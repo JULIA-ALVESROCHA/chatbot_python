@@ -1,0 +1,15 @@
+torch
+transformers
+sentence-transformers
+datasets
+accelerate
+evaluate
+faiss-cpu
+fastapi
+uvicorn[standard]
+pdfplumber
+langdetect
+numpy
+pandas
+scikit-learn
+python-dotenv

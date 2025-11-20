@@ -1,0 +1,112 @@
+bgo-chatbot/                      # raiz do projeto (Brazilian Geography Olympiad chatbot)
+├── .env.example                  # variáveis de ambiente (exemplo)
+├── README.md
+├── pyproject.toml or requirements.txt
+├── docker-compose.yml
+├── Dockerfile
+├── .gitignore
+│
+├── src/
+│   ├── app/                      # backend FastAPI + API layer
+│   │   ├── main.py               # FastAPI app entrypoint (uvicorn)
+│   │   ├── api/
+│   │   │   ├── v1/
+│   │   │   │   ├── chat.py       # endpoint /chat
+│   │   │   │   └── health.py
+│   │   │   └── deps.py           # dependências do FastAPI (e.g. get_retriever)
+│   │   ├── core/
+│   │   │   ├── config.py         # leitura de .env / Pydantic settings
+│   │   │   └── logging.py
+│   │   └── schemas/
+│   │       ├── requests.py       # pydantic models para entrada
+│   │       └── responses.py      # pydantic models para saída
+│   │
+│   ├── rag_pipeline/             # implementação modular do pipeline RAG
+│   │   ├── __init__.py
+│   │   ├── rewrite/              # Query rewriting / decomposition
+│   │   │   ├── rewrite_service.py
+│   │   │   └── prompts.py
+│   │   ├── retrieval/            # Vector store / FAISS / loaders
+│   │   │   ├── loader.py         # carregamento de PDFs/HTMLs
+│   │   │   ├── text_splitter.py
+│   │   │   ├── embeddings.py     # wrapper para OpenAI embeddings
+│   │   │   └── vectorstore.py    # inicialização do FAISS / save/load
+│   │   ├── reranker/             # opcional: cross-encoder / reranker
+│   │   │   ├── reranker.py
+│   │   │   └── model_wrapper.py
+│   │   ├── generator/            # LLM prompt + resposta baseada no contexto
+│   │   │   ├── answer_service.py
+│   │   │   └── templates.py
+│   │   └── pipeline.py           # função/chained orchestration (Rewrite→Retrieve→Rerank→Answer)
+│   │
+│   ├── infra/                    # infra local / integração (caching, storage)
+│   │   ├── cache.py              # opcional: redis wrapper
+│   │   └── storage.py            # paths para FAISS/index files, persistência
+│   │
+│   ├── utils/                    # utilitários cross-cutting
+│   │   ├── text.py               # normalização, limpeza
+│   │   ├── i18n.py               # detecção/rotas de idioma (pt/en)
+│   │   └── metrics.py            # logging/metrics simples
+│   │
+│   └── tests/                    # testes unitários e de integração
+│       ├── unit/
+│       └── integration/
+│
+├── data/                         # documentos de origem (PDFs, txt) - NÃO versionar grandes binários
+│   ├── raw/
+│   └── processed/                # chunks, embeddings index (opcionalmente .gitkeep)
+│
+├── frontend/                     # frontend mínimo (Streamlit / React) — opcional
+│   ├── streamlit_app.py
+│   └── react_app/                # se for React: código aqui
+│
+├── scripts/                      # scripts úteis (Windows PowerShell)
+│   ├── setup_env.ps1             # cria venv, instala dependências, cria .env local
+│   ├── run_dev.ps1               # inicia uvicorn + pré-requisitos
+│   └── build_index.ps1           # pipeline para carregar docs e construir FAISS
+│
+└── deploy/
+    ├── k8s/                      # manifests k8s (se for necessário posteriormente)
+    └── docker/                   # arquivos de deploy Docker extras
+Explicação por bloco / responsabilidades
+src/app/
+Back-end HTTP: concentra a aplicação FastAPI.
+
+main.py: inicializa o app e registra rotas.
+
+api/v1/chat.py: expõe POST /chat que recebe question, language, session_id opcional etc; chama o rag_pipeline.pipeline.process_query(...).
+
+core/config.py: centraliza leitura de variáveis (OPENAI_API_KEY, FAISS_INDEX_PATH, thresholds), usando pydantic.BaseSettings.
+
+schemas/: Pydantic models para validação e documentação automática do OpenAPI.
+
+src/rag_pipeline/
+Corpo do RAG — modularizado em submódulos lógicos:
+
+rewrite/: responsável por tornar a query "standalone" (resolver pronomes, decompor multi-part questions). Aqui você manda a query + último N turnos ao GPT-4 com um prompt de reescrita curto.
+
+retrieval/: loaders (PDF/HTML/TXT), splitters, embeddings e criação/consulta ao FAISS. Idealmente essa camada só retorna Document com text + metadata.
+
+reranker/ (opcional): pega os top-N do FAISS e re-rankeia com um cross-encoder local (ou serviço externo) para melhorar precisão.
+
+generator/: monta o prompt final (instruções "use apenas os trechos abaixo" + citações) e chama GPT-4 para sintetizar a resposta e formatar citações.
+
+pipeline.py: função que orquestra a sequência (rewrite → retrieve → rerank → generate) e aplica políticas (ex.: se retrieval score < X → retornar fallback).
+
+src/infra/
+Abstrações de infra (cache, storage). Por exemplo, se quiser usar Redis para cache de respostas, coloque o wrapper aqui.
+
+src/utils/
+Funções utilitárias reutilizáveis: limpeza de texto, detecção de idioma, logs e métricas simples.
+
+data/
+Contém os PDFs originais e arquivos processados. Não comite PDFs grandes no git — use .gitignore.
+
+frontend/
+Se for Streamlit, um arquivo streamlit_app.py simples que faz POST para /chat. Se for React, coloque app neste subdiretório.
+
+scripts/
+Scripts em PowerShell pensados para Windows (criar venv, instalar deps, rodar desenvolvimento, construir índice FAISS). Isso evita comandos Linux.
+
+docker-compose.yml e Dockerfile
+Dockeriza backend (FastAPI + uvicorn) e um serviço opcional (Redis). No Windows recomenda-se usar WSL2 para Docker Desktop, mas os arquivos Docker são OS-agnósticos.
