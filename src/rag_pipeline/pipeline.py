@@ -4,6 +4,7 @@ import logging
 
 from tenacity import retry, stop_after_attempt, wait_exponential
 
+from src.rag_pipeline.reranker.reranker import rerank_documents
 from src.rag_pipeline.rewrite.rewrite_service import rewrite_query
 from src.rag_pipeline.retrieval.vectorstore import get_retriever
 from src.rag_pipeline.generator.answer_service import generate_answer
@@ -64,15 +65,20 @@ async def process_query(
         logger.info("No documents retrieved for query.")
         return {"answer": "Não encontrei nada no regulamento relacionado à sua pergunta. Pode reformular?", "sources": []}
 
-    # 3) OPTIONAL RERANK - placeholder (implemente se tiver reranker)
-    # try:
-    #     if settings.use_reranker:
-    #         docs = rerank(docs, rewritten)
-    # except Exception as e:
-    #     logger.exception("Reranker failed: %s", e)
-    #     # continue with un-reranked docs
+    # 3) RERANK (opcional)
+    if settings.use_reranker:
+        try:
+            rerank_k = settings.max_rerank
+            docs = await rerank_documents(
+                query=rewritten,
+                documents=docs,
+                top_k=rerank_k,
+            )
+            logger.info("Reranked to %d docs", len(docs))
+        except Exception as e:
+            logger.warning("Reranker failed, using original docs: %s", e)
 
-    # 4) GENERATE
+    # 4) GENERATE (LLM FINAL)
     try:
         result = await generate_answer(rewritten, docs)
     except Exception as e:
