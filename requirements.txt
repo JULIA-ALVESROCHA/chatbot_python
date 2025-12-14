@@ -1,3 +1,4 @@
+#folder that contains the project environment
 torch
 transformers
 sentence-transformers

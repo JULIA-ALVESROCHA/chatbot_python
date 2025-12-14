@@ -1,5 +1,5 @@
 from typing import List
-from langchain_core.documents import Document
+from langchain_core.documents import Document #new version of langchain
 from sentence_transformers import CrossEncoder
 
 

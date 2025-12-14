@@ -1,74 +1,90 @@
-bgo-chatbot/                      # raiz do projeto (Brazilian Geography Olympiad chatbot)
-├── .env.example                  # variáveis de ambiente (exemplo)
+chatbot_python/                     # raiz do projeto (Brazilian Geography Olympiad chatbot)
+├── .env.example                    # variáveis de ambiente (exemplo)
 ├── README.md
-├── pyproject.toml or requirements.txt
+├── pyproject.toml                  # configuração do projeto (dependências, build)
+├── requirements.txt                # dependências Python
 ├── docker-compose.yml
 ├── Dockerfile
 ├── .gitignore
+├── estrutura_pastas.txt            # este arquivo - documentação da estrutura
+├── useful.txt                      # notas úteis
 │
 ├── src/
-│   ├── app/                      # backend FastAPI + API layer
-│   │   ├── main.py               # FastAPI app entrypoint (uvicorn)
+│   ├── __init__.py
+│   ├── app/                        # backend FastAPI + API layer
+│   │   ├── main.py                 # FastAPI app entrypoint (uvicorn)
 │   │   ├── api/
-│   │   │   ├── v1/
-│   │   │   │   ├── chat.py       # endpoint /chat
-│   │   │   │   └── health.py
-│   │   │   └── deps.py           # dependências do FastAPI (e.g. get_retriever)
+│   │   │   ├── deps.py             # dependências do FastAPI (e.g. get_retriever)
+│   │   │   └── v1/
+│   │   │       ├── chat.py         # endpoint /chat
+│   │   │       └── health.py       # endpoint /health
 │   │   ├── core/
-│   │   │   ├── config.py         # leitura de .env / Pydantic settings
-│   │   │   └── logging.py
+│   │   │   ├── config.py           # leitura de .env / Pydantic settings
+│   │   │   └── logging.py          # configuração de logging
 │   │   └── schemas/
-│   │       ├── requests.py       # pydantic models para entrada
-│   │       └── responses.py      # pydantic models para saída
+│   │       ├── requests.py         # pydantic models para entrada
+│   │       └── responses.py        # pydantic models para saída
 │   │
-│   ├── rag_pipeline/             # implementação modular do pipeline RAG
+│   ├── rag_pipeline/               # implementação modular do pipeline RAG
 │   │   ├── __init__.py
-│   │   ├── rewrite/              # Query rewriting / decomposition
+│   │   ├── rewrite/                # Query rewriting / decomposition
 │   │   │   ├── rewrite_service.py
 │   │   │   └── prompts.py
-│   │   ├── retrieval/            # Vector store / FAISS / loaders
-│   │   │   ├── loader.py         # carregamento de PDFs/HTMLs
-│   │   │   ├── text_splitter.py
-│   │   │   ├── embeddings.py     # wrapper para OpenAI embeddings
-│   │   │   └── vectorstore.py    # inicialização do FAISS / save/load
-│   │   ├── reranker/             # opcional: cross-encoder / reranker
-│   │   │   ├── reranker.py
-│   │   │   └── model_wrapper.py
-│   │   ├── generator/            # LLM prompt + resposta baseada no contexto
-│   │   │   ├── answer_service.py
-│   │   │   └── templates.py
-│   │   └── pipeline.py           # função/chained orchestration (Rewrite→Retrieve→Rerank→Answer)
+│   │   ├── retrieval/              # Vector store / FAISS / loaders
+│   │   │   ├── loader.py           # carregamento de PDFs/HTMLs
+│   │   │   ├── text_splitter.py    # divisão de texto em chunks
+│   │   │   ├── embeddings.py       # wrapper para OpenAI embeddings
+│   │   │   └── vectorstore.py      # inicialização do FAISS / save/load
+│   │   ├── reranker/               # opcional: cross-encoder / reranker
+│   │   │   ├── reranker.py         # interface de reranking
+│   │   │   └── model_wrapper.py    # wrapper do modelo cross-encoder
+│   │   ├── generator/              # LLM prompt + resposta baseada no contexto
+│   │   │   ├── answer_service.py   # serviço de geração de resposta
+│   │   │   └── templates.py        # templates de prompt
+│   │   └── pipeline.py             # função/chained orchestration (Rewrite→Retrieve→Rerank→Answer)
 │   │
-│   ├── infra/                    # infra local / integração (caching, storage)
-│   │   ├── cache.py              # opcional: redis wrapper
-│   │   └── storage.py            # paths para FAISS/index files, persistência
+│   ├── infra/                      # infra local / integração (caching, storage)
+│   │   ├── cache.py                # opcional: redis wrapper
+│   │   └── storage.py              # paths para FAISS/index files, persistência
 │   │
-│   ├── utils/                    # utilitários cross-cutting
-│   │   ├── text.py               # normalização, limpeza
-│   │   ├── i18n.py               # detecção/rotas de idioma (pt/en)
-│   │   └── metrics.py            # logging/metrics simples
+│   ├── utils/                      # utilitários cross-cutting
+│   │   ├── text.py                 # normalização, limpeza
+│   │   ├── i18n.py                 # detecção/rotas de idioma (pt/en)
+│   │   └── metrics.py              # logging/metrics simples
 │   │
-│   └── tests/                    # testes unitários e de integração
+│   └── tests/                      # testes unitários e de integração
 │       ├── unit/
 │       └── integration/
 │
-├── data/                         # documentos de origem (PDFs, txt) - NÃO versionar grandes binários
-│   ├── raw/
-│   └── processed/                # chunks, embeddings index (opcionalmente .gitkeep)
+├── data/                           # documentos de origem (PDFs, txt) - NÃO versionar grandes binários
+│   ├── raw/                        # PDFs originais do regulamento
+│   │   └── *.pdf                   # arquivos PDF do regulamento OBG
+│   └── processed/                  # chunks, embeddings index
+│       └── faiss_index/            # índice FAISS
+│           ├── index.faiss
+│           └── index.pkl
 │
-├── frontend/                     # frontend mínimo (Streamlit / React) — opcional
+├── frontend/                       # frontend mínimo (Streamlit / React) — opcional
 │   ├── streamlit_app.py
-│   └── react_app/                # se for React: código aqui
+│   └── react_app/                  # se for React: código aqui
 │
-├── scripts/                      # scripts úteis (Windows PowerShell)
-│   ├── setup_env.ps1             # cria venv, instala dependências, cria .env local
-│   ├── run_dev.ps1               # inicia uvicorn + pré-requisitos
-│   └── build_index.ps1           # pipeline para carregar docs e construir FAISS
+├── scripts/                        # scripts úteis (Python - Windows compatible)
+│   ├── setup_env.py                # cria venv, instala dependências, cria .env local
+│   ├── run_dev.py                  # inicia uvicorn + pré-requisitos
+│   ├── build_index.py              # pipeline para carregar docs e construir FAISS
+│   └── test_imp/                   # testes de implementação/integração
+│       ├── test_generator_components.py
+│       ├── test_reranker_service.py
+│       └── test_reranker.py
 │
 └── deploy/
-    ├── k8s/                      # manifests k8s (se for necessário posteriormente)
-    └── docker/                   # arquivos de deploy Docker extras
+    ├── k8s/                        # manifests k8s (se for necessário posteriormente)
+    └── docker/                     # arquivos de deploy Docker extras
+
+================================================================================
 Explicação por bloco / responsabilidades
+================================================================================
+
 src/app/
 Back-end HTTP: concentra a aplicação FastAPI.
 
@@ -76,7 +92,13 @@ main.py: inicializa o app e registra rotas.
 
 api/v1/chat.py: expõe POST /chat que recebe question, language, session_id opcional etc; chama o rag_pipeline.pipeline.process_query(...).
 
+api/v1/health.py: endpoint de health check.
+
+api/deps.py: dependências do FastAPI (e.g. get_retriever, get_reranker).
+
 core/config.py: centraliza leitura de variáveis (OPENAI_API_KEY, FAISS_INDEX_PATH, thresholds), usando pydantic.BaseSettings.
+
+core/logging.py: configuração de logging da aplicação.
 
 schemas/: Pydantic models para validação e documentação automática do OpenAPI.
 
@@ -106,7 +128,16 @@ frontend/
 Se for Streamlit, um arquivo streamlit_app.py simples que faz POST para /chat. Se for React, coloque app neste subdiretório.
 
 scripts/
-Scripts em PowerShell pensados para Windows (criar venv, instalar deps, rodar desenvolvimento, construir índice FAISS). Isso evita comandos Linux.
+Scripts em Python pensados para Windows (mas compatíveis com Linux). Scripts principais:
+- setup_env.py: cria venv, instala dependências, cria .env local
+- run_dev.py: inicia uvicorn + pré-requisitos
+- build_index.py: pipeline para carregar docs e construir FAISS
+
+scripts/test_imp/
+Testes de implementação/integração para validar componentes individuais do pipeline.
+
+deploy/
+Manifests e configurações de deploy (k8s, Docker extras).
 
 docker-compose.yml e Dockerfile
 Dockeriza backend (FastAPI + uvicorn) e um serviço opcional (Redis). No Windows recomenda-se usar WSL2 para Docker Desktop, mas os arquivos Docker são OS-agnósticos.
