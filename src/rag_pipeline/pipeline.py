@@ -9,6 +9,7 @@ from src.rag_pipeline.rewrite.rewrite_service import rewrite_query
 from src.rag_pipeline.retrieval.vectorstore import get_retriever
 from src.rag_pipeline.generator.answer_service import generate_answer
 from src.app.core.config import settings
+from src.infra.cache import get_history, add_to_history
 
 logger = logging.getLogger("bgo_chatbot.pipeline")
 
@@ -32,9 +33,16 @@ async def process_query(
     """
     logger.info("Processing query (session=%s): %s", session_id, question)
 
+    # 0) Get chat history if session_id provided
+    chat_history = ""
+    if session_id:
+        chat_history = get_history(session_id, max_turns=5)
+        if chat_history:
+            logger.debug("Retrieved chat history for session %s (%d chars)", session_id, len(chat_history))
+
     # 1) REWRITE
     try:
-        rewritten = await rewrite_query(question, chat_history="")
+        rewritten = await rewrite_query(question, chat_history=chat_history)
         logger.debug("Rewritten query: %s", rewritten)
     except Exception as e:
         logger.exception("Error during rewrite_query: %s", e)
@@ -101,4 +109,10 @@ async def process_query(
         sources = [sources]
 
     logger.info("Returning answer (len=%d chars) and %d sources", len(answer or ""), len(sources))
+    
+    # Save to chat history if session_id provided
+    if session_id:
+        add_to_history(session_id, question, answer)
+        logger.debug("Saved to chat history for session %s", session_id)
+    
     return {"answer": answer, "sources": sources}

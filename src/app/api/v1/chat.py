@@ -5,6 +5,7 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 
 from src.rag_pipeline.pipeline import process_query
+from src.infra.cache import clear_history
 
 logger = logging.getLogger("bgo_chatbot.api.chat")
 router = APIRouter()
@@ -67,3 +68,19 @@ async def chat_endpoint(req: ChatRequest):
     except Exception as e:
         logger.exception("Erro no endpoint /chat: %s", e)
         raise HTTPException(status_code=500, detail="Erro interno ao processar a requisição.")
+
+
+@router.delete("/chat/history/{session_id}", tags=["chat"])
+async def clear_chat_history(session_id: str):
+    """
+    Clear chat history for a specific session.
+    
+    Args:
+        session_id: Unique identifier for the conversation session
+    """
+    try:
+        clear_history(session_id)
+        return {"message": f"Chat history cleared for session {session_id}", "session_id": session_id}
+    except Exception as e:
+        logger.exception("Erro ao limpar histórico: %s", e)
+        raise HTTPException(status_code=500, detail="Erro interno ao limpar histórico.")

@@ -7,36 +7,40 @@ autossuficiente para melhorar recuperação no RAG.
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import PromptTemplate
 
+from .prompts import (
+    get_query_rewrite_prompt,
+    detect_language,
+)
+
 
 # LLM assíncrono — escolha o modelo que preferir (custo x velocidade)
-llm = ChatOpenAI(model="gpt-4", temperature=0)
-
-rewrite_prompt = PromptTemplate(
-    input_variables=["question", "chat_history"],
-    template="""
-Reescreva a pergunta abaixo para que ela seja completamente autossuficiente,
-removendo pronomes ambíguos, resolvendo contexto e deixando a pergunta clara
-para um sistema de recuperação de documentos (RAG).
-
-Chat History:
-{chat_history}
-
-Pergunta original:
-{question}
-
-Pergunta reescrita:
-"""
-)
+llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)  # Using cheaper model for rewriting
 
 
 async def rewrite_query(question: str, chat_history: str = "") -> str:
     """
     Recebe a pergunta e (opcionalmente) histórico de conversa e retorna
     uma versão reformulada/autossuficiente.
+    
+    Args:
+        question: Pergunta original do usuário
+        chat_history: Histórico de conversa formatado (pode ser vazio)
+        
+    Returns:
+        Pergunta reescrita, otimizada para busca semântica
     """
-    prompt_text = rewrite_prompt.format(
+    # Detect language and get appropriate prompt
+    language = detect_language(question)
+    
+    # Determine if we should use minimal prompt
+    use_minimal = not chat_history or not chat_history.strip()
+    
+    # Get formatted prompt
+    prompt_text = get_query_rewrite_prompt(
         question=question,
-        chat_history=chat_history
+        chat_history=chat_history,
+        language=language,
+        use_minimal=use_minimal
     )
 
     # chamada assíncrona ao modelo
