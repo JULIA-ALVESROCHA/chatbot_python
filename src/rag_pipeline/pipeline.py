@@ -55,7 +55,7 @@ async def process_query(
         k = getattr(settings, "max_retrieve", 6)
         retriever = get_retriever(k=k)
         # get_relevant_documents é o método padrão de Retriever do LangChain
-        docs = retriever.get_relevant_documents(rewritten)
+        docs = await retriever.ainvoke(rewritten)
         logger.info("Retrieved %d docs for query", len(docs))
     except RuntimeError as e:
         # Vectorstore não inicializado -> retornar mensagem amigável (não re-try)

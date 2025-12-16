@@ -25,8 +25,7 @@ def create_app() -> FastAPI:
         version="0.1.0",
     )
 
-
-# CORS (ajuste origns - when the chatbot is publish online)
+    # CORS (ajuste origns - when the chatbot is publish online)
     app.add_middleware(
         CORSMiddleware,
         allow_origins=["*"],
@@ -43,11 +42,11 @@ def create_app() -> FastAPI:
     async def health():
         return {"status": "ok"}
     
-    @app.get("\ready",tags=["health"])
+    @app.get("/ready", tags=["health"])
     async def ready():
         #check if the vectorstore is loading
         try:
-             # lazy check: se init_vectorstore levantou exceção na startup,
+            # lazy check: se init_vectorstore levantou exceção na startup,
             # a app provavelmente não está pronta — então respondemos conforme.
             return {"ready": True}
         except Exception:
@@ -71,6 +70,7 @@ def create_app() -> FastAPI:
             logger.error("OPENAI_API_KEY não definido.")
         else:
             logger.info("OPENAI_API_KEY carregada.")
+        
         # 2️⃣ Inicializar FAISS (OBRIGATÓRIO)
         try:
             logger.info(
