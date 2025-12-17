@@ -1,4 +1,3 @@
-# src/rag_pipeline/pipeline.py
 from typing import Any, Dict, List, Optional
 import logging
 
@@ -46,16 +45,14 @@ async def process_query(
         logger.debug("Rewritten query: %s", rewritten)
     except Exception as e:
         logger.exception("Error during rewrite_query: %s", e)
-        # lançar para que tenacity re-tente
         raise
 
     # 2) RETRIEVE
     try:
-        # usa max_retrieve configurado no settings
         k = getattr(settings, "max_retrieve", 6)
         retriever = get_retriever(k=k)
-        # get_relevant_documents é o método padrão de Retriever do LangChain
         docs = await retriever.ainvoke(rewritten)
+        
         logger.info("Retrieved %d docs for query", len(docs))
     except RuntimeError as e:
         # Vectorstore não inicializado -> retornar mensagem amigável (não re-try)
@@ -66,12 +63,14 @@ async def process_query(
         }
     except Exception as e:
         logger.exception("Error during retrieval: %s", e)
-        # lançar para que tenacity re-tente
         raise
 
     if not docs:
         logger.info("No documents retrieved for query.")
-        return {"answer": "Não encontrei nada no regulamento relacionado à sua pergunta. Pode reformular?", "sources": []}
+        return {
+            "answer": "Não encontrei nada no regulamento relacionado à sua pergunta. Pode reformular?",
+            "sources": []
+        }
 
     # 3) RERANK (opcional)
     if settings.use_reranker:
@@ -88,25 +87,25 @@ async def process_query(
 
     # 4) GENERATE (LLM FINAL)
     try:
+        # generate_answer now returns Dict[str, Any] with "answer" and "sources"
         result = await generate_answer(rewritten, docs)
+        
+        # Validate result structure
+        if not isinstance(result, dict):
+            logger.error("generate_answer returned non-dict: %s", type(result))
+            raise ValueError("Invalid response from generate_answer")
+        
+        if "answer" not in result:
+            logger.error("generate_answer missing 'answer' key")
+            raise ValueError("Missing 'answer' in response")
+        
     except Exception as e:
         logger.exception("Error during generate_answer: %s", e)
-        # lançar para que tenacity re-tente (ou mude aqui para fallback)
         raise
 
-    # Normalize result to expected shape
-    if isinstance(result, dict):
-        answer = result.get("answer") or result.get("text") or str(result)
-        sources = result.get("sources") or result.get("references") or []
-    else:
-        # if generate_answer returned a plain string
-        answer = str(result)
-        sources = []
-
-    # Ensure types
-    if not isinstance(sources, list):
-        logger.warning("Sources is not a list; converting to list.")
-        sources = [sources]
+    # Extract answer and sources
+    answer = result["answer"]
+    sources = result.get("sources", [])
 
     logger.info("Returning answer (len=%d chars) and %d sources", len(answer or ""), len(sources))
     
@@ -115,4 +114,7 @@ async def process_query(
         add_to_history(session_id, question, answer)
         logger.debug("Saved to chat history for session %s", session_id)
     
-    return {"answer": answer, "sources": sources}
+    return {
+        "answer": answer,
+        "sources": sources
+    }

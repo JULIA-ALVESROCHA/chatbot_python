@@ -1,2 +1,5 @@
 To activate the environment:
 .venv\Scripts\Activate.ps1
+
+To activate the server:
+uvicorn src.app.main:app --reload
