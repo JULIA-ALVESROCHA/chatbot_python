@@ -20,14 +20,6 @@ async def process_query(
     language: str,
     session_id: Optional[str] = None
 ) -> Dict[str, Any]:
-    
-    language = detect_language(question)
-
-    if not language or language == "auto":
-        language = detect_language(question)
-
-    logger.info(f"Detected language: {language}")
-    
     """
     Orquestra o pipeline RAG:
       1) rewrite -> torna a pergunta autossuficiente
@@ -39,7 +31,12 @@ async def process_query(
     Tenacity retry decorates a função inteira — se uma exceção ocorrer,
     a chamada será re-tentada até o limite configurado.
     """
-    logger.info("Processing query (session=%s): %s", session_id, question)
+    
+    # Detect language if not provided or set to auto
+    if not language or language == "auto":
+        language = detect_language(question)
+
+    logger.info("Processing query (session=%s, language=%s): %s", session_id, language, question)
 
     # 0) Get chat history if session_id provided
     chat_history = ""
@@ -95,31 +92,19 @@ async def process_query(
             logger.warning("Reranker failed, using original docs: %s", e)
 
     # 4) GENERATE (LLM FINAL)
+    # answer_service já retorna {"answer": str, "sources": list}
     result = await answer_service.generate_answer(
-            question=question,
-            documents=docs,
-            language=language
-        )
+        question=question,
+        documents=docs,
+        language=language
+    )
+
     answer = result["answer"]
-    # Format sources (pipeline responsibility)
-    sources = []
-    seen = set()
-
-    for doc in docs:
-        key = (doc.metadata.get("source"), doc.metadata.get("page"))
-        if key in seen:
-            continue
-        seen.add(key)
-
-        sources.append({
-            "title": doc.metadata.get("source"),
-            "page": doc.metadata.get("page"),
-            "url": doc.metadata.get("url")
-        })
+    sources = result["sources"]
 
     logger.info(
         "Returning answer (len=%d chars) and %d sources",
-        len(answer or ""),
+        len(answer),
         len(sources)
     )
 
@@ -132,4 +117,3 @@ async def process_query(
         "answer": answer,
         "sources": sources
     }
-

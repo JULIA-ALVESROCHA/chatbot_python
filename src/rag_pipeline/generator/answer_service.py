@@ -44,11 +44,8 @@ class AnswerService:
         self,
         question: str,
         documents: List[Document],
-        language: str
-    ) -> str:
-        
-        system_prompt = SYSTEM_PROMPT.format(language=language)
-
+        language: str = "pt-BR"
+    ) -> Dict[str, Any]:
         """
         Generates a grounded answer using only the provided documents.
         
@@ -75,6 +72,7 @@ class AnswerService:
                 self.prompt.format_messages(
                     question=question,
                     context=context,
+                    language=language,
                 )
             )
 
@@ -215,6 +213,7 @@ class AnswerService:
             + "\n".join(citation_lines)
         )
 
+
 # Module-level singleton instance for backward compatibility
 _service_instance: Optional[AnswerService] = None
 
@@ -230,6 +229,7 @@ def _get_service() -> AnswerService:
 async def generate_answer(
     question: str,
     documents: List[Document],
+    language: str = "pt-BR"
 ) -> Dict[str, Any]:
     """
     Module-level function wrapper for AnswerService.generate_answer().
@@ -240,6 +240,7 @@ async def generate_answer(
     Args:
         question: The user's question
         documents: List of Document objects to use as context
+        language: Language for the response (default: pt-BR)
         
     Returns:
         Dict with keys:
@@ -247,4 +248,4 @@ async def generate_answer(
             - sources: List[Dict] - Source metadata for reference
     """
     service = _get_service()
-    return await service.generate_answer(question, documents)
+    return await service.generate_answer(question, documents, language)
