@@ -6,6 +6,7 @@ from langchain_core.documents import Document
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 
+
 from .templates import (
     SYSTEM_PROMPT,
     ANSWER_TEMPLATE,
@@ -43,7 +44,11 @@ class AnswerService:
         self,
         question: str,
         documents: List[Document],
-    ) -> Dict[str, Any]:
+        language: str
+    ) -> str:
+        
+        system_prompt = SYSTEM_PROMPT.format(language=language)
+
         """
         Generates a grounded answer using only the provided documents.
         

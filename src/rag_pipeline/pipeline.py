@@ -2,23 +2,32 @@ from typing import Any, Dict, List, Optional
 import logging
 
 from tenacity import retry, stop_after_attempt, wait_exponential
-
+from src.utils.language import detect_language
 from src.rag_pipeline.reranker.reranker import rerank_documents
 from src.rag_pipeline.rewrite.rewrite_service import rewrite_query
 from src.rag_pipeline.retrieval.vectorstore import get_retriever
-from src.rag_pipeline.generator.answer_service import generate_answer
+from src.rag_pipeline.generator.answer_service import AnswerService
 from src.app.core.config import settings
 from src.infra.cache import get_history, add_to_history
 
 logger = logging.getLogger("bgo_chatbot.pipeline")
+answer_service = AnswerService()
 
 
 @retry(stop=stop_after_attempt(3), wait=wait_exponential(min=1, max=4))
 async def process_query(
     question: str,
-    language: str = "pt",
+    language: str,
     session_id: Optional[str] = None
 ) -> Dict[str, Any]:
+    
+    language = detect_language(question)
+
+    if not language or language == "auto":
+        language = detect_language(question)
+
+    logger.info(f"Detected language: {language}")
+    
     """
     Orquestra o pipeline RAG:
       1) rewrite -> torna a pergunta autossuficiente
@@ -86,35 +95,41 @@ async def process_query(
             logger.warning("Reranker failed, using original docs: %s", e)
 
     # 4) GENERATE (LLM FINAL)
-    try:
-        # generate_answer now returns Dict[str, Any] with "answer" and "sources"
-        result = await generate_answer(rewritten, docs)
-        
-        # Validate result structure
-        if not isinstance(result, dict):
-            logger.error("generate_answer returned non-dict: %s", type(result))
-            raise ValueError("Invalid response from generate_answer")
-        
-        if "answer" not in result:
-            logger.error("generate_answer missing 'answer' key")
-            raise ValueError("Missing 'answer' in response")
-        
-    except Exception as e:
-        logger.exception("Error during generate_answer: %s", e)
-        raise
-
-    # Extract answer and sources
+    result = await answer_service.generate_answer(
+            question=question,
+            documents=docs,
+            language=language
+        )
     answer = result["answer"]
-    sources = result.get("sources", [])
+    # Format sources (pipeline responsibility)
+    sources = []
+    seen = set()
 
-    logger.info("Returning answer (len=%d chars) and %d sources", len(answer or ""), len(sources))
-    
+    for doc in docs:
+        key = (doc.metadata.get("source"), doc.metadata.get("page"))
+        if key in seen:
+            continue
+        seen.add(key)
+
+        sources.append({
+            "title": doc.metadata.get("source"),
+            "page": doc.metadata.get("page"),
+            "url": doc.metadata.get("url")
+        })
+
+    logger.info(
+        "Returning answer (len=%d chars) and %d sources",
+        len(answer or ""),
+        len(sources)
+    )
+
     # Save to chat history if session_id provided
     if session_id:
         add_to_history(session_id, question, answer)
         logger.debug("Saved to chat history for session %s", session_id)
-    
+
     return {
         "answer": answer,
         "sources": sources
     }
+
