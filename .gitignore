@@ -3,3 +3,9 @@ __pycache__/
 src/data/*.npy
 src/data/index.faiss
 .env
+
+node_modules/
+.DS_Store
+dist/
+build/
+.env
