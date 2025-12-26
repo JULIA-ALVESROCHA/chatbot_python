@@ -1,13 +1,45 @@
-venv/
+# ======================
+# Python
+# ======================
 __pycache__/
-src/data/*.npy
-src/data/index.faiss
-src/data/raw
-.env
+*.py[cod]
+*.pyo
+*.pyd
 
-node_modules/
-.DS_Store
-dist/
-build/
+# Virtual environments
+.venv/
+venv/
+
+# ======================
+# Environment variables
+# ======================
 .env
 .env.*
+!.env.example
+
+# ======================
+# Data / RAG artifacts
+# ======================
+src/data/
+faiss_index/
+storage/
+*.npy
+*.faiss
+*.index
+
+# PDFs and large raw files
+*.pdf
+
+# ======================
+# Node / Frontend
+# ======================
+node_modules/
+dist/
+build/
+
+# ======================
+# OS / Editor
+# ======================
+.DS_Store
+.idea/
+.vscode/

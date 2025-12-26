@@ -7,6 +7,7 @@ Main FastAPI app for BGO Chatbot.
 - Configura CORS, logging e handlers básicos
 """
 import logging
+import os
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse 
 from fastapi.middleware.cors import CORSMiddleware
@@ -17,6 +18,8 @@ from src.rag_pipeline.retrieval.vectorstore import init_vectorstore
 
 logger = logging.getLogger("bgo_chatbot")
 logging.basicConfig(level=logging.INFO)
+DISABLE_RAG_ON_STARTUP = os.getenv("DISABLE_RAG_ON_STARTUP", "false").lower() == "true"
+
 
 def create_app() -> FastAPI:
     app = FastAPI(
@@ -70,7 +73,16 @@ def create_app() -> FastAPI:
             logger.error("OPENAI_API_KEY não definido.")
         else:
             logger.info("OPENAI_API_KEY carregada.")
-        
+
+        #deploying
+        if DISABLE_RAG_ON_STARTUP:
+            print("⚠️ RAG desativado no startup (modo deploy)")
+            vectorstore = None
+        else:
+            docs = load_documents()
+            splits = split_documents(docs)
+            vectorstore = build_faiss(splits)
+
         # 2️⃣ Inicializar FAISS (OBRIGATÓRIO)
         try:
             logger.info(

@@ -2,6 +2,7 @@ from typing import Any, Dict, List, Optional
 import logging
 import re
 
+
 from tenacity import retry, stop_after_attempt, wait_exponential
 from src.utils.language import detect_language
 from src.rag_pipeline.reranker.reranker import rerank_documents
@@ -32,7 +33,12 @@ async def process_query(
     Tenacity retry decorates a função inteira — se uma exceção ocorrer,
     a chamada será re-tentada até o limite configurado.
     """
-    
+    if vectorstore is None:
+        return {
+            "answer": "Sistema em modo de inicialização. Base documental indisponível.",
+            "sources": []
+        }
+
     # Detect language if not provided or set to auto
     if not language or language == "auto":
         language = detect_language(question)

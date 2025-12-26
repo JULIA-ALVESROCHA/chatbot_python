@@ -3,7 +3,6 @@ chatbot_python/                     # raiz do projeto (Brazilian Geography Olymp
 ├── README.md
 ├── pyproject.toml                  # configuração do projeto (dependências, build)
 ├── requirements.txt                # dependências Python
-├── docker-compose.yml
 ├── Dockerfile
 ├── .gitignore
 ├── estrutura_pastas.txt            # este arquivo - documentação da estrutura
@@ -76,10 +75,6 @@ chatbot_python/                     # raiz do projeto (Brazilian Geography Olymp
 │       ├── test_generator_components.py
 │       ├── test_reranker_service.py
 │       └── test_reranker.py
-│
-└── deploy/
-    ├── k8s/                        # manifests k8s (se for necessário posteriormente)
-    └── docker/                     # arquivos de deploy Docker extras
 
 ================================================================================
 Explicação por bloco / responsabilidades
@@ -136,8 +131,3 @@ Scripts em Python pensados para Windows (mas compatíveis com Linux). Scripts pr
 scripts/test_imp/
 Testes de implementação/integração para validar componentes individuais do pipeline.
 
-deploy/
-Manifests e configurações de deploy (k8s, Docker extras).
-
-docker-compose.yml e Dockerfile
-Dockeriza backend (FastAPI + uvicorn) e um serviço opcional (Redis). No Windows recomenda-se usar WSL2 para Docker Desktop, mas os arquivos Docker são OS-agnósticos.
