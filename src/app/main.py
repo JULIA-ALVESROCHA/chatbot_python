@@ -28,11 +28,9 @@ def create_app() -> FastAPI:
     # CORS (ajuste origns - when the chatbot is publish online)
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["https://project-cfzwv0pbefifvjwdyxfg.framercanvas.com",
-        "https://nonidiomatical-flor-nonregulatory.ngrok-free.dev",
-        ],
-        allow_credentials=False,
-        allow_methods=["*"],
+        allow_origins= settings.ALLOWED_ORIGINS,
+        allow_credentials=True,
+        allow_methods=["POST", "OPTIONS"],
         allow_headers=["*"],
     )
 

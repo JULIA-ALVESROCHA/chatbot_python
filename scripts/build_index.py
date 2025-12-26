@@ -1,11 +1,13 @@
 from pathlib import Path
 
+import re
 from langchain_community.document_loaders import PyPDFLoader, TextLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import FAISS
 
 # Pastas
+ITEM_REGEX = re.compile(r"\b(\d+\.\d+\.\d+)\b")
 DATA_RAW = Path("data/raw")
 PROCESSED = Path("data/processed/faiss_index")
 PROCESSED.mkdir(parents=True, exist_ok=True)
@@ -23,10 +25,24 @@ def load_documents():
 
 def split_documents(docs, chunk_size=800, chunk_overlap=20):
     splitter = RecursiveCharacterTextSplitter(
-        chunk_size=chunk_size, 
+        chunk_size=chunk_size,
         chunk_overlap=chunk_overlap
     )
-    return splitter.split_documents(docs)
+
+    split_docs = splitter.split_documents(docs)
+
+    # 🔹 NOVO: extrair item do regulamento (ex: 4.2.1, 5.7.3)
+    item_pattern = re.compile(r"\b\d+\.\d+\.\d+\b")
+
+    for doc in split_docs:
+        text = doc.page_content or ""
+
+        match = item_pattern.search(text)
+        if match:
+            # salva o item no metadata
+            doc.metadata["item"] = match.group()
+
+    return split_docs
 
 def build_faiss(docs):
     embeddings = OpenAIEmbeddings(model="text-embedding-3-large")

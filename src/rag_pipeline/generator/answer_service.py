@@ -125,49 +125,53 @@ class AnswerService:
 
     @staticmethod
     def _extract_sources(documents: List[Document]) -> List[Dict[str, Any]]:
-        """
-        Extracts source metadata from documents for citation.
-        
-        Returns a list of dicts with title, page, url, etc.
-        """
         sources = []
-        seen_sources = set()  # Deduplicate sources
-        
+        seen_sources = set()
+
         for doc in documents:
             metadata = doc.metadata or {}
-            
-            # Create a unique key for this source
+
             source_key = (
                 metadata.get("source", ""),
                 metadata.get("page"),
             )
-            
-            # Skip duplicates
+
             if source_key in seen_sources:
                 continue
-            
+
             seen_sources.add(source_key)
-            
+
             source_name = metadata.get("source", "Regulamento")
-            
-            # Clean source name: remove path, extension, and extra spaces
             source_clean = source_name.replace(".pdf", "").replace(".txt", "")
-            # Remove common path prefixes
             source_clean = re.sub(r'^(?:data[/\\]raw[/\\]|data[/\\])', '', source_clean)
             source_clean = source_clean.strip()
-            
+
             page = metadata.get("page")
-            
+
+            # 🔹 NOVO: extrair item do regulamento a partir do texto
+            item_match = re.search(r"\b\d+(?:\.\d+){1,3}\b", doc.page_content)
+            item = item_match.group(0) if item_match else None
+
+            citation_parts = [source_clean]
+
+            if item:
+                citation_parts.append(f"item {item}")
+
+            if page is not None:
+                citation_parts.append(f"pag {page}")
+
+            citation = " — ".join(citation_parts)
+
             sources.append({
                 "title": source_clean,
                 "page": page,
+                "item": item,  
                 "url": metadata.get("url"),
                 "chunk_id": metadata.get("chunk_id"),
-                # Formatted citation for display
-                "citation": f"{source_clean}- pag {page}" if page is not None else source_clean
+                "citation": citation
             })
-        
-        return sources
+
+        return sources[:2]
 
     @staticmethod
     def _ensure_citations(answer_text: str, sources: List[Dict[str, Any]]) -> str:
