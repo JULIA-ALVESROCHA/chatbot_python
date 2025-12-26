@@ -74,15 +74,6 @@ def create_app() -> FastAPI:
         else:
             logger.info("OPENAI_API_KEY carregada.")
 
-        #deploying
-        if DISABLE_RAG_ON_STARTUP:
-            print("⚠️ RAG desativado no startup (modo deploy)")
-            vectorstore = None
-        else:
-            docs = load_documents()
-            splits = split_documents(docs)
-            vectorstore = build_faiss(splits)
-
         # 2️⃣ Inicializar FAISS (OBRIGATÓRIO)
         try:
             logger.info(

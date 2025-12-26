@@ -1,6 +1,7 @@
 from typing import Any, Dict, List, Optional
 import logging
 import re
+import os
 
 
 from tenacity import retry, stop_after_attempt, wait_exponential
@@ -14,6 +15,8 @@ from src.infra.cache import get_history, add_to_history
 
 logger = logging.getLogger("bgo_chatbot.pipeline")
 answer_service = AnswerService()
+DISABLE_RAG_ON_STARTUP = os.getenv("DISABLE_RAG_ON_STARTUP", "false").lower() == "true"
+
 
 
 @retry(stop=stop_after_attempt(3), wait=wait_exponential(min=1, max=4))
@@ -33,13 +36,13 @@ async def process_query(
     Tenacity retry decorates a função inteira — se uma exceção ocorrer,
     a chamada será re-tentada até o limite configurado.
     """
-    if vectorstore is None:
+    if DISABLE_RAG:
         return {
-            "answer": "Sistema em modo de inicialização. Base documental indisponível.",
+            "answer": "O sistema está em modo de inicialização.",
             "sources": []
         }
 
-    # Detect language if not provided or set to auto
+    vectorstore = get_vectorstore()
     if not language or language == "auto":
         language = detect_language(question)
 
