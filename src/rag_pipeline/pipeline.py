@@ -15,8 +15,14 @@ from src.infra.cache import get_history, add_to_history
 
 logger = logging.getLogger("bgo_chatbot.pipeline")
 answer_service = AnswerService()
-DISABLE_RAG_ON_STARTUP = os.getenv("DISABLE_RAG_ON_STARTUP", "false").lower() == "true"
+_vectorstore =  None
 
+def get_vectorstore():
+    global _vectorstore
+
+    if _vectorstore is None:
+        _vectorstore = load_faiss_index()  # sua função atual
+    return _vectorstore
 
 
 @retry(stop=stop_after_attempt(3), wait=wait_exponential(min=1, max=4))
@@ -36,13 +42,10 @@ async def process_query(
     Tenacity retry decorates a função inteira — se uma exceção ocorrer,
     a chamada será re-tentada até o limite configurado.
     """
-    if DISABLE_RAG:
-        return {
-            "answer": "O sistema está em modo de inicialização.",
-            "sources": []
-        }
-
     vectorstore = get_vectorstore()
+    retriever = vectorstore.as_retriever()
+    docs = retriever.get_relevant_documents(question)
+    
     if not language or language == "auto":
         language = detect_language(question)
 
