@@ -92,7 +92,7 @@ Instruções:
 6. NÃO adicione informações que não estão implícitas na pergunta ou no histórico.
 7. Mantenha a pergunta reescrita concisa e focada.
 8. Responda APENAS com a pergunta reescrita, sem explicações adicionais.
-
+9. If the information is not present in the OBG official documents, explicitly state that it is not mentioned in the edital or regulamento.
 Histórico da Conversa:
 {chat_history}
 
@@ -114,7 +114,7 @@ Instructions:
 6. Do NOT add information that isn't implied by the question or chat history.
 7. Keep the rewritten question concise and focused.
 8. Answer ONLY with the rewritten question, without additional explanations.
-
+9. If the information is not present in the OBG official documents, explicitly state that it is not mentioned in the edital or regulamento.
 Chat History:
 {chat_history}
 
