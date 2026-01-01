@@ -26,7 +26,7 @@ from typing import Literal
 # Número máximo de sub-perguntas geradas na decomposição
 MAX_DECOMPOSED_QUERIES = 3
 
-# Temperatura para geração (0 = determinístico, seguindo o paper)
+# Temperatura para geração
 REWRITE_TEMPERATURE = 0
 
 # Máximo de tokens para respostas de reescrita
