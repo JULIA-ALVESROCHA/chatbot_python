@@ -5,6 +5,7 @@ from langchain_community.vectorstores import FAISS
 from langchain_openai import OpenAIEmbeddings
 from langchain_core.embeddings import Embeddings
 from langchain_core.documents import Document
+from src.app.core.config import settings
 
 # variável global que manterá o índice carregado
 _vectorstore = None
@@ -22,7 +23,7 @@ def init_vectorstore(index_path: str):
         )
 
     # Cria embeddings (TEM que ser o mesmo modelo usado no build_index)
-    embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
+    embeddings = OpenAIEmbeddings(model=settings.embedding_model)
 
     # Carrega FAISS
     _vectorstore = FAISS.load_local(
@@ -69,7 +70,7 @@ def create_vectorstore(
     return vectorstore
 
 
-def get_retriever(k: int = 6):
+def get_retriever(k: int = settings.max_retrieve):
     """
     Retorna um retriever configurado com k documentos.
     """
@@ -78,5 +79,11 @@ def get_retriever(k: int = 6):
             "Vectorstore não inicializado. "
             "Chame init_vectorstore() na inicialização do servidor."
         )
+    return _vectorstore.as_retriever(
+            search_type="similarity_score_threshold",
+            search_kwargs={
+                "k": k,
+                "score_threshold": settings.retrieval_score_threshold
+            }
+        )
 
-    return _vectorstore.as_retriever(search_kwargs={"k": k})
