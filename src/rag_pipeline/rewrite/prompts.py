@@ -6,13 +6,13 @@ This module contains prompts designed to transform user queries into
 self-contained, search-optimized versions that improve retrieval performance.
 
 Based on:
-- "Empowering Air Travelers" (NLLP Workshop 2024, Appendix A)
+- "Empowering Air Travelers" (NLLP Workshop 2024, Appendix A & B)
 - RAG best practices and query decomposition techniques
 
 Key features:
-- Resolves ambiguous pronouns and references
+- Addresses ambiguous pronouns and references
 - Incorporates context from conversation history
-- Decomposes complex multi-part questions
+- Decomposes complex multi-part questions into simpler queries
 - Makes queries standalone for better semantic search
 - Bilingual support (PT-BR/EN) with automatic detection
 """
@@ -22,14 +22,8 @@ from typing import Literal
 # ==============================================================================
 # CONFIGURAÇÕES
 # ==============================================================================
-
-# Número máximo de sub-perguntas geradas na decomposição
 MAX_DECOMPOSED_QUERIES = 3
-
-# Temperatura para geração
 REWRITE_TEMPERATURE = 0
-
-# Máximo de tokens para respostas de reescrita
 MAX_REWRITE_TOKENS = 300
 
 
@@ -39,8 +33,7 @@ MAX_REWRITE_TOKENS = 300
 
 def detect_language(text: str) -> Literal["pt", "en"]:
     """
-    Detecta o idioma do texto de forma simples e rápida.
-    
+
     Args:
         text: Texto para detecção de idioma
         
@@ -125,7 +118,7 @@ Rewritten Question (self-contained, optimized for semantic search):"""
 
 
 # ==============================================================================
-# PROMPT 1B: REESCRITA MÍNIMA (sem histórico disponível)
+# PROMPT 1B: REESCRITA MÍNIMA 
 # ==============================================================================
 
 QUERY_REWRITE_MINIMAL_TEMPLATE_PT = """Reescreva a seguinte pergunta para ser autossuficiente e otimizada para busca semântica de documentos sobre regulamentos de olimpíadas brasileiras de Geografia.
@@ -213,19 +206,7 @@ def get_query_rewrite_prompt(
         
     Returns:
         Prompt formatado pronto para envio ao LLM
-        
-    Example:
-        >>> # Com histórico
-        >>> prompt = get_query_rewrite_prompt(
-        ...     question="E sobre isso?",
-        ...     chat_history="User: Qual é a duração da prova?\nAssistant: A prova tem 3 horas.",
-        ...     language="pt"
-        ... )
-        >>> # Sem histórico (minimal)
-        >>> prompt = get_query_rewrite_prompt(
-        ...     question="Quais são os critérios?",
-        ...     use_minimal=True
-        ... )
+
     """
     # Se não há histórico ou use_minimal=True, usa template minimal
     if use_minimal or not chat_history or chat_history.strip() == "":
@@ -262,12 +243,6 @@ def get_decomposition_prompt(
         
     Returns:
         Prompt formatado pronto para envio ao LLM
-        
-    Example:
-        >>> prompt = get_decomposition_prompt(
-        ...     query="Quais são os critérios de inscrição e como funciona a prova?",
-        ...     language="pt"
-        ... )
     """
     template = (
         DECOMPOSITION_TEMPLATE_PT if language == "pt"
@@ -351,16 +326,7 @@ def parse_decomposed_queries(llm_response: str) -> list[str]:
 def should_use_minimal_prompt(chat_history: str) -> bool:
     """
     Determina se deve usar prompt minimal (economia de tokens).
-    
-    Args:
-        chat_history: Histórico de conversa
-        
-    Returns:
-        True se deve usar minimal, False caso contrário
-        
-    Note:
-        Usa prompt minimal quando não há histórico ou é muito curto,
-        economizando tokens sem perda de qualidade.
+
     """
     if not chat_history or chat_history.strip() == "":
         return True
@@ -414,22 +380,6 @@ def get_fallback_message(message_type: str, language: str = "pt") -> str:
 # ==============================================================================
 
 def is_valid_query(query: str, min_length: int = 3) -> bool:
-    """
-    Valida se a query é minimamente aceitável.
-    
-    Args:
-        query: Query para validar
-        min_length: Comprimento mínimo em caracteres
-        
-    Returns:
-        True se válida, False caso contrário
-        
-    Example:
-        >>> is_valid_query("Quais são os critérios?")
-        True
-        >>> is_valid_query("?")
-        False
-    """
     if not query or not isinstance(query, str):
         return False
     

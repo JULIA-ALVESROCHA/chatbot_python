@@ -12,6 +12,10 @@ class Settings(BaseSettings):
     use_reranker: bool = Field(False, env="USE_RERANKER")
     ALLOWED_ORIGINS: List[str] = Field(default_factory=list)
 
+    # chunking parameters
+    chunk_size: int = Field(500, env="CHUNK_SIZE")
+    chunk_overlap: int = Field(50, env="CHUNK_OVERLAP")
+
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"

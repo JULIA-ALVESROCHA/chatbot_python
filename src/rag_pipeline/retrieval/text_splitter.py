@@ -2,12 +2,12 @@ from typing import List
 
 from langchain_core.documents import Document
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-
+from src.app.core.config import settings
 
 def split_documents(
     documents: List[Document],
-    chunk_size: int = 500,
-    chunk_overlap: int = 100,
+    chunk_size: int = settings.chunk_size,
+    chunk_overlap: int = settings.chunk_overlap,
 ) -> List[Document]:
     """
     Split documents into smaller chunks suitable for embeddings.

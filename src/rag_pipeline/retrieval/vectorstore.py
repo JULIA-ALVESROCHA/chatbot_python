@@ -11,10 +11,6 @@ _vectorstore = None
 
 
 def init_vectorstore(index_path: str):
-    """
-    Inicializa o vectorstore FAISS a partir do caminho salvo.
-    Esse método deve ser chamado na startup do servidor FastAPI.
-    """
     global _vectorstore
 
     index_dir = Path(index_path)

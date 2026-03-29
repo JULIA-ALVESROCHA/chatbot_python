@@ -1,10 +1,15 @@
 from pathlib import Path
-
+from typing import List
 import re
+
+
 from langchain_community.document_loaders import PyPDFLoader, TextLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import FAISS
+from src.rag_pipeline.retrieval.text_splitter import split_documents
+from src.app.core.config import settings
+from langchain_core.documents import Document
 
 # Pastas
 ITEM_REGEX = re.compile(r"\b(\d+\.\d+\.\d+)\b")
@@ -23,15 +28,20 @@ def load_documents():
             docs.extend(loader.load())
     return docs
 
-def split_documents(docs, chunk_size=800, chunk_overlap=20):
+def split_documents(
+    documents: List[Document],
+    chunk_size: int = settings.chunk_size,
+    chunk_overlap: int = settings.chunk_overlap,
+) -> List[Document]:
+
     splitter = RecursiveCharacterTextSplitter(
-        chunk_size=chunk_size,
-        chunk_overlap=chunk_overlap
+    chunk_size=chunk_size,
+    chunk_overlap=chunk_overlap
     )
 
-    split_docs = splitter.split_documents(docs)
+    split_docs = splitter.split_documents(documents)
 
-    # 🔹 NOVO: extrair item do regulamento (ex: 4.2.1, 5.7.3)
+    #extrair item do regulamento (ex: 4.2.1, 5.7.3)
     item_pattern = re.compile(r"\b\d+\.\d+\.\d+\b")
 
     for doc in split_docs:
