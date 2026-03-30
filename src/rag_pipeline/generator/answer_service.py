@@ -114,10 +114,9 @@ class AnswerService:
             source_name = metadata.get("source", "Regulamento")
             page = metadata.get("page", "?")
             
-            # Clean source name (remove extension if present)
             source_clean = source_name.replace(".pdf", "").replace(".txt", "")
             
-            # Format: [Source: regulamento-pag8]
+            
             label = f"[Fonte {idx}: {source_clean}-pag{page}]"
             context_parts.append(f"{label}\n{doc.page_content}")
         
@@ -148,7 +147,7 @@ class AnswerService:
 
             page = metadata.get("page")
 
-            # 🔹 NOVO: extrair item do regulamento a partir do texto
+           
             item_match = re.search(r"\b\d+(?:\.\d+){1,3}\b", doc.page_content)
             item = item_match.group(0) if item_match else None
 
@@ -178,10 +177,10 @@ class AnswerService:
         """
         Ensures the answer has properly formatted citations with correct spacing.
         """
-        # 1. Strip the "Resposta:" prefix if the LLM included it (common with your template)
+        
         clean_answer = re.sub(r"^Resposta:\s*", "", answer_text, flags=re.IGNORECASE)
 
-        # 2. Remove any citations/trailers the LLM might have added
+      
         citation_patterns = [
             r"você pode encontrar.*$",
             r"encontre mais em.*$",
@@ -195,7 +194,7 @@ class AnswerService:
             # We use DOTALL or just ensure we catch the end of the string
             clean_answer = re.sub(pattern, "", clean_answer, flags=re.IGNORECASE | re.MULTILINE | re.DOTALL)
         
-        # 3. CRITICAL: Clean up whitespace at the end of the LLM's text
+       
         clean_answer = clean_answer.strip()
 
         if not sources:
@@ -210,7 +209,7 @@ class AnswerService:
         if not citation_lines:
             return clean_answer
 
-        # 4. Use double \n\n to ensure a clear vertical break
+      
         return (
             clean_answer
             + "\n\nVocê pode encontrar mais em:\n"

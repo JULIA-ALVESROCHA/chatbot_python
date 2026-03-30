@@ -7,7 +7,6 @@ from tenacity import retry, stop_after_attempt, wait_exponential
 from src.utils.language import detect_language
 from src.rag_pipeline.reranker.reranker import rerank_documents
 from src.rag_pipeline.rewrite.rewrite_service import rewrite_query
-# ✅ IMPORTANTE: Usamos apenas o get_retriever do seu vectorstore.py
 from src.rag_pipeline.retrieval.vectorstore import get_retriever
 from src.rag_pipeline.generator.answer_service import AnswerService
 from src.app.core.config import settings
