@@ -16,7 +16,7 @@ class Settings(BaseSettings):
     embedding_model: str = Field("text-embedding-3-large", env="EMBEDDING_MODEL")
     chunk_size: int = Field(500, env="CHUNK_SIZE")
     chunk_overlap: int = Field(50, env="CHUNK_OVERLAP")
-    retrieval_score_threshold: float = Field(0.60, env="RETRIEVAL_SCORE_THRESHOLD")
+    retrieval_score_threshold: float = Field(0.50, env="RETRIEVAL_SCORE_THRESHOLD")
     
     class Config:
         env_file = ".env"

@@ -1,6 +1,7 @@
 import re
 from openai import OpenAI
 from dotenv import load_dotenv
+import time 
 
 load_dotenv()
 
@@ -57,7 +58,8 @@ Scoring guide:
     completion = client.chat.completions.create(
         model="gpt-4",
         max_tokens=256,
-        messages=[{"role": "user", "content": judge_prompt}]
+        messages=[{"role": "user", "content": judge_prompt}],
+        timeout=30  # seconds
     )
 
     raw = completion.choices[0].message.content.strip()
