@@ -1,6 +1,7 @@
 import re
 from openai import OpenAI
 from dotenv import load_dotenv
+from src.rag_pipeline.retrieval.vectorstore import get_retriever, init_vectorstore
 import time 
 
 load_dotenv()
