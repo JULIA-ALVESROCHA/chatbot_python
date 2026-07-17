@@ -1,0 +1,225 @@
+=== FONTE OFICIAL OBG - CORPUS DE CONHECIMENTO (FactScore / verificacao de suporte) ===
+Edicao de referencia: 10a Olimpiada Brasileira de Geografia (OBG) 2025.
+Fonte: Regulamento 10a OBG 2025; Duvidas e Suporte de Acesso 10a OBG; Orientacoes de Senhas
+Estudante/Professor; Edital de Selecao Equipe Brasil iGeo; Diretrizes de Elaboracao de Questoes;
+Anexo 2 (Temas e ODS). Onde houver conflito de datas, prevalece o Calendario oficial do Regulamento.
+
+[ESTRUTURA GERAL]
+A 10a OBG 2025 e composta por 3 (tres) fases online classificatorias em nivel nacional, 1 (uma)
+Fase Final Presencial e 1 fase internacional (iGeo). A Comissao Organizadora incentiva a
+participacao feminina e das comunidades LGBTQ+. O horario-padrao e o de Brasilia.
+
+[PARTICIPANTES E SERIES PERMITIDAS]
+Podem participar estudantes regularmente matriculados em escolas publicas e/ou particulares do
+Brasil, do 9o ano do Ensino Fundamental ate o 3o (e 4o, se houver) ano do Ensino Medio.
+Sao permitidos ensino regular, profissionalizante, supletivo e EJA, sempre nas series permitidas.
+Em nenhuma hipotese podem participar estudantes que ja concluiram o Ensino Medio, mesmo que
+inscritos em cursinhos pre-universitarios, nem estudantes do Ensino Superior.
+Estudantes de cursinhos ou instituicoes de apoio so participam se tambem forem alunos regulares
+do Ensino Medio e inscritos pela instituicao de ensino regular.
+
+[COMPOSICAO DA EQUIPE]
+As equipes sao formadas por 3 estudantes e 1 professor(a) orientador(a). O professor e o
+responsavel pela inscricao. Um(a) aluno(a) nao pode participar de mais de uma equipe; se isso
+ocorrer, as equipes envolvidas serao sumariamente desclassificadas. Os alunos devem pertencer a
+mesma escola. Nao sao permitidas equipes com alunos de escolas diferentes, ainda que da mesma
+rede ou mantenedora.
+
+[PROFESSOR ORIENTADOR]
+O professor orientador deve pertencer ao corpo docente da escola; e permitida a participacao de
+orientadores como estagiarios, plantonistas e coordenadores de olimpiadas, desde que vinculados a
+escola. Nao ha limite de equipes que uma escola pode inscrever nem que um professor pode orientar.
+Somente o professor orientador pode alterar a composicao da equipe.
+
+[SUBSTITUICAO DE MEMBROS]
+O professor coordenador pode substituir qualquer membro da equipe antes do inicio da primeira fase
+online. Apos o inicio, o sistema permite apenas a exclusao do estudante. Equipes classificadas para
+a Fase Presencial nacional nao podem substituir membros e nao podem participar com menos de dois
+membros. Equipes que participarem da Presencial com apenas dois membros nao concorrem a premiacoes
+por equipe.
+
+[NOME SOCIAL]
+Em cumprimento ao Decreto no 8.727/2016, e garantido o uso do nome social durante toda a prova; o
+participante pode registrar o nome social na equipe e no certificado.
+
+[INSCRICOES]
+As inscricoes sao feitas exclusivamente online; nao sao aceitas por e-mail, correspondencia ou
+outro meio. O professor coordenador deve ser o unico usuario com acesso ao sistema de inscricao e
+edicao dos dados da equipe. O professor cadastra a escola pelo numero INEP e depois forma as
+equipes incluindo CPFs de estudantes ja cadastrados. Cada estudante deve se cadastrar antes,
+informando obrigatoriamente um e-mail (usado para confirmacao e recuperacao de senha).
+O simples cadastro nao configura inscricao; a inscricao se confirma com o pagamento, se houver, em
+ate 3 dias uteis. Nao ha devolucao de valores de inscricoes pagas.
+
+[DADOS OBRIGATORIOS DO ESTUDANTE]
+No cadastro, o estudante deve incluir: CPF, e-mail valido, nome completo, celular WhatsApp, nome
+social (sim/nao), data de nascimento, genero, cor ou raca, pertencimento a categorias (indigenas,
+ribeirinhos, populacao negra, quilombolas, pessoa com deficiencia, outras comunidades tradicionais
+ou nenhuma), nome completo da mae e NIS.
+
+[TIPOS DE ESCOLA]
+As escolas sao classificadas automaticamente como Publicas ou Particulares com base no INEP. Para a
+Fase Presencial, sao categorizadas em: Escolas Particulares; Escolas Publicas com Acesso Seletivo
+(tecnicas/profissionalizantes, militares, colegios de aplicacao de universidades publicas); ou
+Escolas Publicas de Ensino Regular. O professor deve atualizar dados como e-mail institucional,
+nome do diretor/coordenacao e o CNPJ (particulares) ou Inscricao Estadual (publicas sem CNPJ).
+
+[LOGIN E SENHAS]
+Cada estudante e o professor usam o CPF como login e escolhem uma senha; e responsabilidade do
+participante lembrar login e senha. No caso de perda, pode-se solicitar nova senha pelo proprio
+sistema, que envia o link por e-mail; a senha anterior fica automaticamente invalidada. Cada novo
+pedido invalida o anterior, por isso recomenda-se aguardar pelo menos meia hora (30 minutos) pela
+chegada do e-mail. A equipe de apoio nao tem acesso as senhas e nao pode recupera-las.
+
+[GERACAO MANUAL DE SENHA DO ESTUDANTE PELO PROFESSOR]
+O professor/coordenador pode gerar e compartilhar a senha do estudante. Passos: fazer login no
+perfil Professor; entrar no ambiente de Equipes; acessar a edicao da equipe (icone de lapis); no
+espaco do estudante, clicar em "Alterar manualmente a senha deste estudante" (ou "Enviar nova senha
+para este estudante"); digitar a nova senha, anota-la para compartilhar e clicar em "Alterar" para
+confirmar.
+
+[SENHA RECUPERADA INCOMPATIVEL / NAVEGADOR]
+Se a nova senha nao funcionar, o navegador pode estar usando uma senha antiga salva. Recomenda-se:
+limpar o cache e o historico de navegacao; acessar novamente com a senha enviada pelo sistema; se
+necessario solicitar nova senha; e usar outro navegador, como Firefox ou Microsoft Edge.
+
+[TOKEN / LINK EXPIRADO]
+Os links de validacao expiram apos 24 horas por seguranca. Para reativar, usar o fluxo "Esqueceu a
+senha?" com o e-mail cadastrado para receber um novo link e clica-lo o mais rapido possivel.
+
+[E-MAIL DE ATIVACAO/CONFIRMACAO NAO CHEGA]
+O e-mail pode ter ido para a caixa de spam, ou o provedor pode ter bloqueado o envio. E-mails
+institucionais (escolas/governo) costumam ter filtros mais fortes, por isso recomenda-se cadastro
+com e-mail pessoal e checar Spam/Lixeira. Se o e-mail foi digitado errado no cadastro, refazer o
+cadastro com o e-mail correto (o sistema reconhece o CPF e atualiza os dados) ou pedir ao professor
+para corrigir pelo painel. Em ultimo caso, o professor pode gerar a senha manualmente.
+
+[NAVEGADORES SUPORTADOS]
+A Comissao Organizadora garante o funcionamento para as versoes mais recentes do Firefox e do Google
+Chrome. Nao e recomendado o uso de versoes antigas, de outros navegadores, ou de versoes para tablet
+ou celular.
+
+[ACESSO SIMULTANEO DURANTE A PROVA]
+Embora todos os membros tenham acesso, nao e recomendado o acesso simultaneo: durante as provas,
+recomenda-se que apenas um estudante acesse o sistema usando um unico login para produzir as
+respostas, evitando conflitos e divergencias no salvamento. A responsabilidade pelos procedimentos
+de resposta e da propria equipe.
+
+[PRAZOS DE PREENCHIMENTO E SUPORTE TECNICO]
+Recomenda-se preencher os dados no sistema antes do inicio da prova; prazo recomendado ate 01/08. O
+professor pode alterar ou substituir os dados dos estudantes ate 01/08, antes da primeira fase. A
+Comissao Organizadora nao presta suporte tecnico de acesso durante o periodo de aplicacao das
+provas; problemas devem ser resolvidos antes do inicio das fases.
+
+[FASES E ESTRUTURA DAS PROVAS]
+Sao 3 fases online classificatorias e 1 Fase Final Presencial. Estrutura minima: Fase 1 com 25
+questoes de multipla escolha; Fase 2 com 25 questoes de multipla escolha; Fase 3 com 15 questoes de
+multipla escolha (podem ser tematicas sobre um tema ou material especifico). A quarta fase, final
+presencial, tem atividades teoricas e praticas definidas em regulamento especifico, da qual
+participam apenas as equipes classificadas por estado. As despesas da participacao presencial sao de
+responsabilidade das equipes.
+
+[ENVIO DE RESPOSTAS]
+Todas as respostas sao feitas exclusivamente pelo sistema da OBG; nao sao aceitas respostas por
+e-mail ou correio. Durante a fase, a prova pode ser reaberta e o envio cancelado ou substituido. O
+sistema salva rascunho automaticamente. Apos o envio definitivo, a prova nao pode ser alterada.
+Deixar uma fase inteira em branco ou em rascunho elimina a equipe; e preciso responder todas as
+questoes e enviar dentro do prazo, caso contrario a equipe e considerada desistente.
+
+[GABARITO E CONTEUDO]
+O gabarito oficial e publicado somente apos o fim da terceira fase online. A Comissao Organizadora
+nao fornece explicacoes sobre o conteudo das questoes apos as fases.
+
+[USO DE IA GENERATIVA]
+A OBG recomenda evitar o uso de IAs generativas, devido a possiveis imprecisoes e ao risco de
+dependencia excessiva, alem de contrariar os principios eticos da Olimpiada. E permitido consultar
+livros, sites, professores e outros materiais de pesquisa.
+
+[CLASSIFICACAO PARA A FASE PRESENCIAL]
+Os pontos das tres fases online selecionam as equipes para a Presencial. A Fase Presencial e
+destinada a tres equipes por estado da federacao (incluindo o DF): uma de Escola Particular, uma de
+Escola Publica Regular e uma de Escola Publica com Acesso Seletivo. O calculo e automatico, divulgado
+apos o periodo de recursos.
+
+[CRITERIOS DE DESEMPATE]
+Em caso de empate apos as tres fases: 1) maior pontuacao na Fase 1; 2) se persistir, maior pontuacao
+na Fase 2; 3) se persistir, maior nota na Fase 3; 4) outros criterios a criterio da Comissao.
+
+[RECURSOS]
+Apos a divulgacao dos gabaritos, abre-se prazo para recursos de revisao de questao, encaminhados pelo
+ambiente "Fale Conosco" do site, opcao "Revisao de Questao". Os argumentos devem ser sucintos,
+objetivos e imparciais; somente sao validos argumentos baseados em publicacoes cientificas com
+Conselho Editorial. Solicitacoes sem embasamento tecnico sao desconsideradas. Em caso de questao
+anulada, a pontuacao e considerada para todas as equipes. Nao ha recontagem, revisao de prova nem
+divulgacao de pontuacoes por questao, e nao ha ranking geral.
+
+[CERTIFICADOS]
+Os certificados sao digitais e assinados, disponiveis no sistema. Os participantes devem imprimir
+ate 31/12/2025; a Comissao nao se responsabiliza por certificados nao impressos ate essa data e nao
+emite segunda via, nem segunda via de edicoes anteriores. Certificados sao emitidos com base nos
+dados da inscricao; dados incorretos nao serao corrigidos e nao ha nova emissao. Todos os
+participantes que cumprirem os criterios recebem certificado de participacao; ha tambem certificados
+de medalhista (ouro, prata, bronze) por classificacao estadual.
+
+[MEDALHAS]
+Nao sao enviadas medalhas fisicas. As escolas contempladas podem produzi-las por conta propria, com
+base em layout disponibilizado no site oficial.
+
+[CONTATO OFICIAL]
+Todas as informacoes oficiais sao divulgadas exclusivamente no site https://obgeografia.com.br.
+Duvidas sobre o regulamento podem ser vistas no Chat do site; sugestoes, recursos e demais duvidas
+devem ser enviadas exclusivamente pelo ambiente "Fale Conosco". A Comissao busca responder em ate 4
+dias uteis. Nao ha atendimento por telefone, e-mail pessoal ou redes sociais pessoais; mensagens por
+esses meios sao ignoradas. Contato abusivo, ofensivo ou ameacador pode levar a desclassificacao.
+
+[CALENDARIO OFICIAL 10a OBG 2025]
+Periodo de Inscricoes: 12/05 a 11/07/2025 (prorrogadas ate 21/07 por comunicado de suporte).
+Inscricao gratuita para escolas publicas e particulares.
+Prova Fase 1: 05/08 a 08/08/2025.
+Prova Fase 2: 12/08 a 15/08/2025.
+Prova Fase 3: 19/08 a 21/08/2025.
+Divulgacao dos Gabaritos: 22/08/2025.
+Interpelacao de Recursos: 22/08 a 23/08/2025.
+Divulgacao de Resultados/Medalhistas/Classificadas para a Presencial: 01/09/2025.
+Fase Final Presencial: 25/11 a 28/11/2025.
+
+[SELECAO PARA A iGeo]
+Os medalhistas da Fase Final Presencial podem participar do processo de selecao da Equipe Brasil que
+representara o pais na International Geography Olympiad (iGeo). Criterios de elegibilidade: estar
+regularmente matriculado na Educacao Basica em instituicao regular ate 30 de junho do ano da iGeo, e
+ter entre 16 e 19 anos nessa data; nao estar matriculado em universidade; disponibilidade de cerca de
+2 horas semanais de reunioes e 8 horas semanais de atividades. A selecao depende de fluencia em
+ingles e ocorre em etapas, com provas em ingles abordando Geografia Humana, Fisica, Cartografia e
+Geotecnologias. A confirmacao de participacao e feita pelo professor coordenador via formulario. O
+processo seletivo costuma envolver uma fase online (prova objetiva e prova escrita supervisionada) e
+uma fase em formato iGeo (prova escrita WRT e prova pratica Virtual Fieldwork Test); ao final, sao
+selecionados estudantes para treinamento e os melhores compoem a equipe (4 estudantes). A
+participacao no evento internacional depende de recursos financeiros e condicoes sanitarias.
+
+[TEMAS E ODS DAS QUESTOES]
+As questoes da OBG sao categorizadas em areas tematicas associadas aos Objetivos de Desenvolvimento
+Sustentavel (ODS), incluindo: Geografia Economica, Cultural, Social, Politica, Agraria, da Saude, do
+Transporte, Ambiental, Historica, de Genero, da Religiao, do Desenvolvimento, da Tecnologia; Turismo,
+Globalizacao, Demografia, Urbanizacao, Biogeografia, Geomorfologia, Geologia Geral, Pedologia,
+Climatologia, Hidrografia; e geotecnologias como Geoprocessamento, Cartografia Digital, Cartografia
+Tematica e Sensoriamento Remoto. Essa estrutura serve de guia para a categorizacao e elaboracao das
+questoes.
+
+[DIRETRIZES DE ELABORACAO DE QUESTOES (COLABORADORES)]
+Para o banco de provas das fases online, recomenda-se: priorizar analises interpretativas em vez de
+conceitos teoricos; usar mapas, graficos e tabelas como elementos centrais; basear questoes em fontes
+cientificas (SciELO, Periodicos CAPES, Scopus); elaborar questoes de solucao de problemas e
+multidisciplinares; manter clareza e objetividade; usar dados atualizados; seguir a BNCC; padronizar o
+formato; citar fontes de imagens; revisar; e testar a questao em IAs generativas para torna-la mais
+resistente a respostas automaticas. Ao final da questao deve constar a explicacao da alternativa
+correta. O nivel-alvo vai do 9o ano do Ensino Fundamental II ao Ensino Medio.
+
+[NIVEL DAS QUESTOES]
+Embora a olimpiada admita estudantes do 9o ano do EF II ate o Ensino Medio, o nivel das questoes e
+intermediario e avancado, devido ao formato de pesquisa e consulta, seguindo as diretrizes
+curriculares nacionais.
+
+[PRIVACIDADE E COMUNICADOS]
+Os participantes concordam com a Politica de Privacidade ao se inscrever. Comunicados Oficiais
+publicados no site tem forca de regulamento a partir de sua publicacao. A Comissao Organizadora tem a
+ultima palavra na interpretacao do regulamento e nos casos omissos.
