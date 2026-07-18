@@ -1,0 +1,39 @@
+{
+  "summary": {
+    "total_queries": 136,
+    "k": 5,
+    "P@5": 0.0,
+    "R@5": 0.0,
+    "F1@5": 0.0,
+    "MAP@5": 0.0
+  },
+  "by_category": {
+    "undocumented_future_event": {
+      "total_queries": 100,
+      "P@5": 0.0,
+      "R@5": 0.0,
+      "F1@5": 0.0,
+      "MAP@5": 0.0
+    },
+    "plausible_but_undocumented": {
+      "total_queries": 25,
+      "P@5": 0.0,
+      "R@5": 0.0,
+      "F1@5": 0.0,
+      "MAP@5": 0.0
+    },
+    "impossible_claim": {
+      "total_queries": 11,
+      "P@5": 0.0,
+      "R@5": 0.0,
+      "F1@5": 0.0,
+      "MAP@5": 0.0
+    }
+  },
+  "metric_definitions": {
+    "P@5": "Fraction of the top-k retrieved chunks that are relevant",
+    "R@5": "Fraction of all relevant chunks found in the top-k",
+    "F1@5": "Harmonic mean of P@k and R@k",
+    "MAP@5": "Mean Average Precision — rewards relevant chunks appearing earlier"
+  }
+}

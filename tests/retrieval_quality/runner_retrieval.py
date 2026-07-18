@@ -115,8 +115,38 @@ def _retrieved_ids(docs, chunk_id_field: str) -> list[str]:
 
 
 def _normalize(chunk_id: str) -> str:
-    """Normalise a chunk id for comparison (lowercase, strip extension/path)."""
-    return os.path.splitext(os.path.basename(chunk_id.lower().strip()))[0]
+    """Normalise chunk ids from BOTH conventions to a canonical 'family-pagN'.
+
+    Dataset convention : 'regulamento-pag13', 'igeo-edital-pag2', 'temas-ods-pag1'
+    Index convention   : 'regulamento_11obg_2026_260212_155053_p9_c5',
+                         'edital_selecao_equipebrasil_igeo_2025_p2_c1'
+    """
+    import re as _re
+    import unicodedata as _ud
+    s = os.path.splitext(os.path.basename(str(chunk_id).lower().strip()))[0]
+    s = _ud.normalize("NFKD", s).encode("ascii", "ignore").decode()  # selecao == seleção
+
+    # page number: matches '-pag13', '_pag13', '_p9', '_p9_c5' (c = chunk within page)
+    m = _re.search(r"[_-]p(?:ag)?(\d+)(?:[_-]c\d+)?$", s)
+    page = m.group(1) if m else None
+
+    # document family
+    if "regulamento" in s:
+        fam = "regulamento"
+    elif "igeo" in s or "equipebrasil" in s:
+        fam = "igeo-edital"          # canonicaliza 'edital-igeo' tambem
+    elif "ods" in s or "temas" in s:
+        fam = "temas-ods"
+    elif "modelo" in s and "quest" in s:
+        fam = "modelo-questoes"
+    elif "senha" in s:
+        fam = "procedimentos-senhas"
+    elif "duvida" in s or "acesso" in s:
+        fam = "duvidas-acesso"
+    else:
+        fam = _re.split(r"[_-]", s)[0]
+
+    return f"{fam}-pag{page}" if page else fam
 
 
 def precision_at_k(retrieved: list[str], relevant: list[str], k: int) -> float:
