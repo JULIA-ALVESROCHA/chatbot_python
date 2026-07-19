@@ -12,6 +12,7 @@ from .templates import (
     ANSWER_TEMPLATE,
     FALLBACK_RESPONSE,
 )
+from src.app.core.config import settings
 
 logger = logging.getLogger("bgo_chatbot.generator")
 
@@ -25,12 +26,16 @@ class AnswerService:
     All prompt content is delegated to templates.py.
     """
 
-    def __init__(self, model_name: str = "gpt-4", temperature: float = 0.3):
+    def __init__(self, model_name: str = None, temperature: float = None):
         self.llm = ChatOpenAI(
-            model=model_name,
-            temperature=temperature,  # 0.3 for balanced creativity/consistency
-            request_timeout=30,  # 30 second timeout
-            max_tokens=300,  # Limit response length to force conciseness
+            model=model_name or getattr(settings, "generation_model", "gpt-4o-mini"),
+            temperature=(
+                temperature
+                if temperature is not None
+                else getattr(settings, "generation_temperature", 0.1)
+            ),
+            request_timeout=30,
+            max_tokens=300,
         )
 
         self.prompt = ChatPromptTemplate.from_messages(
@@ -44,7 +49,8 @@ class AnswerService:
         self,
         question: str,
         documents: List[Document],
-        language: str = "pt-BR"
+        language: str = "pt-BR",
+        chat_history: str = ""
     ) -> Dict[str, Any]:
         """
         Generates a grounded answer using only the provided documents.
@@ -73,6 +79,7 @@ class AnswerService:
                     question=question,
                     context=context,
                     language=language,
+                    chat_history=chat_history or "(sem histórico)",
                 )
             )
 
@@ -82,9 +89,13 @@ class AnswerService:
                 logger.warning("LLM returned empty response, using fallback")
                 answer_text = FALLBACK_RESPONSE
 
-            # Extract sources from documents
-            sources = self._extract_sources(documents)
-            
+            # Abstenção/pedido de reformulação não deve exibir fontes:
+            # citações sob "não sei" passam falsa autoridade ao usuário.
+            if self._is_abstention(answer_text):
+                sources = []
+            else:
+                sources = self._extract_sources(documents)
+
             # Ensure answer has citations in the correct format
             answer_with_citations = self._ensure_citations(answer_text, sources)
             
@@ -102,24 +113,59 @@ class AnswerService:
             raise
 
     @staticmethod
+    def _is_abstention(text: str) -> bool:
+        """Detecta respostas de abstenção/reformulação (sem conteúdo factual)."""
+        t = (text or "").lower()
+        patterns = [
+            "não encontrei", "nao encontrei",
+            "não está no regulamento", "nao esta no regulamento",
+            "não consta", "nao consta",
+            "não está clara", "nao esta clara",
+            "reformul",                      # reformule / reformular
+            "pergunta está incompleta", "pergunta esta incompleta",
+            "não fornece informações suficientes",
+            "nao fornece informacoes suficientes",
+            "não é mencionad", "nao e mencionad",
+            "not mentioned", "could not find", "i did not find",
+            "please rephrase",
+        ]
+        return any(p in t for p in patterns)
+
+    @staticmethod
+    def _detect_phase(text: str) -> str:
+        """Heurística: a qual fase da OBG o trecho se refere.
+        Usada para rotular o contexto e impedir que o gerador aplique
+        regra de uma fase à outra (ex.: consulta permitida online != presencial)."""
+        t = (text or "").lower()
+        has_presencial = "presencial" in t
+        has_online = bool(re.search(r"\bonline\b|fases?\s+on-?line", t))
+        if has_presencial and has_online:
+            return "menciona fase online E fase presencial — atenção ao trecho exato"
+        if has_presencial:
+            return "fase presencial"
+        if has_online:
+            return "fases online"
+        return "fase não especificada no trecho"
+
+    @staticmethod
     def _build_context_with_labels(documents: List[Document]) -> str:
         """
         Builds the textual context with source labels for citation.
-        Each chunk is labeled with its source for easier reference.
+        Each chunk is labeled with its source AND the phase it refers to.
         """
         context_parts = []
-        
+
         for idx, doc in enumerate(documents, 1):
             metadata = doc.metadata or {}
             source_name = metadata.get("source", "Regulamento")
             page = metadata.get("page", "?")
-            
+
             source_clean = source_name.replace(".pdf", "").replace(".txt", "")
-            
-            
-            label = f"[Fonte {idx}: {source_clean}-pag{page}]"
+
+            phase = AnswerService._detect_phase(doc.page_content)
+            label = f"[Fonte {idx}: {source_clean}-pag{page} | aplica-se a: {phase}]"
             context_parts.append(f"{label}\n{doc.page_content}")
-        
+
         return "\n\n".join(context_parts)
 
     @staticmethod
@@ -170,7 +216,7 @@ class AnswerService:
                 "citation": citation
             })
 
-        return sources[:2]
+        return sources[:3]
 
     @staticmethod
     def _ensure_citations(answer_text: str, sources: List[Dict[str, Any]]) -> str:
@@ -197,24 +243,9 @@ class AnswerService:
        
         clean_answer = clean_answer.strip()
 
-        if not sources:
-            return clean_answer
-
-        citation_lines = [
-            f"- {src['citation']}"
-            for src in sources
-            if src.get("citation")
-        ]
-
-        if not citation_lines:
-            return clean_answer
-
-      
-        return (
-            clean_answer
-            + "\n\nVocê pode encontrar mais em:\n"
-            + "\n".join(citation_lines)
-        )
+        # As fontes vão SOMENTE no campo estruturado "sources" da resposta;
+        # o frontend as renderiza como badges. Não anexar texto de citação aqui.
+        return clean_answer
 
 
 # Module-level singleton instance for backward compatibility

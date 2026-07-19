@@ -15,6 +15,36 @@ from src.infra.cache import get_history, add_to_history
 logger = logging.getLogger("bgo_chatbot.pipeline")
 answer_service = AnswerService()
 
+# Perguntas sobre o próprio assistente (meta) não devem passar pelo RAG:
+# o retrieval devolve trechos sobre como os ALUNOS embasam respostas,
+# e o bot responde isso em vez de falar de si mesmo.
+_META_PATTERNS = re.compile(
+    r"(baseia (as )?suas respostas|em que (voc[eê]|vc) se baseia"
+    r"|como (voc[eê]|vc) (funciona|responde|foi (feito|criado|treinado))"
+    r"|quem (te|lhe) (criou|fez|desenvolveu|treinou)"
+    r"|(voc[eê]|vc) (como|é um|eh um) (sistema|rob[oô]|ia|assistente|bot)"
+    r"|o que (voc[eê]|vc) (é|eh|sabe fazer)"
+    r"|what (do you base|are you based)|how (do you|were you) (work|made|trained)"
+    r"|who (made|created|trained) you)",
+    re.IGNORECASE,
+)
+
+_META_ANSWER_PT = (
+    "Eu sou o GeoLUME, o assistente virtual da Olimpíada Brasileira de "
+    "Geografia. Baseio minhas respostas exclusivamente nos documentos "
+    "oficiais da OBG — regulamento, editais e materiais publicados pela "
+    "organização. Se algo não estiver nesses documentos, eu digo que não "
+    "encontrei, em vez de inventar."
+)
+
+_META_ANSWER_EN = (
+    "I am GeoLUME, the virtual assistant of the Brazilian Geography "
+    "Olympiad. My answers are based exclusively on the official OBG "
+    "documents — the regulations, official notices and published "
+    "materials. If something is not in those documents, I say I could "
+    "not find it rather than guessing."
+)
+
 # 
 
 @retry(stop=stop_after_attempt(3), wait=wait_exponential(min=1, max=4))
@@ -45,6 +75,14 @@ async def process_query(
         chat_history = get_history(session_id, max_turns=5)
         if chat_history:
             logger.debug("Retrieved chat history for session %s (%d chars)", session_id, len(chat_history))
+
+    # --- 1.5 META-QUESTIONS (sobre o assistente) — responder direto, sem RAG ---
+    if _META_PATTERNS.search(question):
+        meta_answer = _META_ANSWER_EN if language == "en" else _META_ANSWER_PT
+        logger.info("Meta-question detected; answering directly without retrieval")
+        if session_id:
+            add_to_history(session_id, question, meta_answer)
+        return {"answer": meta_answer, "sources": []}
 
     # --- 2. REWRITE ---
     try:
@@ -99,11 +137,14 @@ async def process_query(
             logger.warning("Reranker failed, using original docs: %s", e)
 
     # --- 5. GENERATE (LLM Final) ---
-    # answer_service já retorna {"answer": str, "sources": list}
+    # IMPORTANTE: usamos a pergunta REESCRITA (autossuficiente) na geração.
+    # Antes, o gerador recebia a pergunta crua ("e na fase presencial?") sem
+    # histórico e respondia "pergunta incompleta" mesmo com retrieval correto.
     result = await answer_service.generate_answer(
-        question=question,
+        question=rewritten,
         documents=docs,
-        language=language
+        language=language,
+        chat_history=chat_history,
     )
 
     answer = result["answer"]

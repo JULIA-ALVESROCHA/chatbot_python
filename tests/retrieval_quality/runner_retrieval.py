@@ -77,7 +77,7 @@ def _get_env(key: str, default: str = "") -> str:
 # ---------------------------------------------------------------------------
 
 # Path to the evaluation dataset — relative to the project root found above
-DATASET_FILE = os.path.join(_PROJECT_ROOT, "tests", "retrival_quality", "dataset_retrival.json")
+DATASET_FILE = os.path.join(_PROJECT_ROOT, "tests", "retrieval_quality", "dataset_retrival.json")
 # Where to write reports
 REPORT_DIR = os.path.join(_PROJECT_ROOT, "reports")
 
