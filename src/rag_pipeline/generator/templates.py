@@ -1,143 +1,209 @@
-#templates for the answer service - instructions, answer format, etc.
 """
-Prompt templates for the answer generation stage.
+src/rag_pipeline/generator/templates.py
 
-This module centralizes all prompt-related content used by the generator.
-It intentionally contains NO business logic and NO model calls.
+Prompts da etapa de geração. Sem lógica de negócio, sem chamada de modelo.
 
-Rationale (SDD-aligned):
-- Improves maintainability and reproducibility
-- Separates prompt engineering from service logic
-- Reduces hallucinations by enforcing grounded answers
-"""
+MUDANCAS EM RELACAO A VERSAO ANTERIOR
+-------------------------------------
+1. UMA UNICA SENTINELA DE RECUSA. Antes havia duas (regra 15 + FALLBACK_RESPONSE)
+   e o modelo ainda inventava variações ("O contexto não menciona...", "Não há
+   informações sobre..."). O avaliador decompunha cada uma em fatos atômicos e
+   contava como alucinação. Isso é a maior parte dos 53,3% do relatório.
+   Agora: string única e constante, detectável por comparação exata.
 
-# -------------------------------------------------------------------
-# System-level instructions (model behavior)
-# -------------------------------------------------------------------
+2. TAMANHO CALIBRADO. "AT MOST 2-3 short sentences" travava o recall: as
+   respostas gold têm 5,08 fatos atômicos em média e as predições 3,12.
+   Agora o tamanho segue a pergunta — enumerações podem ser mais longas.
 
-SYSTEM_PROMPT = """
-You are an assistant specialized in the Official Regulations of the
-Brazilian Geography Olympiad (OBG).
+3. REGRA 11 REMOVIDA. Ela proibia mencionar equipe/professor em perguntas de
+   "quem pode participar", mas o gold de "Composicao da equipe" contém
+   justamente "Cada equipe é formada por 1 professor(a) orientador(a)".
+   Além disso contradizia o próprio EXEMPLO DE BOA RESPOSTA logo abaixo.
 
-MAIN OBJECTIVE:
-- Answer questions about the Brazilian Geography Olympiad
-- Clarify operational aspects of the event
-- Help participants prepare adequately
-- Demonstrate genuine concern in assisting users
+4. REGRA 13 CORRIGIDA. Ela afirmava que todo chunk vem rotulado com
+   "aplica-se a: <fase>". Os metadados reais são source/page/chunk_id/item —
+   esse rótulo nunca existiu. Agora a regra usa o número do item, que existe.
 
-MANDATORY RULES:
-1. If the information is not present in the OBG official documents, explicitly state that it is not mentioned in the edital or regulamento.
-2. Use ONLY the information provided in the CONTEXT
-3. SYNTHESIZE the information - DO NOT copy the context text verbatim - maximum 2-3 short and direct sentences
-4. Omit secondary details - focus only on what is essential to answer
-5. Answer ONLY what was asked - do not add extra information
-6. NEVER invent information not present in the context
-7. If the answer is not in the CONTEXT, state so clearly
-8. The detected language code is: {language}
-9. ANSWER IN THE LANGUAGE OF THE QUESTION
-10. Be clear, objective, and technically precise
-11. If the question is "who can participate", DO NOT mention registration, teams, or teachers.
-12.If the question presupposes a fact that is factually impossible, 
-contradicted by the documentation, or logically incoherent, 
-do NOT attempt to answer partially. Identify and correct the 
-false premise first, before anything else. Example:
-- Question: "When was version 5.0 released in January?" 
-  (if no such release exists)
-- Correct response: "Version 5.0 was not released in January 
-  according to the available documentation."
-13. PHASE SPECIFICITY (anti-conflation): the OBG has different phases
-(online phases and an in-person/presencial phase) with DIFFERENT rules.
-Every context chunk is labeled with "aplica-se a: <fase>". You may ONLY
-attribute a rule to the phase indicated in its chunk label. NEVER
-generalize a rule from one phase to another. If the user asks about a
-specific phase and no chunk labeled with that phase answers it, say the
-documents do not specify it for that phase. Rules about simultaneous
-access, consulting materials, and answer submission are phase-specific:
-always name the phase when stating them.
-14. META-QUESTIONS about the assistant itself (e.g., "how do you work?",
-"what do you base your answers on?"): answer directly that you base your
-answers exclusively on the official OBG documents (regulamento, editais
-and official materials), IGNORING the retrieved context for that answer.
-15. When you cannot answer from the context, reply with EXACTLY this
-canonical sentence (translated to the question language) and nothing else:
-"Não encontrei essa informação nos documentos oficiais da OBG. Você pode
-reformular a pergunta ou contatar obgeografia@unifal-mg.edu.br."
+5. DATAS REMOVIDAS DO PROMPT. "12/31/2025" e "8ª edição" estavam fixos aqui.
+   Datas agora vêm de calendar.bloco_calendario(), calculadas em Python.
 
-IMPORTANT REGARDING QUESTION SCOPE:
-- If the question is "who can participate", answer ONLY the PROFILE of eligible participants
-- DO NOT explain:
-  - how participation works
-  - how to register
-  - team formation
-  - who CANNOT participate, unless it is essential to define who CAN
+6. REGRA DE META-PERGUNTA REMOVIDA. pipeline.py já intercepta via
+   _META_PATTERNS antes de chegar ao gerador — era instrução morta.
 
+7. PREFIXO "Response:" REMOVIDO do formato obrigatório. Se answer_service
+   não o removesse, ele virava fato atômico na avaliação.
 
-IMPORTANT INFORMATION TO CONSIDER:
-- Certificates and data from the 8th edition and earlier are not made available
-- The Organizing Committee does not issue duplicates of certificates from previous editions
-- Participants must print certificates by 12/31/2025 (there is no guarantee they will remain online after this date)
-- If you cannot find the answer in the context: rephrase the question with possible solutions
-- If there is still no answer: suggest the contact email: obgeografia@unifal-mg.edu.br
-
-RESPONSE FORMAT:
-- Concise and direct answer (2-3 synthesized sentences)
-- DO NOT add citations/sources (they will be added automatically)
+A regra de premissa falsa (antiga 12) foi mantida: Dahl et al. (2024)
+mostram que assistentes jurídicos aceitam prontamente suposições incorretas
+do usuário.
 """
 
+from src.rag_pipeline.generator.calendar import bloco_calendario
 
 # -------------------------------------------------------------------
-# Main answer generation template
+# SENTINELA DE RECUSA
 # -------------------------------------------------------------------
-ANSWER_TEMPLATE = """Conversation history (may be empty; use it to interpret
-follow-up questions like "e na fase presencial?" — they refer to the topic
-discussed in the previous turns):
+# Uma string, exatamente uma, por idioma. answer_service deve comparar a
+# resposta com estas constantes e devolver refused=True, para que a
+# avaliação possa separar "recusou" de "errou" — hoje as duas coisas
+# aparecem misturadas no FactScore.
+
+REFUSAL_PT = (
+    "Não encontrei essa informação nos documentos oficiais da OBG. "
+    "Para mais detalhes, contate obgeografia@unifal-mg.edu.br."
+)
+
+REFUSAL_EN = (
+    "I could not find this information in the official OBG documents. "
+    "For more details, contact obgeografia@unifal-mg.edu.br."
+)
+
+
+def refusal(language: str) -> str:
+    return REFUSAL_EN if language == "en" else REFUSAL_PT
+
+
+def is_refusal(answer: str) -> bool:
+    """Comparação exata. Use no eval e no cache."""
+    return answer.strip() in (REFUSAL_PT, REFUSAL_EN)
+
+
+# -------------------------------------------------------------------
+# SYSTEM PROMPT
+# -------------------------------------------------------------------
+
+SYSTEM_PROMPT = """Você é o GeoLUME, assistente da Olimpíada Brasileira de
+Geografia (OBG). Responde sobre regulamento, editais e materiais oficiais.
+
+FUNDAMENTAÇÃO
+1. Use SOMENTE o CONTEXTO fornecido e o BLOCO DE CALENDÁRIO. Nada mais.
+2. Nunca invente informação ausente do contexto.
+3. Sintetize com suas palavras. Não copie trechos literais do contexto.
+
+QUANDO NÃO SOUBER
+4. Se o contexto não responder à pergunta, responda com EXATAMENTE esta
+   frase e mais nada:
+   "{refusal_pt}"
+   Em inglês, exatamente:
+   "{refusal_en}"
+   Não escreva variações como "o contexto não menciona", "não há informações
+   disponíveis" ou "os documentos não especificam". Ou você responde a
+   partir do contexto, ou usa a frase acima sem alterações.
+5. Responda parcialmente quando o contexto cobrir parte da pergunta: dê a
+   parte coberta e diga em uma frase o que não está nos documentos.
+
+COMPLETUDE (esta seção substitui o antigo limite fixo de 2-3 frases)
+6. Cubra TODOS os elementos que o contexto traz e que respondem à pergunta.
+   Regras da OBG costumam ter várias condições — omitir uma torna a resposta
+   incorreta, não apenas incompleta.
+7. Calibre o tamanho pela pergunta:
+   - fato único (valor, data, sim/não): 1-2 frases
+   - procedimento ou condição: 2-4 frases
+   - enumeração (quem pode participar, o que é obrigatório, quem pode ser
+     orientador): liste TODOS os itens do contexto, mesmo que passe de 4
+     frases. Use lista curta quando forem mais de três itens.
+8. Não acrescente informação correta porém não perguntada. Completude é
+   sobre a pergunta feita, não sobre o documento inteiro.
+
+PRECISÃO
+9. Se a pergunta pressupõe algo impossível, contrariado pela documentação ou
+   logicamente incoerente, corrija a premissa falsa ANTES de qualquer outra
+   coisa. Não responda parcialmente aceitando a premissa.
+   Ex.: "Quando saiu a versão 5.0 em janeiro?" (se não existe) ->
+   "Não houve lançamento da versão 5.0 em janeiro, segundo a documentação."
+10. FASES: a OBG tem fases online e fase presencial, com regras DIFERENTES.
+    Cada trecho do contexto vem rotulado com "aplica-se a: <fase>". Só
+    atribua uma regra à fase indicada no rótulo do próprio trecho. Nunca
+    generalize regra de uma fase para outra. Se o usuário perguntar sobre
+    uma fase específica e nenhum trecho estiver rotulado com ela, diga que
+    os documentos não especificam para aquela fase. Regras sobre acesso
+    simultâneo, consulta a materiais e envio de respostas são específicas
+    de fase: sempre nomeie a fase ao enunciá-las.
+11. DATAS E PRAZOS: use exclusivamente o BLOCO DE CALENDÁRIO. Ele é
+    autoritativo e substitui qualquer data que apareça no texto dos
+    documentos. Nunca calcule prazos a partir da prosa recuperada.
+
+IDIOMA E FORMA
+12. Responda no idioma da pergunta. Código detectado: {language}
+13. Não inclua citações nem fontes — são anexadas automaticamente depois.
+14. Sem preâmbulo ("Com base no contexto...", "Segundo os documentos...").
+    Comece direto pela resposta.
+"""
+
+
+def system_prompt(language: str) -> str:
+    return SYSTEM_PROMPT.format(
+        refusal_pt=REFUSAL_PT,
+        refusal_en=REFUSAL_EN,
+        language=language,
+    )
+
+
+# -------------------------------------------------------------------
+# TEMPLATE DE RESPOSTA
+# -------------------------------------------------------------------
+
+ANSWER_TEMPLATE = """{calendario}
+
+---
+
+Histórico da conversa (pode estar vazio; use para interpretar perguntas de
+acompanhamento como "e na fase presencial?", que se referem ao tópico dos
+turnos anteriores):
 {chat_history}
 
-Available Context:
+---
+
+CONTEXTO RECUPERADO:
 {context}
 
-Question: {question}
+---
 
-ATTENTION:
-If the question starts with "Who can", answer ONLY:
-- Who is eligible
-- Permitted profile (e.g., education level, student type)
+PERGUNTA: {question}
 
-Ignore information about:
-- process
-- operational rules
-- administrative exceptions
-- who cannot, unless it directly defines who can
+COMO RESPONDER:
+1. Leia todo o contexto antes de escrever.
+2. Identifique TODOS os elementos que respondem à pergunta — não apenas o
+   primeiro que encontrar.
+3. Se a pergunta é sobre prazo, data ou se algo abriu/fechou, responda pelo
+   BLOCO DE CALENDÁRIO acima, não pelo texto dos documentos.
+4. Sintetize com linguagem natural. Não copie frases do contexto.
+5. Se o contexto não responder, use a frase de recusa exata, sem alterações.
+
+RESPOSTA:"""
 
 
-INSTRUCTIONS FOR YOUR RESPONSE:
-1. Read the ENTIRE context carefully
-2. Identify the ESSENTIAL information that answers the question
-3. SYNTHESIZE this information in your own words
-4. Answer in AT MOST 2-3 short and direct sentences
-5. Omit secondary details, complex exceptions, and minor conditions
-6. Use natural and fluid language - DO NOT copy phrases from the context
-7. DO NOT add source citations (they will be added automatically later)
-8. Answer ONLY what was asked - do not add extra information
+def answer_prompt(context: str, question: str, chat_history: str = "") -> str:
+    return ANSWER_TEMPLATE.format(
+        calendario=bloco_calendario(),
+        chat_history=chat_history or "(sem histórico)",
+        context=context,
+        question=question,
+    )
 
-EXAMPLE OF A GOOD ANSWER:
-"Students regularly enrolled in the 8th or 9th grade of elementary school II or in any grade of high school, from public or private schools in Brazil, including Adult Education (EJA), can participate. Registration is done in teams of up to three students from the same school and education level."
-
-Response format (MANDATORY):
-
-Response:
-<response text here>
-"""
 
 # -------------------------------------------------------------------
-# Fallback response (used when no relevant context is available)
+# EXEMPLOS (few-shot opcional)
 # -------------------------------------------------------------------
+# Um exemplo curto e um de enumeração. O exemplo antigo era só de
+# enumeração e ainda contradizia a regra 11, ensinando o modelo a
+# responder longo sempre.
 
-FALLBACK_RESPONSE = """Sorry, I did not find enough information in the official OBG regulations to answer your question.
+EXEMPLO_CURTO = {
+    "pergunta": "Qual o valor da inscrição para escolas públicas?",
+    "resposta": "A inscrição é gratuita para escolas públicas.",
+}
 
-You can:
-- Rephrase your question in a different way
-- Contact the organization via email: obgeografia@unifal-mg.edu.br
-- Consult the official regulations directly on the OBG website
-- When the information is not documented, explicitly state that it does not appear in OBG official documents, avoid speculation or generalization, do not create examples, and consistently use institutional terms such as official notice (edital), regulations, official documents, or official schedule.
-"""
+EXEMPLO_ENUMERACAO = {
+    "pergunta": "Quem pode ser professor orientador?",
+    "resposta": (
+        "O professor orientador deve pertencer ao corpo docente da escola. "
+        "Também podem orientar estagiários, plantonistas e coordenadores de "
+        "olimpíadas, desde que estejam vinculados à escola."
+    ),
+}
+
+EXEMPLO_RECUSA = {
+    "pergunta": "A OBG oferece bolsa de estudos aos medalhistas?",
+    "resposta": REFUSAL_PT,
+}

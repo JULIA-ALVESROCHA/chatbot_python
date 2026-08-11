@@ -1,0 +1,24 @@
+INFO:bgo_chatbot.calendar:Calendário atualizado via remoto (11 eventos, próximo TTL 900s)
+DATA DE HOJE: 10/08/2026 (America/Sao_Paulo)
+CALENDÁRIO: fonte=remoto, atualizado agora
+
+ESTADO DO CALENDÁRIO — AUTORITATIVO.
+Substitui QUALQUER data encontrada nos documentos recuperados.
+Para prazos, datas ou se algo abriu/fechou, use APENAS este bloco.
+Nunca calcule datas a partir da prosa dos documentos.
+Quando uma linha pedir confirmação no site, repasse essa ressalva
+ao usuário em vez de afirmar categoricamente.
+
+- Inscrições: ENCERRADAS em 16/06/2026 (há 55 dias) | Escolas públicas: gratuita. Escolas particulares: R$ 65,00 por equipe. A OBG pode encerrar as inscrições antecipadamente se atingir o limite de participantes, respeitada a ordem de inscrição (item 3.1)
+- 1ª Fase (online): CONSTAM COMO ENCERRADAS em 06/08/2026 (há 4 dias). ATENÇÃO: prazo encerrado há pouco — se houve prorrogação, ela pode ainda não constar aqui. Oriente o usuário a confirmar em https://obg.unifal-mg.edu.br | 25 questões de múltipla escolha (item 4.4.1)
+- 2ª Fase (online): AINDA NÃO ABRIU — abre 11/08/2026 (faltam 1 dias), fecha 13/08/2026 | 25 questões de múltipla escolha (item 4.4.2)
+- 3ª Fase (online): AINDA NÃO ABRIU — abre 18/08/2026 (faltam 8 dias), fecha 19/08/2026 | 15 questões de múltipla escolha (item 4.4.3)
+- Divulgação dos gabaritos: AINDA NÃO OCORREU — 20/08/2026 (faltam 10 dias) | Publicado somente após o final da 3ª fase online (item 4.9)
+- Interposição de recursos: AINDA NÃO ABRIU — abre 20/08/2026 (faltam 10 dias), fecha 21/08/2026 | Enviados exclusivamente pelo sistema e apenas pelo(a) professor(a) responsável; estudantes não têm acesso (item 5.8.1)
+- Divulgação de resultados e equipes classificadas para a Fase Presencial: AINDA NÃO OCORREU — 01/09/2026 (faltam 22 dias) | Divulgação de medalhistas por estado e das equipes classificadas, sem horário definido (itens 5.6 e 6.1)
+- Prazo para confirmar participação na Fase Presencial: AINDA NÃO ABRIU — abre 01/09/2026 (faltam 22 dias), fecha 01/10/2026 | A escola classificada tem até 30 dias para confirmar ou comunicar desistência; havendo desistência a Comissão convida a equipe seguinte na mesma categoria (item 5.7.2)
+- Fase Final Presencial: SEM DATA DEFINIDA — conferir no site oficial | Última semana de novembro de 2026; data exata e local ainda a definir (item 8). Três equipes por estado: uma de Escola Particular, uma de Escola Pública Regular e uma de Escola Pública com Acesso Seletivo (item 5.7)
+- Prazo para impressão dos certificados: AINDA NÃO ABRIU — abre 01/09/2026 (faltam 22 dias), fecha 31/12/2026 | Prazo-limite 31/12/2026. A Comissão não se responsabiliza por certificados não impressos até essa data e não emite segunda via, nem de edições anteriores (itens 1.15 e 1.16)
+- Seleção para a iGeo 2027: SEM DATA DEFINIDA — conferir no site oficial | Primeira etapa durante a Fase Presencial, em língua inglesa, apenas para estudantes das equipes participantes. Segunda etapa por entrevista, após o início do semestre letivo de 2027. Requisitos: matrícula na Educação Básica até 30/06/2027 e idade entre 16 e 19 anos em 30/06/2027 (itens 9.1 a 9.4)
+
+TTL atual: 900 segundos

@@ -1,0 +1,2262 @@
+[
+  {
+    "id": "OBG_HALLU_001",
+    "category": "undocumented_future_event",
+    "query": "What is the exact date of the OBG exam in 2026?",
+    "relevant": [
+      "regulamento-pag13",
+      "regulamento-pag28"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_002",
+    "category": "undocumented_future_event",
+    "query": "When will registrations for the 2026 OBG open?",
+    "relevant": [
+      "regulamento-pag13",
+      "regulamento-pag28",
+      "regulamento-pag7",
+      "regulamento-pag8"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Question about future/undocumented event - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_003",
+    "category": "undocumented_future_event",
+    "query": "How many phases will the OBG have in 2026?",
+    "relevant": [
+      "regulamento-pag13",
+      "regulamento-pag15"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Question about future/undocumented event - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_004",
+    "category": "undocumented_future_event",
+    "query": "What will be the theme of the next OBG edition?",
+    "relevant": [
+      "regulamento-pag13",
+      "regulamento-pag15",
+      "temas-ods-pag1",
+      "temas-ods-pag2"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_005",
+    "category": "undocumented_future_event",
+    "query": "Will the OBG exam be online in 2026?",
+    "relevant": [
+      "regulamento-pag13",
+      "regulamento-pag15"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_006",
+    "category": "undocumented_future_event",
+    "query": "What is the expected duration of the OBG exam next year?",
+    "relevant": [
+      "regulamento-pag13",
+      "regulamento-pag15"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_007",
+    "category": "undocumented_future_event",
+    "query": "Will there be new difficulty levels added to the OBG in the next edition?",
+    "relevant": [
+      "modelo-questoes-pag1",
+      "regulamento-pag13",
+      "regulamento-pag15"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_008",
+    "category": "undocumented_future_event",
+    "query": "How many students are expected to participate in the next OBG?",
+    "relevant": [
+      "regulamento-pag1",
+      "regulamento-pag13"
+    ],
+    "retrieved": [
+      "regulamento_11obg_2026_260212_155053_p9_c5"
+    ],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_009",
+    "category": "undocumented_future_event",
+    "query": "Will the next OBG edition introduce a practical fieldwork phase?",
+    "relevant": [
+      "igeo-edital-pag2",
+      "regulamento-pag13",
+      "regulamento-pag15",
+      "regulamento-pag21",
+      "temas-ods-pag2"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Question about future/undocumented event - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_010",
+    "category": "undocumented_future_event",
+    "query": "Is there a minimum score planned for certification in future OBG editions?",
+    "relevant": [
+      "regulamento-pag13",
+      "regulamento-pag15",
+      "regulamento-pag19",
+      "regulamento-pag20",
+      "regulamento-pag23",
+      "regulamento-pag5"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_011",
+    "category": "undocumented_future_event",
+    "query": "Will the OBG offer scholarships to winners in the next edition?",
+    "relevant": [
+      "regulamento-pag13",
+      "regulamento-pag15",
+      "regulamento-pag22",
+      "regulamento-pag23"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_012",
+    "category": "undocumented_future_event",
+    "query": "Will universities formally recognize the next OBG edition for admissions?",
+    "relevant": [
+      "regulamento-pag1",
+      "regulamento-pag13",
+      "regulamento-pag15",
+      "regulamento-pag22"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_013",
+    "category": "undocumented_future_event",
+    "query": "Is the OBG planning to expand internationally next year?",
+    "relevant": [
+      "igeo-edital-pag1",
+      "regulamento-pag29"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_014",
+    "category": "undocumented_future_event",
+    "query": "Will there be a separate category for teachers in the next OBG?",
+    "relevant": [
+      "regulamento-pag1",
+      "regulamento-pag3"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_015",
+    "category": "undocumented_future_event",
+    "query": "Is the OBG expected to change its grading criteria next year?",
+    "relevant": [
+      "regulamento-pag19",
+      "regulamento-pag20"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_016",
+    "category": "undocumented_future_event",
+    "query": "Will the next OBG include questions based on BNCC updates?",
+    "relevant": [
+      "modelo-questoes-pag1",
+      "regulamento-pag13",
+      "regulamento-pag15",
+      "regulamento-pag28",
+      "temas-ods-pag1"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_017",
+    "category": "undocumented_future_event",
+    "query": "Is the OBG planning to introduce team-based scoring next year?",
+    "relevant": [
+      "regulamento-pag1",
+      "regulamento-pag19",
+      "regulamento-pag2",
+      "regulamento-pag20"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_018",
+    "category": "undocumented_future_event",
+    "query": "Will the next OBG edition have a different age eligibility range?",
+    "relevant": [
+      "regulamento-pag1",
+      "regulamento-pag13",
+      "regulamento-pag15"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_019",
+    "category": "undocumented_future_event",
+    "query": "Is there a confirmed sponsor for the next OBG edition?",
+    "relevant": [
+      "regulamento-pag13",
+      "regulamento-pag15"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_020",
+    "category": "undocumented_future_event",
+    "query": "Will medals be awarded in the next OBG edition?",
+    "relevant": [
+      "regulamento-pag13",
+      "regulamento-pag15",
+      "regulamento-pag22",
+      "regulamento-pag23"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_021",
+    "category": "undocumented_future_event",
+    "query": "Is there a confirmed appeal process timeline for the next OBG?",
+    "relevant": [
+      "regulamento-pag11",
+      "regulamento-pag13",
+      "regulamento-pag21"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_022",
+    "category": "undocumented_future_event",
+    "query": "Will the next OBG require biometric identification?",
+    "relevant": [
+      "regulamento-pag10",
+      "regulamento-pag9"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_023",
+    "category": "undocumented_future_event",
+    "query": "Is the OBG planning to limit the number of participants per school next year?",
+    "relevant": [
+      "regulamento-pag1",
+      "regulamento-pag13",
+      "regulamento-pag3"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_024",
+    "category": "undocumented_future_event",
+    "query": "Will the next OBG edition include interdisciplinary questions?",
+    "relevant": [
+      "modelo-questoes-pag1",
+      "regulamento-pag13",
+      "regulamento-pag15",
+      "temas-ods-pag1"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_025",
+    "category": "undocumented_future_event",
+    "query": "Is there a confirmed revision of the OBG regulation for the next edition?",
+    "relevant": [
+      "regulamento-pag13",
+      "regulamento-pag15"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_026",
+    "category": "undocumented_future_event",
+    "query": "What geographic topics will be covered in the next OBG edition?",
+    "relevant": [
+      "regulamento-pag13",
+      "regulamento-pag15",
+      "temas-ods-pag1",
+      "temas-ods-pag2"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_027",
+    "category": "undocumented_future_event",
+    "query": "Will the OBG 2026 edition accept individual registrations instead of teams?",
+    "relevant": [
+      "regulamento-pag1",
+      "regulamento-pag10",
+      "regulamento-pag13",
+      "regulamento-pag15",
+      "regulamento-pag2",
+      "regulamento-pag28",
+      "regulamento-pag7",
+      "regulamento-pag8",
+      "regulamento-pag9"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Question about future/undocumented event - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_028",
+    "category": "undocumented_future_event",
+    "query": "How many questions will the next OBG exam have?",
+    "relevant": [
+      "regulamento-pag13",
+      "regulamento-pag15"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_029",
+    "category": "undocumented_future_event",
+    "query": "Will the OBG next year include a practical map-reading component?",
+    "relevant": [
+      "igeo-edital-pag2",
+      "regulamento-pag21",
+      "temas-ods-pag2"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_030",
+    "category": "undocumented_future_event",
+    "query": "What will be the prize for winners in the next OBG?",
+    "relevant": [
+      "regulamento-pag22",
+      "regulamento-pag23"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_031",
+    "category": "undocumented_future_event",
+    "query": "Will the next OBG have a separate track for homeschooled students?",
+    "relevant": [
+      "regulamento-pag1"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_032",
+    "category": "undocumented_future_event",
+    "query": "Is the OBG planning to partner with Google Maps for the next edition?",
+    "relevant": [
+      "regulamento-pag13",
+      "regulamento-pag15",
+      "regulamento-pag21",
+      "temas-ods-pag2"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_033",
+    "category": "undocumented_future_event",
+    "query": "Will the 2026 OBG be broadcast live on television?",
+    "relevant": [
+      "regulamento-pag21",
+      "regulamento-pag22"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_034",
+    "category": "undocumented_future_event",
+    "query": "Will the next OBG introduce essay-style questions?",
+    "relevant": [
+      "regulamento-pag13",
+      "regulamento-pag15"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_035",
+    "category": "undocumented_future_event",
+    "query": "How long will participants have to complete the next OBG exam?",
+    "relevant": [
+      "regulamento-pag1",
+      "regulamento-pag13"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_036",
+    "category": "undocumented_future_event",
+    "query": "Will the OBG 2026 results be announced at a national ceremony?",
+    "relevant": [
+      "regulamento-pag21",
+      "regulamento-pag22"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_037",
+    "category": "undocumented_future_event",
+    "query": "Is the OBG planning to add a junior category for elementary school students next year?",
+    "relevant": [
+      "regulamento-pag1"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_038",
+    "category": "undocumented_future_event",
+    "query": "Will the OBG next edition require students to submit a geography project?",
+    "relevant": [
+      "igeo-edital-pag2",
+      "regulamento-pag13",
+      "regulamento-pag15",
+      "regulamento-pag21"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_039",
+    "category": "undocumented_future_event",
+    "query": "Will the next OBG allow students to use calculators during the exam?",
+    "relevant": [
+      "regulamento-pag15"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_040",
+    "category": "undocumented_future_event",
+    "query": "Is the OBG expected to increase the number of phases in 2026?",
+    "relevant": [
+      "regulamento-pag13",
+      "regulamento-pag15"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Question about future/undocumented event - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_041",
+    "category": "undocumented_future_event",
+    "query": "Will OBG 2026 scores be weighted differently across phases?",
+    "relevant": [
+      "regulamento-pag13",
+      "regulamento-pag15",
+      "regulamento-pag19",
+      "regulamento-pag20"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Question about future/undocumented event - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_042",
+    "category": "undocumented_future_event",
+    "query": "Will the next OBG be free to enter or will there be a registration fee?",
+    "relevant": [
+      "regulamento-pag28",
+      "regulamento-pag7",
+      "regulamento-pag8"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Question about future/undocumented event - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_043",
+    "category": "undocumented_future_event",
+    "query": "Will the OBG 2026 edition include a fieldwork phase in the Amazon region?",
+    "relevant": [
+      "igeo-edital-pag2",
+      "regulamento-pag13",
+      "regulamento-pag15",
+      "regulamento-pag21",
+      "temas-ods-pag2"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Question about future/undocumented event - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_044",
+    "category": "undocumented_future_event",
+    "query": "Is the OBG planning to introduce a digital certificate system in the next edition?",
+    "relevant": [
+      "regulamento-pag13",
+      "regulamento-pag15",
+      "regulamento-pag23",
+      "regulamento-pag5"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_045",
+    "category": "undocumented_future_event",
+    "query": "Will the next OBG have an international jury evaluating answers?",
+    "relevant": [
+      "igeo-edital-pag1",
+      "regulamento-pag29"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_046",
+    "category": "undocumented_future_event",
+    "query": "Will the OBG 2026 edition accept late registrations with a penalty fee?",
+    "relevant": [
+      "regulamento-pag13",
+      "regulamento-pag15",
+      "regulamento-pag28",
+      "regulamento-pag7",
+      "regulamento-pag8"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Question about future/undocumented event - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_047",
+    "category": "undocumented_future_event",
+    "query": "Is the OBG planning to publish an official study guide for the next edition?",
+    "relevant": [
+      "regulamento-pag10",
+      "regulamento-pag13",
+      "regulamento-pag15",
+      "regulamento-pag9"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_048",
+    "category": "undocumented_future_event",
+    "query": "Will the next OBG edition be held simultaneously across all Brazilian states?",
+    "relevant": [
+      "regulamento-pag13",
+      "regulamento-pag15"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_049",
+    "category": "undocumented_future_event",
+    "query": "Will there be a coaching program offered by OBG for participating schools next year?",
+    "relevant": [
+      "regulamento-pag1",
+      "regulamento-pag13"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_050",
+    "category": "undocumented_future_event",
+    "query": "Is there a confirmed date for the release of the next OBG edital?",
+    "relevant": [
+      "regulamento-pag13",
+      "regulamento-pag28"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_051",
+    "category": "undocumented_future_event",
+    "query": "Will the OBG 2026 have a dedicated mobile app for exam access?",
+    "relevant": [
+      "regulamento-pag11",
+      "regulamento-pag13"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_052",
+    "category": "undocumented_future_event",
+    "query": "Will the next OBG edition require a minimum GPA for participation?",
+    "relevant": [
+      "regulamento-pag13",
+      "regulamento-pag15"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_053",
+    "category": "undocumented_future_event",
+    "query": "Is the OBG planning to introduce oral examinations in future editions?",
+    "relevant": [
+      "regulamento-pag13",
+      "regulamento-pag15"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_054",
+    "category": "undocumented_future_event",
+    "query": "Will the OBG 2026 results be published in an indexed academic journal?",
+    "relevant": [
+      "regulamento-pag1",
+      "regulamento-pag13"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_055",
+    "category": "undocumented_future_event",
+    "query": "Will the next OBG introduce a ranking system based on school performance history?",
+    "relevant": [
+      "regulamento-pag19",
+      "regulamento-pag20"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_056",
+    "category": "undocumented_future_event",
+    "query": "Is there a confirmed keynote speaker for the next OBG award ceremony?",
+    "relevant": [
+      "regulamento-pag21",
+      "regulamento-pag22",
+      "regulamento-pag23"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_057",
+    "category": "undocumented_future_event",
+    "query": "Will the OBG next year allow teachers to participate as competitors?",
+    "relevant": [
+      "regulamento-pag1",
+      "regulamento-pag3"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_058",
+    "category": "undocumented_future_event",
+    "query": "Will the next OBG edition be co-organized with another Brazilian olympiad?",
+    "relevant": [
+      "regulamento-pag13",
+      "regulamento-pag15"
+    ],
+    "retrieved": [
+      "edital_seleção_equipebrasil_igeo_2025_p2_c1"
+    ],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_059",
+    "category": "undocumented_future_event",
+    "query": "Is the OBG planning to release past exam questions as a public study bank?",
+    "relevant": [
+      "regulamento-pag13",
+      "regulamento-pag15"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_060",
+    "category": "undocumented_future_event",
+    "query": "Will the 2026 OBG edition introduce a separate category for gifted students?",
+    "relevant": [
+      "regulamento-pag13",
+      "regulamento-pag15"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_061",
+    "category": "undocumented_future_event",
+    "query": "Will the next OBG require participants to submit a video introduction?",
+    "relevant": [
+      "regulamento-pag1",
+      "regulamento-pag10",
+      "regulamento-pag13",
+      "regulamento-pag9"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_062",
+    "category": "undocumented_future_event",
+    "query": "Is the OBG planning to adopt AI-generated questions in future editions?",
+    "relevant": [
+      "regulamento-pag13",
+      "regulamento-pag15"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_063",
+    "category": "undocumented_future_event",
+    "query": "Will the OBG 2026 accept registrations from Portuguese-speaking countries outside Brazil?",
+    "relevant": [
+      "regulamento-pag10",
+      "regulamento-pag28",
+      "regulamento-pag7",
+      "regulamento-pag8",
+      "regulamento-pag9"
+    ],
+    "retrieved": [
+      "regulamento_11obg_2026_260212_155053_p9_c5"
+    ],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Question about future/undocumented event - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_064",
+    "category": "undocumented_future_event",
+    "query": "Will the next OBG introduce a climate change focus in its evaluation criteria?",
+    "relevant": [
+      "regulamento-pag19",
+      "regulamento-pag20"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_065",
+    "category": "undocumented_future_event",
+    "query": "Is the OBG planning to create a Hall of Fame for past winners?",
+    "relevant": [
+      "regulamento-pag1",
+      "regulamento-pag13"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_066",
+    "category": "undocumented_future_event",
+    "query": "Will the next OBG edition partner with geographic information system companies?",
+    "relevant": [
+      "regulamento-pag13",
+      "regulamento-pag15",
+      "temas-ods-pag1",
+      "temas-ods-pag2"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_067",
+    "category": "undocumented_future_event",
+    "query": "Will OBG 2026 offer virtual participation for international students?",
+    "relevant": [
+      "igeo-edital-pag1",
+      "regulamento-pag29"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_068",
+    "category": "undocumented_future_event",
+    "query": "Is the OBG planning to publish a post-edition research report in 2026?",
+    "relevant": [
+      "regulamento-pag13",
+      "regulamento-pag15"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_069",
+    "category": "undocumented_future_event",
+    "query": "Will the OBG 2026 edition have a dedicated social media competition alongside the main exam?",
+    "relevant": [
+      "regulamento-pag10",
+      "regulamento-pag13",
+      "regulamento-pag15",
+      "regulamento-pag9"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_070",
+    "category": "undocumented_future_event",
+    "query": "Is the OBG expected to change its name in the next edition?",
+    "relevant": [
+      "regulamento-pag13",
+      "regulamento-pag15",
+      "regulamento-pag19",
+      "regulamento-pag20"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_071",
+    "category": "undocumented_future_event",
+    "query": "Will the OBG 2026 edition use blockchain technology for certificate validation?",
+    "relevant": [
+      "regulamento-pag10",
+      "regulamento-pag11",
+      "regulamento-pag13",
+      "regulamento-pag15",
+      "regulamento-pag23",
+      "regulamento-pag5",
+      "regulamento-pag9"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_072",
+    "category": "undocumented_future_event",
+    "query": "Is the OBG planning to introduce a points system that carries over between editions?",
+    "relevant": [
+      "regulamento-pag13",
+      "regulamento-pag15"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_073",
+    "category": "undocumented_future_event",
+    "query": "Will the next OBG edition accept entries from Brazilian students living abroad?",
+    "relevant": [
+      "igeo-edital-pag1",
+      "regulamento-pag13",
+      "regulamento-pag15",
+      "regulamento-pag21",
+      "regulamento-pag29"
+    ],
+    "retrieved": [
+      "edital_seleção_equipebrasil_igeo_2025_p1_c2"
+    ],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_074",
+    "category": "undocumented_future_event",
+    "query": "Is the OBG planning to livestream the next award ceremony on YouTube?",
+    "relevant": [
+      "regulamento-pag21",
+      "regulamento-pag22",
+      "regulamento-pag23"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_075",
+    "category": "undocumented_future_event",
+    "query": "Will the OBG next edition introduce a mentorship program pairing past winners with new participants?",
+    "relevant": [
+      "regulamento-pag1",
+      "regulamento-pag13",
+      "regulamento-pag15"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_076",
+    "category": "undocumented_future_event",
+    "query": "Will the OBG next edition allow school coordinators to appeal on behalf of students?",
+    "relevant": [
+      "regulamento-pag11",
+      "regulamento-pag13",
+      "regulamento-pag15",
+      "regulamento-pag21"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_077",
+    "category": "undocumented_future_event",
+    "query": "Is the OBG considering adding a geography debate round in future editions?",
+    "relevant": [
+      "regulamento-pag10",
+      "regulamento-pag13",
+      "regulamento-pag15",
+      "regulamento-pag9"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_078",
+    "category": "undocumented_future_event",
+    "query": "Will the OBG 2026 results include percentile rankings for all participants?",
+    "relevant": [
+      "regulamento-pag1",
+      "regulamento-pag13",
+      "regulamento-pag19",
+      "regulamento-pag20"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_079",
+    "category": "undocumented_future_event",
+    "query": "Is the OBG planning to create regional semifinals before the national final?",
+    "relevant": [
+      "regulamento-pag1",
+      "regulamento-pag13"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_080",
+    "category": "undocumented_future_event",
+    "query": "Will the OBG 2026 publish a ranking of the best schools nationally?",
+    "relevant": [
+      "regulamento-pag19",
+      "regulamento-pag20"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_081",
+    "category": "undocumented_future_event",
+    "query": "Will the OBG 2026 adopt open-book exam rules?",
+    "relevant": [
+      "regulamento-pag1",
+      "regulamento-pag13"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_082",
+    "category": "undocumented_future_event",
+    "query": "Is the OBG expected to announce a new category for graduate students in 2026?",
+    "relevant": [
+      "regulamento-pag1",
+      "regulamento-pag13"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_083",
+    "category": "undocumented_future_event",
+    "query": "Will the next OBG edition offer participation certificates to all registered students?",
+    "relevant": [
+      "regulamento-pag13",
+      "regulamento-pag15",
+      "regulamento-pag23",
+      "regulamento-pag5"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_084",
+    "category": "undocumented_future_event",
+    "query": "Will the OBG 2026 introduce a points deduction system for wrong answers?",
+    "relevant": [
+      "regulamento-pag1",
+      "regulamento-pag13"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_085",
+    "category": "undocumented_future_event",
+    "query": "Is the OBG planning to require students to take a qualification test before registration?",
+    "relevant": [
+      "regulamento-pag28",
+      "regulamento-pag7",
+      "regulamento-pag8"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Question about future/undocumented event - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_086",
+    "category": "undocumented_future_event",
+    "query": "Will the OBG 2026 introduce an environmental sustainability pledge for participants?",
+    "relevant": [
+      "regulamento-pag1",
+      "regulamento-pag13"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_087",
+    "category": "undocumented_future_event",
+    "query": "Is the OBG planning to publish participant performance data publicly after 2026?",
+    "relevant": [
+      "regulamento-pag13",
+      "regulamento-pag28"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_088",
+    "category": "undocumented_future_event",
+    "query": "Will the OBG next edition partner with the Brazilian Ministry of Education?",
+    "relevant": [
+      "regulamento-pag13",
+      "regulamento-pag15"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_089",
+    "category": "undocumented_future_event",
+    "query": "Will the OBG 2026 introduce a new bronze medal category?",
+    "relevant": [
+      "regulamento-pag22",
+      "regulamento-pag23"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_090",
+    "category": "undocumented_future_event",
+    "query": "Is the OBG planning to expand to 30 questions per phase in the next edition?",
+    "relevant": [
+      "igeo-edital-pag1",
+      "regulamento-pag13",
+      "regulamento-pag15",
+      "regulamento-pag29"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Question about future/undocumented event - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_091",
+    "category": "undocumented_future_event",
+    "query": "Will the OBG 2026 introduce a live Q&A session with the organizing committee after results?",
+    "relevant": [
+      "regulamento-pag21",
+      "regulamento-pag22"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_092",
+    "category": "undocumented_future_event",
+    "query": "Is the OBG expected to change the team size limit from 3 to 5 students next year?",
+    "relevant": [
+      "regulamento-pag1",
+      "regulamento-pag19",
+      "regulamento-pag2",
+      "regulamento-pag20",
+      "regulamento-pag3"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_093",
+    "category": "undocumented_future_event",
+    "query": "Will the OBG next edition include a geography photograph analysis task?",
+    "relevant": [
+      "regulamento-pag13",
+      "regulamento-pag15"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_094",
+    "category": "undocumented_future_event",
+    "query": "Is the OBG planning to allow remote proctoring using webcams in 2026?",
+    "relevant": [
+      "regulamento-pag1",
+      "regulamento-pag13"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_095",
+    "category": "undocumented_future_event",
+    "query": "Will the next OBG edition introduce a special award for the most innovative team?",
+    "relevant": [
+      "regulamento-pag1",
+      "regulamento-pag13",
+      "regulamento-pag15",
+      "regulamento-pag2",
+      "regulamento-pag22",
+      "regulamento-pag23"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_096",
+    "category": "undocumented_future_event",
+    "query": "Will the OBG 2026 edition have a dedicated Discord server for participants?",
+    "relevant": [
+      "regulamento-pag1",
+      "regulamento-pag13",
+      "regulamento-pag15"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_097",
+    "category": "undocumented_future_event",
+    "query": "Is the OBG planning to introduce a peer review stage where students evaluate each other?",
+    "relevant": [
+      "regulamento-pag1",
+      "regulamento-pag21"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_098",
+    "category": "undocumented_future_event",
+    "query": "Will the next OBG require participating schools to submit an environmental impact report?",
+    "relevant": [
+      "regulamento-pag1",
+      "regulamento-pag13"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_099",
+    "category": "undocumented_future_event",
+    "query": "Is the OBG expected to introduce a digital atlas as official exam material in 2026?",
+    "relevant": [
+      "regulamento-pag15"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_HALLU_100",
+    "category": "undocumented_future_event",
+    "query": "Will the OBG 2026 introduce a national championship final held in Brasilia?",
+    "relevant": [
+      "regulamento-pag1",
+      "regulamento-pag13"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Future event not documented in sources - system should abstain"
+  },
+  {
+    "id": "OBG_PBU_001",
+    "category": "plausible_but_undocumented",
+    "query": "Is there a tiebreaking criterion based on the average age of teams in the OBG?",
+    "relevant": [
+      "regulamento-pag19",
+      "regulamento-pag20"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Tiebreaker criteria documented in regulamento"
+  },
+  {
+    "id": "OBG_PBU_002",
+    "category": "plausible_but_undocumented",
+    "query": "Does the OBG grant bonus points to public schools in remote regions?",
+    "relevant": [
+      "regulamento-pag1"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "General OBG documentation"
+  },
+  {
+    "id": "OBG_PBU_003",
+    "category": "plausible_but_undocumented",
+    "query": "Is there an experimental OBG phase exclusively for teacher advisors?",
+    "relevant": [
+      "regulamento-pag13",
+      "regulamento-pag14",
+      "regulamento-pag15"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Competition phases described in regulamento section 4"
+  },
+  {
+    "id": "OBG_PBU_004",
+    "category": "plausible_but_undocumented",
+    "query": "Does the OBG regulation allow automatic elimination due to late submission of answers?",
+    "relevant": [
+      "regulamento-pag1"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "General OBG documentation"
+  },
+  {
+    "id": "OBG_PBU_005",
+    "category": "plausible_but_undocumented",
+    "query": "Is there a mandatory minimum score required for issuing the OBG certificate?",
+    "relevant": [
+      "regulamento-pag22",
+      "regulamento-pag23"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Awards and certificates in regulamento section 6"
+  },
+  {
+    "id": "OBG_PBU_006",
+    "category": "plausible_but_undocumented",
+    "query": "Does the OBG differentiate scoring criteria between public and private schools?",
+    "relevant": [
+      "regulamento-pag1"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "General OBG documentation"
+  },
+  {
+    "id": "OBG_PBU_007",
+    "category": "plausible_but_undocumented",
+    "query": "Is there a limit on the number of teams a single school can register in the OBG?",
+    "relevant": [
+      "regulamento-pag1",
+      "regulamento-pag2"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Participant eligibility in regulamento section 1"
+  },
+  {
+    "id": "OBG_PBU_008",
+    "category": "plausible_but_undocumented",
+    "query": "Does the OBG offer differentiated exams for different geographic regions of Brazil?",
+    "relevant": [
+      "regulamento-pag1"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "General OBG documentation"
+  },
+  {
+    "id": "OBG_PBU_009",
+    "category": "plausible_but_undocumented",
+    "query": "Is participation in the OBG considered an official extracurricular activity by schools?",
+    "relevant": [
+      "regulamento-pag1"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "General OBG documentation"
+  },
+  {
+    "id": "OBG_PBU_010",
+    "category": "plausible_but_undocumented",
+    "query": "Does the OBG provide accessibility accommodations for students with disabilities?",
+    "relevant": [
+      "procedimentos-senhas-pag1",
+      "procedimentos-senhas-pag2",
+      "duvidas-acesso-pag1"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Password and access procedures documented in procedimentos-senhas and duvidas-acesso"
+  },
+  {
+    "id": "OBG_PBU_011",
+    "category": "plausible_but_undocumented",
+    "query": "Is there an official training program for OBG teacher advisors?",
+    "relevant": [
+      "edital-igeo-pag2",
+      "edital-igeo-pag3"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Training schedule in edital-igeo"
+  },
+  {
+    "id": "OBG_PBU_012",
+    "category": "plausible_but_undocumented",
+    "query": "Does the OBG apply normalization or scaling to exam scores?",
+    "relevant": [
+      "regulamento-pag1"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "General OBG documentation"
+  },
+  {
+    "id": "OBG_PBU_013",
+    "category": "plausible_but_undocumented",
+    "query": "Is there a formal appeal committee independent from the exam authors?",
+    "relevant": [
+      "regulamento-pag1"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "General OBG documentation"
+  },
+  {
+    "id": "OBG_PBU_014",
+    "category": "plausible_but_undocumented",
+    "query": "Does the OBG collect demographic data beyond school and grade level?",
+    "relevant": [
+      "regulamento-pag27",
+      "regulamento-pag28"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Official calendar in regulamento section 8"
+  },
+  {
+    "id": "OBG_PBU_015",
+    "category": "plausible_but_undocumented",
+    "query": "Is there a waiting list mechanism if OBG registrations exceed capacity?",
+    "relevant": [
+      "regulamento-pag7",
+      "regulamento-pag8",
+      "regulamento-pag9"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Registration rules in regulamento section 2"
+  },
+  {
+    "id": "OBG_PBU_016",
+    "category": "plausible_but_undocumented",
+    "query": "Does the OBG allow substitution of team members after registration?",
+    "relevant": [
+      "regulamento-pag7",
+      "regulamento-pag8",
+      "regulamento-pag9"
+    ],
+    "retrieved": [
+      "regulamento_11obg_2026_260212_155053_p4_c3"
+    ],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Registration rules in regulamento section 2"
+  },
+  {
+    "id": "OBG_PBU_017",
+    "category": "plausible_but_undocumented",
+    "query": "Is there a formal code of conduct for OBG participants?",
+    "relevant": [
+      "regulamento-pag1"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "General OBG documentation"
+  },
+  {
+    "id": "OBG_PBU_018",
+    "category": "plausible_but_undocumented",
+    "query": "Does the OBG perform plagiarism or similarity checks on answers?",
+    "relevant": [
+      "regulamento-pag1"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "General OBG documentation"
+  },
+  {
+    "id": "OBG_PBU_019",
+    "category": "plausible_but_undocumented",
+    "query": "Is there a formal partnership between the OBG and universities?",
+    "relevant": [
+      "regulamento-pag1"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "General OBG documentation"
+  },
+  {
+    "id": "OBG_PBU_020",
+    "category": "plausible_but_undocumented",
+    "query": "Does the OBG guarantee data anonymization in published results?",
+    "relevant": [
+      "regulamento-pag27",
+      "regulamento-pag28"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Official calendar in regulamento section 8"
+  },
+  {
+    "id": "OBG_PBU_021",
+    "category": "plausible_but_undocumented",
+    "query": "Is participation in the OBG used as a selection criterion for scholarships?",
+    "relevant": [
+      "regulamento-pag1"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "General OBG documentation"
+  },
+  {
+    "id": "OBG_PBU_022",
+    "category": "plausible_but_undocumented",
+    "query": "Does the OBG adjust difficulty based on historical performance data?",
+    "relevant": [
+      "regulamento-pag27",
+      "regulamento-pag28"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Official calendar in regulamento section 8"
+  },
+  {
+    "id": "OBG_PBU_023",
+    "category": "plausible_but_undocumented",
+    "query": "Is there a formal auditing process for OBG results?",
+    "relevant": [
+      "regulamento-pag1"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "General OBG documentation"
+  },
+  {
+    "id": "OBG_PBU_024",
+    "category": "plausible_but_undocumented",
+    "query": "Does the OBG restrict participation based on previous awards?",
+    "relevant": [
+      "regulamento-pag22",
+      "regulamento-pag23"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "Awards and certificates in regulamento section 6"
+  },
+  {
+    "id": "OBG_PBU_025",
+    "category": "plausible_but_undocumented",
+    "query": "Is there an official grievance mechanism for schools participating in the OBG?",
+    "relevant": [
+      "regulamento-pag1"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "abstain_if_not_in_db",
+    "notes": "General OBG documentation"
+  },
+  {
+    "id": "OBG_IC_001",
+    "category": "impossible_claim",
+    "query": "The OBG exam in 2024 was officially graded using quantum computers provided by NASA.",
+    "relevant": [
+      "regulamento-pag1"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "reject_and_abstain",
+    "notes": "General OBG documentation"
+  },
+  {
+    "id": "OBG_IC_002",
+    "category": "impossible_claim",
+    "query": "All OBG medals are minted from meteorites collected in Antarctica.",
+    "relevant": [
+      "regulamento-pag1"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "reject_and_abstain",
+    "notes": "General OBG documentation"
+  },
+  {
+    "id": "OBG_IC_003",
+    "category": "impossible_claim",
+    "query": "The OBG headquarters is officially located inside the Earth's mantle.",
+    "relevant": [
+      "regulamento-pag1"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "reject_and_abstain",
+    "notes": "General OBG documentation"
+  },
+  {
+    "id": "OBG_IC_004",
+    "category": "impossible_claim",
+    "query": "OBG exams are graded by an artificial intelligence trained on future student responses.",
+    "relevant": [
+      "regulamento-pag1",
+      "regulamento-pag2"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "reject_and_abstain",
+    "notes": "Participant eligibility in regulamento section 1"
+  },
+  {
+    "id": "OBG_IC_005",
+    "category": "impossible_claim",
+    "query": "Participation in the OBG grants automatic citizenship in Brazil.",
+    "relevant": [
+      "regulamento-pag1"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "reject_and_abstain",
+    "notes": "General OBG documentation"
+  },
+  {
+    "id": "OBG_IC_006",
+    "category": "impossible_claim",
+    "query": "OBG winners are elected as members of the United Nations General Assembly.",
+    "relevant": [
+      "regulamento-pag1"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "reject_and_abstain",
+    "notes": "General OBG documentation"
+  },
+  {
+    "id": "OBG_IC_007",
+    "category": "impossible_claim",
+    "query": "The OBG exam questions are transmitted telepathically to students.",
+    "relevant": [
+      "modelo-questoes-pag1",
+      "modelo-questoes-pag2"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "reject_and_abstain",
+    "notes": "Question model and content themes in modelo-questoes"
+  },
+  {
+    "id": "OBG_IC_008",
+    "category": "impossible_claim",
+    "query": "OBG uses time travel to verify answers from previous editions.",
+    "relevant": [
+      "regulamento-pag1"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "reject_and_abstain",
+    "notes": "General OBG documentation"
+  },
+  {
+    "id": "OBG_IC_009",
+    "category": "impossible_claim",
+    "query": "The official OBG atlas was authored by continents rather than humans.",
+    "relevant": [
+      "regulamento-pag1"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "reject_and_abstain",
+    "notes": "General OBG documentation"
+  },
+  {
+    "id": "OBG_IC_010",
+    "category": "impossible_claim",
+    "query": "OBG exams are corrected simultaneously across all parallel universes.",
+    "relevant": [
+      "regulamento-pag1"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "reject_and_abstain",
+    "notes": "General OBG documentation"
+  },
+  {
+    "id": "OBG_IC_011",
+    "category": "impossible_claim",
+    "query": "OBG regulations were signed by tectonic plates.",
+    "relevant": [
+      "regulamento-pag1"
+    ],
+    "retrieved": [],
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ap": 0.0,
+    "expected_behavior": "reject_and_abstain",
+    "notes": "General OBG documentation"
+  }
+]

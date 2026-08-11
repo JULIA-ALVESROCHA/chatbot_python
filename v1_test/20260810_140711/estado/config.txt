@@ -1,0 +1,23 @@
+config fingerprint: f1c7dbbfdb1e
+  bm25_top_accept                  5
+  chunk_overlap                    100
+  chunk_size                       500
+  distance_strategy                EUCLIDEAN_DISTANCE
+  embedding_model                  text-embedding-3-large
+  fusion_strategy                  rrf
+  generation_max_tokens            800
+  generation_model                 gpt-4o-mini
+  generation_temperature           0.1
+  index_checksum                   2482221-1786381116
+  max_chunks_per_page              4
+  max_rerank                       4
+  max_retrieve                     6
+  min_chunks                       2
+  reranker_model                   cross-encoder/mmarco-mMiniLMv2-L12-H384-v1
+  reranker_revision                1427fd652930e4ba29e8149678df786c240d8825
+  retrieval_cosine_threshold       0.25
+  retrieval_fetch_k                20
+  support_cosine_threshold         0.15
+  translate_query_to_pt            True
+  use_reranker                     True
+  origins                          ['https://obg.unifal-mg.edu.br', 'http://localhost:3000LOG_LEVEL=INFO']

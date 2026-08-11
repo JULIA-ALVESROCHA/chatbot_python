@@ -1,0 +1,1771 @@
+{
+  "config": {
+    "dataset": "testset_questions.jsonl",
+    "corpus": "knowledge_source.txt",
+    "seeds": [
+      42
+    ],
+    "model": "gpt-4o-mini",
+    "sample": 50,
+    "workers": 8,
+    "out": "results_v2_amostra.json",
+    "report": "report_v2_amostra.md"
+  },
+  "aggregate": {
+    "overall": {
+      "precision": {
+        "mean": 0.5076287001287001,
+        "std": 0.0
+      },
+      "recall": {
+        "mean": 0.39161904761904753,
+        "std": 0.0
+      },
+      "f1": {
+        "mean": 0.3956248479375939,
+        "std": 0.0
+      },
+      "factscore": {
+        "mean": 0.6175978120978123,
+        "std": 0.0
+      }
+    },
+    "by_lang": {
+      "pt": {
+        "precision": {
+          "mean": 0.5181747681747682,
+          "std": 0.32923672999291914
+        },
+        "recall": {
+          "mean": 0.38555148555148555,
+          "std": 0.30322654878311334
+        },
+        "f1": {
+          "mean": 0.3934783134276352,
+          "std": 0.3004750106650523
+        },
+        "factscore": {
+          "mean": 0.6005527505527507,
+          "std": 0.39119943543668817
+        },
+        "n": 39
+      },
+      "en": {
+        "precision": {
+          "mean": 0.47023809523809523,
+          "std": 0.3212381189815216
+        },
+        "recall": {
+          "mean": 0.4131313131313131,
+          "std": 0.24844378407504175
+        },
+        "f1": {
+          "mean": 0.40323528847290224,
+          "std": 0.2840145808022973
+        },
+        "factscore": {
+          "mean": 0.678030303030303,
+          "std": 0.35000491928853056
+        },
+        "n": 11
+      }
+    },
+    "by_intent": {
+      "Substituicao de membros": {
+        "precision": {
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "recall": {
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "f1": {
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "factscore": {
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "n": 1
+      },
+      "Contato oficial": {
+        "precision": {
+          "mean": 0.5,
+          "std": 0.0
+        },
+        "recall": {
+          "mean": 0.16666666666666666,
+          "std": 0.0
+        },
+        "f1": {
+          "mean": 0.25,
+          "std": 0.0
+        },
+        "factscore": {
+          "mean": 1.0,
+          "std": 0.0
+        },
+        "n": 1
+      },
+      "Navegadores suportados": {
+        "precision": {
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "recall": {
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "f1": {
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "factscore": {
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "n": 1
+      },
+      "Temas e ODS das questoes": {
+        "precision": {
+          "mean": 0.02702702702702703,
+          "std": 0.02702702702702703
+        },
+        "recall": {
+          "mean": 0.3,
+          "std": 0.3
+        },
+        "f1": {
+          "mean": 0.049586776859504134,
+          "std": 0.049586776859504134
+        },
+        "factscore": {
+          "mean": 0.04054054054054054,
+          "std": 0.04054054054054054
+        },
+        "n": 2
+      },
+      "Nome da equipe": {
+        "precision": {
+          "mean": 1.0,
+          "std": 0.0
+        },
+        "recall": {
+          "mean": 0.4,
+          "std": 0.0
+        },
+        "f1": {
+          "mean": 0.5714285714285715,
+          "std": 0.0
+        },
+        "factscore": {
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "n": 1
+      },
+      "Classificacao para a presencial": {
+        "precision": {
+          "mean": 0.4305555555555556,
+          "std": 0.4030171702374141
+        },
+        "recall": {
+          "mean": 0.3333333333333333,
+          "std": 0.33993463423951903
+        },
+        "f1": {
+          "mean": 0.3475783475783476,
+          "std": 0.38788313219641046
+        },
+        "factscore": {
+          "mean": 0.4305555555555556,
+          "std": 0.4030171702374141
+        },
+        "n": 3
+      },
+      "Divulgacao do gabarito": {
+        "precision": {
+          "mean": 0.5,
+          "std": 0.0
+        },
+        "recall": {
+          "mean": 0.5,
+          "std": 0.0
+        },
+        "f1": {
+          "mean": 0.5,
+          "std": 0.0
+        },
+        "factscore": {
+          "mean": 0.5,
+          "std": 0.0
+        },
+        "n": 1
+      },
+      "Valor da inscricao": {
+        "precision": {
+          "mean": 0.38888888888888884,
+          "std": 0.28327886186626583
+        },
+        "recall": {
+          "mean": 0.5,
+          "std": 0.0
+        },
+        "f1": {
+          "mean": 0.3571428571428572,
+          "std": 0.2542161488578884
+        },
+        "factscore": {
+          "mean": 0.38888888888888884,
+          "std": 0.28327886186626583
+        },
+        "n": 3
+      },
+      "Limite de equipes": {
+        "precision": {
+          "mean": 0.6666666666666666,
+          "std": 0.0
+        },
+        "recall": {
+          "mean": 1.0,
+          "std": 0.0
+        },
+        "f1": {
+          "mean": 0.8,
+          "std": 0.0
+        },
+        "factscore": {
+          "mean": 1.0,
+          "std": 0.0
+        },
+        "n": 1
+      },
+      "Prazo de preenchimento de dados": {
+        "precision": {
+          "mean": 0.5,
+          "std": 0.0
+        },
+        "recall": {
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "f1": {
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "factscore": {
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "n": 1
+      },
+      "Corrigir dados da escola": {
+        "precision": {
+          "mean": 0.75,
+          "std": 0.0
+        },
+        "recall": {
+          "mean": 0.3333333333333333,
+          "std": 0.15713484026367722
+        },
+        "f1": {
+          "mean": 0.436609152288072,
+          "std": 0.17186991530715784
+        },
+        "factscore": {
+          "mean": 0.3333333333333333,
+          "std": 0.11785113019775792
+        },
+        "n": 3
+      },
+      "Minimo de membros na presencial": {
+        "precision": {
+          "mean": 0.16666666666666666,
+          "std": 0.16666666666666666
+        },
+        "recall": {
+          "mean": 0.25,
+          "std": 0.25
+        },
+        "f1": {
+          "mean": 0.2,
+          "std": 0.2
+        },
+        "factscore": {
+          "mean": 0.5,
+          "std": 0.5
+        },
+        "n": 2
+      },
+      "Recuperar senha": {
+        "precision": {
+          "mean": 0.5,
+          "std": 0.0
+        },
+        "recall": {
+          "mean": 0.3333333333333333,
+          "std": 0.0
+        },
+        "f1": {
+          "mean": 0.4,
+          "std": 0.0
+        },
+        "factscore": {
+          "mean": 0.7,
+          "std": 0.0
+        },
+        "n": 1
+      },
+      "Responder todas as questoes": {
+        "precision": {
+          "mean": 0.16666666666666666,
+          "std": 0.16666666666666666
+        },
+        "recall": {
+          "mean": 0.2,
+          "std": 0.2
+        },
+        "f1": {
+          "mean": 0.1818181818181818,
+          "std": 0.1818181818181818
+        },
+        "factscore": {
+          "mean": 0.5,
+          "std": 0.5
+        },
+        "n": 2
+      },
+      "Envio de respostas": {
+        "precision": {
+          "mean": 0.75,
+          "std": 0.2041241452319315
+        },
+        "recall": {
+          "mean": 0.27777777777777773,
+          "std": 0.07856742013183861
+        },
+        "f1": {
+          "mean": 0.39090909090909093,
+          "std": 0.09300611668619882
+        },
+        "factscore": {
+          "mean": 0.9166666666666666,
+          "std": 0.11785113019775792
+        },
+        "n": 3
+      },
+      "Nome social": {
+        "precision": {
+          "mean": 0.9,
+          "std": 0.09999999999999998
+        },
+        "recall": {
+          "mean": 0.75,
+          "std": 0.0
+        },
+        "f1": {
+          "mean": 0.815668202764977,
+          "std": 0.041474654377880116
+        },
+        "factscore": {
+          "mean": 0.9,
+          "std": 0.09999999999999998
+        },
+        "n": 2
+      },
+      "Fases e estrutura das provas": {
+        "precision": {
+          "mean": 0.6666666666666666,
+          "std": 0.33333333333333337
+        },
+        "recall": {
+          "mean": 0.2857142857142857,
+          "std": 0.14285714285714285
+        },
+        "f1": {
+          "mean": 0.4,
+          "std": 0.19999999999999998
+        },
+        "factscore": {
+          "mean": 1.0,
+          "std": 0.0
+        },
+        "n": 2
+      },
+      "Equipes de escolas diferentes": {
+        "precision": {
+          "mean": 0.8333333333333333,
+          "std": 0.16666666666666669
+        },
+        "recall": {
+          "mean": 0.5,
+          "std": 0.0
+        },
+        "f1": {
+          "mean": 0.6190476190476191,
+          "std": 0.04761904761904756
+        },
+        "factscore": {
+          "mean": 0.8333333333333333,
+          "std": 0.16666666666666669
+        },
+        "n": 2
+      },
+      "Senha recuperada incompativel / navegador": {
+        "precision": {
+          "mean": 0.5571428571428572,
+          "std": 0.15714285714285714
+        },
+        "recall": {
+          "mean": 0.4,
+          "std": 0.19999999999999998
+        },
+        "f1": {
+          "mean": 0.45942028985507244,
+          "std": 0.1927536231884058
+        },
+        "factscore": {
+          "mean": 0.9,
+          "std": 0.09999999999999998
+        },
+        "n": 2
+      },
+      "Diretrizes de elaboracao de questoes": {
+        "precision": {
+          "mean": 0.3333333333333333,
+          "std": 0.0
+        },
+        "recall": {
+          "mean": 0.16666666666666666,
+          "std": 0.0
+        },
+        "f1": {
+          "mean": 0.2222222222222222,
+          "std": 0.0
+        },
+        "factscore": {
+          "mean": 1.0,
+          "std": 0.0
+        },
+        "n": 1
+      },
+      "Cadastro nao e inscricao": {
+        "precision": {
+          "mean": 0.6666666666666666,
+          "std": 0.0
+        },
+        "recall": {
+          "mean": 0.25,
+          "std": 0.0
+        },
+        "f1": {
+          "mean": 0.36363636363636365,
+          "std": 0.0
+        },
+        "factscore": {
+          "mean": 0.6666666666666666,
+          "std": 0.0
+        },
+        "n": 1
+      },
+      "Composicao da equipe": {
+        "precision": {
+          "mean": 0.5,
+          "std": 0.16666666666666666
+        },
+        "recall": {
+          "mean": 0.5,
+          "std": 0.16666666666666666
+        },
+        "f1": {
+          "mean": 0.5,
+          "std": 0.16666666666666666
+        },
+        "factscore": {
+          "mean": 0.75,
+          "std": 0.25
+        },
+        "n": 2
+      },
+      "Criterios de desempate": {
+        "precision": {
+          "mean": 0.3333333333333333,
+          "std": 0.0
+        },
+        "recall": {
+          "mean": 0.25,
+          "std": 0.0
+        },
+        "f1": {
+          "mean": 0.28571428571428575,
+          "std": 0.0
+        },
+        "factscore": {
+          "mean": 0.6666666666666666,
+          "std": 0.0
+        },
+        "n": 1
+      },
+      "Recursos de questao": {
+        "precision": {
+          "mean": 0.6,
+          "std": 0.0
+        },
+        "recall": {
+          "mean": 0.5,
+          "std": 0.0
+        },
+        "f1": {
+          "mean": 0.5454545454545454,
+          "std": 0.0
+        },
+        "factscore": {
+          "mean": 0.8,
+          "std": 0.0
+        },
+        "n": 1
+      },
+      "Quem pode participar / series": {
+        "precision": {
+          "mean": 0.5666666666666667,
+          "std": 0.23333333333333336
+        },
+        "recall": {
+          "mean": 0.5,
+          "std": 0.09999999999999998
+        },
+        "f1": {
+          "mean": 0.5246753246753246,
+          "std": 0.16103896103896106
+        },
+        "factscore": {
+          "mean": 0.8333333333333333,
+          "std": 0.16666666666666669
+        },
+        "n": 2
+      },
+      "Certificados": {
+        "precision": {
+          "mean": 0.4,
+          "std": 0.0
+        },
+        "recall": {
+          "mean": 0.14285714285714285,
+          "std": 0.0
+        },
+        "f1": {
+          "mean": 0.21052631578947364,
+          "std": 0.0
+        },
+        "factscore": {
+          "mean": 0.8,
+          "std": 0.0
+        },
+        "n": 1
+      },
+      "Aluno em mais de uma equipe": {
+        "precision": {
+          "mean": 0.75,
+          "std": 0.0
+        },
+        "recall": {
+          "mean": 1.0,
+          "std": 0.0
+        },
+        "f1": {
+          "mean": 0.8571428571428571,
+          "std": 0.0
+        },
+        "factscore": {
+          "mean": 0.5,
+          "std": 0.0
+        },
+        "n": 1
+      },
+      "Medalhas fisicas": {
+        "precision": {
+          "mean": 1.0,
+          "std": 0.0
+        },
+        "recall": {
+          "mean": 1.0,
+          "std": 0.0
+        },
+        "f1": {
+          "mean": 1.0,
+          "std": 0.0
+        },
+        "factscore": {
+          "mean": 1.0,
+          "std": 0.0
+        },
+        "n": 2
+      },
+      "Quem pode ser professor orientador": {
+        "precision": {
+          "mean": 0.3333333333333333,
+          "std": 0.0
+        },
+        "recall": {
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "f1": {
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "factscore": {
+          "mean": 0.6666666666666666,
+          "std": 0.0
+        },
+        "n": 1
+      },
+      "Calendario / datas": {
+        "precision": {
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "recall": {
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "f1": {
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "factscore": {
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "n": 1
+      },
+      "Tipos de escola": {
+        "precision": {
+          "mean": 0.2857142857142857,
+          "std": 0.2857142857142857
+        },
+        "recall": {
+          "mean": 0.5833333333333334,
+          "std": 0.25
+        },
+        "f1": {
+          "mean": 0.3389830508474576,
+          "std": 0.3389830508474576
+        },
+        "factscore": {
+          "mean": 0.9285714285714286,
+          "std": 0.07142857142857145
+        },
+        "n": 2
+      }
+    },
+    "n_units": 50,
+    "seeds": [
+      42
+    ]
+  },
+  "per_seed": [
+    {
+      "seed": 42,
+      "precision": 0.5076287001287001,
+      "recall": 0.39161904761904753,
+      "f1": 0.3956248479375939,
+      "factscore": 0.6175978120978123,
+      "rows": [
+        {
+          "id": "substituicao_membros__prof__006",
+          "lang": "pt",
+          "intent": "Substituicao de membros",
+          "persona": "prof",
+          "question": "ate quando posso trocar um aluno da equipe?",
+          "n_gold_atoms": 3,
+          "n_pred_atoms": 2,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "factscore": 0.0,
+          "missed_gold": [
+            "O professor coordenador pode substituir qualquer membro da equipe antes do início da primeira fase online.",
+            "Depois do início da primeira fase online, o sistema permite apenas a exclusão do estudante.",
+            "Equipes classificadas para a Presencial nacional não podem substituir membros."
+          ],
+          "unsupported_pred": [
+            "Não encontrei essa informação nos documentos oficiais da OBG.",
+            "Para mais detalhes, contate obgeografia@unifal-mg.edu.br."
+          ]
+        },
+        {
+          "id": "contato_oficial__prof__035",
+          "lang": "pt",
+          "intent": "Contato oficial",
+          "persona": "prof",
+          "question": "qual o canal oficial pra tirar duvidas?",
+          "n_gold_atoms": 6,
+          "n_pred_atoms": 2,
+          "precision": 0.5,
+          "recall": 0.16666666666666666,
+          "f1": 0.25,
+          "factscore": 1.0,
+          "missed_gold": [
+            "As informações oficiais são divulgadas exclusivamente no site obgeografia.com.br.",
+            "As respostas para dúvidas e recursos são dadas em até 4 dias úteis.",
+            "Não há atendimento por telefone.",
+            "Não há atendimento por e-mail pessoal.",
+            "Não há atendimento por redes sociais pessoais."
+          ],
+          "unsupported_pred": []
+        },
+        {
+          "id": "navegadores__prof__062",
+          "lang": "pt",
+          "intent": "Navegadores suportados",
+          "persona": "prof",
+          "question": "posso fazer a prova pelo celular?",
+          "n_gold_atoms": 7,
+          "n_pred_atoms": 2,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "factscore": 0.0,
+          "missed_gold": [
+            "A Comissao Organizadora garante o funcionamento para as versoes mais recentes do Firefox.",
+            "A Comissao Organizadora garante o funcionamento para as versoes mais recentes do Google Chrome.",
+            "Nao e recomendado usar versoes antigas do Firefox.",
+            "Nao e recomendado usar versoes antigas do Google Chrome.",
+            "Nao e recomendado usar outros navegadores.",
+            "Nao e recomendado usar versoes de tablet.",
+            "Nao e recomendado usar versoes de celular."
+          ],
+          "unsupported_pred": [
+            "Não encontrei essa informação nos documentos oficiais da OBG.",
+            "Para mais detalhes, contate obgeografia@unifal-mg.edu.br."
+          ]
+        },
+        {
+          "id": "temas_ods__prof__163",
+          "lang": "en",
+          "intent": "Temas e ODS das questoes",
+          "persona": "prof",
+          "question": "which topics are covered in the OBG questions?",
+          "n_gold_atoms": 5,
+          "n_pred_atoms": 2,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "factscore": 0.0,
+          "missed_gold": [
+            "As questões são categorizadas em áreas temáticas de Geografia.",
+            "As áreas temáticas de Geografia incluem econômica, cultural, social, política, agrária, ambiental, urbana e física.",
+            "As questões são categorizadas em geotecnologias.",
+            "As geotecnologias incluem geoprocessamento, sensoriamento remoto e cartografia.",
+            "As questões estão associadas aos Objetivos de Desenvolvimento Sustentável (ODS)."
+          ],
+          "unsupported_pred": [
+            "Não encontrei essa informação nos documentos oficiais da OBG.",
+            "Para mais detalhes, contate obgeografia@unifal-mg.edu.br."
+          ]
+        },
+        {
+          "id": "nome_equipe__aluno__189",
+          "lang": "pt",
+          "intent": "Nome da equipe",
+          "persona": "aluno",
+          "question": "escrevemos o nome da equipe errado, tem como corrigir?",
+          "n_gold_atoms": 5,
+          "n_pred_atoms": 3,
+          "precision": 1.0,
+          "recall": 0.4,
+          "f1": 0.5714285714285715,
+          "factscore": 0.0,
+          "missed_gold": [
+            "As equipes devem criar um nome.",
+            "O nome será usado em todas as etapas da competição.",
+            "Os nomes das equipes devem ser escolhidos com critério."
+          ],
+          "unsupported_pred": [
+            "Não é possível corrigir o nome da equipe uma vez que ele foi escolhido e registrado.",
+            "Os nomes das equipes não serão alterados, salvo exceções mencionadas nos regulamentos.",
+            "É importante que a equipe verifique se realmente deseja aquele nome antes de finalizar a inscrição."
+          ]
+        },
+        {
+          "id": "classificacao_presencial__coord_escola__070",
+          "lang": "pt",
+          "intent": "Classificacao para a presencial",
+          "persona": "coord_escola",
+          "question": "quantas equipes por estado vao pra presencial?",
+          "n_gold_atoms": 5,
+          "n_pred_atoms": 4,
+          "precision": 1.0,
+          "recall": 0.8,
+          "f1": 0.888888888888889,
+          "factscore": 1.0,
+          "missed_gold": [
+            "A seleção usa os pontos das três fases online."
+          ],
+          "unsupported_pred": []
+        },
+        {
+          "id": "gabarito__aluno__026",
+          "lang": "pt",
+          "intent": "Divulgacao do gabarito",
+          "persona": "aluno",
+          "question": "quando sai o gabarito?",
+          "n_gold_atoms": 2,
+          "n_pred_atoms": 2,
+          "precision": 0.5,
+          "recall": 0.5,
+          "f1": 0.5,
+          "factscore": 0.5,
+          "missed_gold": [
+            "A Comissão não fornece explicações sobre o conteúdo das questões após as fases."
+          ],
+          "unsupported_pred": [
+            "A divulgação dos gabaritos das Olimpíadas Brasileiras de Geografia ocorrerá no dia 20/08/2026."
+          ]
+        },
+        {
+          "id": "classificacao_presencial__prof__028",
+          "lang": "pt",
+          "intent": "Classificacao para a presencial",
+          "persona": "prof",
+          "question": "como minha equipe se classifica pra fase presencial?",
+          "n_gold_atoms": 3,
+          "n_pred_atoms": 6,
+          "precision": 0.16666666666666666,
+          "recall": 0.0,
+          "f1": 0.0,
+          "factscore": 0.16666666666666666,
+          "missed_gold": [
+            "A Fase Presencial é destinada a três equipes por estado, incluindo o Distrito Federal.",
+            "As três equipes são: uma de Escola Particular, uma de Escola Pública Regular e uma de Escola Pública com Acesso Seletivo.",
+            "A seleção usa os pontos das três fases online."
+          ],
+          "unsupported_pred": [
+            "Os critérios de classificação para a fase presencial das Olimpíadas Brasileiras de Geografia incluem a divulgação dos nomes das equipes classificadas.",
+            "A divulgação dos nomes das equipes classificadas ocorrerá em 01/09/2026.",
+            "As medalhas serão disponibilizadas com base na classificação das equipes nas três fases online.",
+            "As medalhas também serão disponibilizadas com base no resultado da fase final presencial.",
+            "Não há informações adicionais sobre outros critérios de classificação nos documentos."
+          ]
+        },
+        {
+          "id": "valor_inscricao__coord_escola__139",
+          "lang": "en",
+          "intent": "Valor da inscricao",
+          "persona": "coord_escola",
+          "question": "is there a registration fee?",
+          "n_gold_atoms": 2,
+          "n_pred_atoms": 2,
+          "precision": 0.5,
+          "recall": 0.5,
+          "f1": 0.5,
+          "factscore": 0.5,
+          "missed_gold": [
+            "Na 10a OBG 2025, a inscrição é gratuita para escolas particulares."
+          ],
+          "unsupported_pred": [
+            "As escolas particulares devem pagar R$ 65,00 por equipe para participar da Olimpíada Brasileira de Geografia."
+          ]
+        },
+        {
+          "id": "limite_equipes__coord_escola__173",
+          "lang": "pt",
+          "intent": "Limite de equipes",
+          "persona": "coord_escola",
+          "question": "quantas equipes a escola pode mandar?",
+          "n_gold_atoms": 2,
+          "n_pred_atoms": 3,
+          "precision": 0.6666666666666666,
+          "recall": 1.0,
+          "f1": 0.8,
+          "factscore": 1.0,
+          "missed_gold": [],
+          "unsupported_pred": []
+        },
+        {
+          "id": "prazo_dados__prof__022",
+          "lang": "pt",
+          "intent": "Prazo de preenchimento de dados",
+          "persona": "prof",
+          "question": "ate quando posso atualizar os dados dos alunos?",
+          "n_gold_atoms": 4,
+          "n_pred_atoms": 2,
+          "precision": 0.5,
+          "recall": 0.0,
+          "f1": 0.0,
+          "factscore": 0.0,
+          "missed_gold": [
+            "Recomenda-se preencher e conferir os dados antes do início da prova.",
+            "O prazo recomendado para preencher e conferir os dados é até 01/08.",
+            "O professor pode alterar os dados dos estudantes até 01/08.",
+            "A Comissão não presta suporte técnico de acesso durante a aplicação das provas."
+          ],
+          "unsupported_pred": [
+            "O prazo final para a atualização dos dados dos alunos foi até 01/08/2026.",
+            "Após 01/08/2026, não é possível realizar alterações nas informações dos estudantes."
+          ]
+        },
+        {
+          "id": "cnpj_inep_escola__coord_escola__188",
+          "lang": "pt",
+          "intent": "Corrigir dados da escola",
+          "persona": "coord_escola",
+          "question": "o nome da escola esta escrito errado no sistema, como ajusto?",
+          "n_gold_atoms": 9,
+          "n_pred_atoms": 4,
+          "precision": 0.75,
+          "recall": 0.4444444444444444,
+          "f1": 0.5581395348837209,
+          "factscore": 0.25,
+          "missed_gold": [
+            "Erros ou inexistência da escola na base devem ser corrigidos.",
+            "O ajuste deve ser solicitado pela equipe.",
+            "O responsável deve conferir o estado da escola.",
+            "O responsável deve conferir o CNPJ se a escola for particular.",
+            "O responsável deve conferir a Inscrição Estadual se a escola for pública."
+          ],
+          "unsupported_pred": [
+            "O responsável pela inscrição deve solicitar a correção dos dados através do ambiente 'Fale Conosco'.",
+            "O nome da escola está incorreto no sistema da Olimpíada Brasileira de Geografia.",
+            "Os demais dados incluem cidade, estado e endereço."
+          ]
+        },
+        {
+          "id": "presencial_min_membros__prof__007",
+          "lang": "pt",
+          "intent": "Minimo de membros na presencial",
+          "persona": "prof",
+          "question": "minha equipe pode ir pra presencial com 2 alunos?",
+          "n_gold_atoms": 2,
+          "n_pred_atoms": 3,
+          "precision": 0.3333333333333333,
+          "recall": 0.5,
+          "f1": 0.4,
+          "factscore": 1.0,
+          "missed_gold": [
+            "Equipes classificadas para a Fase Presencial nao podem participar com menos de dois membros."
+          ],
+          "unsupported_pred": []
+        },
+        {
+          "id": "recuperar_senha__prof__057",
+          "lang": "pt",
+          "intent": "Recuperar senha",
+          "persona": "prof",
+          "question": "como redefino a senha de acesso?",
+          "n_gold_atoms": 6,
+          "n_pred_atoms": 10,
+          "precision": 0.5,
+          "recall": 0.3333333333333333,
+          "f1": 0.4,
+          "factscore": 0.7,
+          "missed_gold": [
+            "Para recuperar a senha, use a opção do próprio sistema na tela de login.",
+            "Cada novo pedido invalida o anterior.",
+            "Recomenda-se aguardar pelo menos 30 minutos pela chegada do e-mail.",
+            "É necessário verificar o Spam."
+          ],
+          "unsupported_pred": [
+            "O professor ou coordenador da equipe deve inserir a nova senha para o estudante.",
+            "O professor ou coordenador da equipe deve confirmar a alteração da senha.",
+            "Aguardar meia hora garante que o link enviado não seja invalidado por um novo pedido."
+          ]
+        },
+        {
+          "id": "valor_inscricao__coord_escola__055",
+          "lang": "pt",
+          "intent": "Valor da inscricao",
+          "persona": "coord_escola",
+          "question": "a inscricao e paga para escola particular?",
+          "n_gold_atoms": 2,
+          "n_pred_atoms": 3,
+          "precision": 0.6666666666666666,
+          "recall": 0.5,
+          "f1": 0.5714285714285715,
+          "factscore": 0.6666666666666666,
+          "missed_gold": [
+            "Na 10a OBG 2025, a inscrição é gratuita para escolas particulares."
+          ],
+          "unsupported_pred": [
+            "O valor da taxa de inscrição para escolas particulares na Olimpíada Brasileira de Geografia é de R$ 65,00 por equipe."
+          ]
+        },
+        {
+          "id": "responder_todas__prof__151",
+          "lang": "en",
+          "intent": "Responder todas as questoes",
+          "persona": "prof",
+          "question": "what happens if a team leaves a whole phase blank?",
+          "n_gold_atoms": 5,
+          "n_pred_atoms": 3,
+          "precision": 0.3333333333333333,
+          "recall": 0.4,
+          "f1": 0.3636363636363636,
+          "factscore": 1.0,
+          "missed_gold": [
+            "A equipe deve responder todas as questões.",
+            "A equipe deve enviar as respostas dentro do prazo.",
+            "A equipe que é considerada desistente perde acesso às fases seguintes."
+          ],
+          "unsupported_pred": []
+        },
+        {
+          "id": "respostas_sistema__aluno__108",
+          "lang": "pt",
+          "intent": "Envio de respostas",
+          "persona": "aluno",
+          "question": "posso mandar as respostas por e-mail?",
+          "n_gold_atoms": 6,
+          "n_pred_atoms": 3,
+          "precision": 1.0,
+          "recall": 0.3333333333333333,
+          "f1": 0.5,
+          "factscore": 1.0,
+          "missed_gold": [
+            "O sistema salva rascunho automaticamente.",
+            "Durante a fase, a prova pode ser reaberta.",
+            "Durante a fase, o envio pode ser substituído.",
+            "Após o envio definitivo, a prova não pode ser alterada."
+          ],
+          "unsupported_pred": []
+        },
+        {
+          "id": "nome_social__aluno__008",
+          "lang": "pt",
+          "intent": "Nome social",
+          "persona": "aluno",
+          "question": "posso usar meu nome social no certificado?",
+          "n_gold_atoms": 4,
+          "n_pred_atoms": 3,
+          "precision": 1.0,
+          "recall": 0.75,
+          "f1": 0.8571428571428571,
+          "factscore": 1.0,
+          "missed_gold": [
+            "O uso do nome social é em cumprimento ao Decreto no 8.727/2016."
+          ],
+          "unsupported_pred": []
+        },
+        {
+          "id": "fases_estrutura__aluno__023",
+          "lang": "pt",
+          "intent": "Fases e estrutura das provas",
+          "persona": "aluno",
+          "question": "quantas fases tem a olimpiada?",
+          "n_gold_atoms": 7,
+          "n_pred_atoms": 3,
+          "precision": 0.3333333333333333,
+          "recall": 0.14285714285714285,
+          "f1": 0.2,
+          "factscore": 1.0,
+          "missed_gold": [
+            "Existem 3 fases online classificatórias.",
+            "A Fase 1 tem 25 questões de múltipla escolha.",
+            "A Fase 2 tem 25 questões de múltipla escolha.",
+            "A Fase 3 tem 15 questões que podem ser temáticas.",
+            "A fase final presencial tem atividades teóricas e práticas.",
+            "As atividades da fase final presencial são definidas em regulamento específico."
+          ],
+          "unsupported_pred": []
+        },
+        {
+          "id": "equipes_mesma_escola__coord_escola__129",
+          "lang": "en",
+          "intent": "Equipes de escolas diferentes",
+          "persona": "coord_escola",
+          "question": "can students from different schools be on the same team?",
+          "n_gold_atoms": 4,
+          "n_pred_atoms": 3,
+          "precision": 0.6666666666666666,
+          "recall": 0.5,
+          "f1": 0.5714285714285715,
+          "factscore": 0.6666666666666666,
+          "missed_gold": [
+            "Nao sao permitidas equipes com alunos de escolas da mesma rede de ensino.",
+            "Nao sao permitidas equipes com alunos de escolas da mesma mantenedora."
+          ],
+          "unsupported_pred": [
+            "Os membros da equipe podem ser de salas ou séries diferentes."
+          ]
+        },
+        {
+          "id": "senha_incompativel__prof__059",
+          "lang": "pt",
+          "intent": "Senha recuperada incompativel / navegador",
+          "persona": "prof",
+          "question": "o aluno diz que a senha esta incompativel, alguma dica?",
+          "n_gold_atoms": 5,
+          "n_pred_atoms": 5,
+          "precision": 0.4,
+          "recall": 0.2,
+          "f1": 0.26666666666666666,
+          "factscore": 0.8,
+          "missed_gold": [
+            "Recomenda-se limpar o cache e o histórico.",
+            "É recomendado acessar com a senha enviada pelo sistema.",
+            "É recomendado solicitar nova senha se necessário.",
+            "É recomendado tentar outro navegador, como Firefox ou Microsoft Edge."
+          ],
+          "unsupported_pred": [
+            "O compartilhamento da nova senha garante um acesso seguro e direto à plataforma."
+          ]
+        },
+        {
+          "id": "elaboracao_questoes__coord_olimp__197",
+          "lang": "pt",
+          "intent": "Diretrizes de elaboracao de questoes",
+          "persona": "coord_olimp",
+          "question": "preciso colocar a explicacao da alternativa correta?",
+          "n_gold_atoms": 6,
+          "n_pred_atoms": 3,
+          "precision": 0.3333333333333333,
+          "recall": 0.16666666666666666,
+          "f1": 0.2222222222222222,
+          "factscore": 1.0,
+          "missed_gold": [
+            "Para elaborar questões, recomenda-se priorizar análises interpretativas.",
+            "É recomendado usar mapas, gráficos e tabelas.",
+            "É importante basear-se em fontes científicas como SciELO, CAPES e Scopus.",
+            "Deve-se seguir a BNCC.",
+            "É aconselhável testar a questão em IAs generativas para torná-la resistente."
+          ],
+          "unsupported_pred": []
+        },
+        {
+          "id": "nome_social__prof__050",
+          "lang": "pt",
+          "intent": "Nome social",
+          "persona": "prof",
+          "question": "como funciona o nome social no cadastro?",
+          "n_gold_atoms": 4,
+          "n_pred_atoms": 5,
+          "precision": 0.8,
+          "recall": 0.75,
+          "f1": 0.7741935483870969,
+          "factscore": 0.8,
+          "missed_gold": [
+            "O uso do nome social é em cumprimento ao Decreto no 8.727/2016."
+          ],
+          "unsupported_pred": [
+            "Os participantes podem atualizar os dados no sistema."
+          ]
+        },
+        {
+          "id": "senha_incompativel__aluno__143",
+          "lang": "en",
+          "intent": "Senha recuperada incompativel / navegador",
+          "persona": "aluno",
+          "question": "my new password is not working, what should I do?",
+          "n_gold_atoms": 5,
+          "n_pred_atoms": 7,
+          "precision": 0.7142857142857143,
+          "recall": 0.6,
+          "f1": 0.6521739130434783,
+          "factscore": 1.0,
+          "missed_gold": [
+            "É recomendado acessar com a senha enviada pelo sistema.",
+            "É recomendado tentar outro navegador, como Firefox ou Microsoft Edge."
+          ],
+          "unsupported_pred": []
+        },
+        {
+          "id": "cnpj_inep_escola__coord_escola__166",
+          "lang": "en",
+          "intent": "Corrigir dados da escola",
+          "persona": "coord_escola",
+          "question": "the school's data is wrong, how do I fix it?",
+          "n_gold_atoms": 9,
+          "n_pred_atoms": 4,
+          "precision": 0.75,
+          "recall": 0.4444444444444444,
+          "f1": 0.5581395348837209,
+          "factscore": 0.5,
+          "missed_gold": [
+            "Erros ou inexistência da escola na base devem ser corrigidos.",
+            "O ajuste deve ser solicitado pela equipe.",
+            "O responsável deve conferir o estado da escola.",
+            "O responsável deve conferir o CNPJ se a escola for particular.",
+            "O responsável deve conferir a Inscrição Estadual se a escola for pública."
+          ],
+          "unsupported_pred": [
+            "O responsável pela inscrição deve solicitar a correção de dados imprecisos na Olimpíada Brasileira de Geografia.",
+            "Os dados a serem verificados incluem nome da escola, cidade, estado e endereço."
+          ]
+        },
+        {
+          "id": "fases_estrutura__aluno__107",
+          "lang": "pt",
+          "intent": "Fases e estrutura das provas",
+          "persona": "aluno",
+          "question": "as provas sao de multipla escolha?",
+          "n_gold_atoms": 7,
+          "n_pred_atoms": 4,
+          "precision": 1.0,
+          "recall": 0.42857142857142855,
+          "f1": 0.6,
+          "factscore": 1.0,
+          "missed_gold": [
+            "Existem 3 fases online classificatórias.",
+            "Existe 1 Fase Final Presencial.",
+            "A fase final presencial tem atividades teóricas e práticas.",
+            "As atividades da fase final presencial são definidas em regulamento específico."
+          ],
+          "unsupported_pred": []
+        },
+        {
+          "id": "cadastro_vs_inscricao__coord_escola__056",
+          "lang": "pt",
+          "intent": "Cadastro nao e inscricao",
+          "persona": "coord_escola",
+          "question": "cadastrar os alunos ja conta como inscricao?",
+          "n_gold_atoms": 4,
+          "n_pred_atoms": 3,
+          "precision": 0.6666666666666666,
+          "recall": 0.25,
+          "f1": 0.36363636363636365,
+          "factscore": 0.6666666666666666,
+          "missed_gold": [
+            "A confirmacao de inscricao se da pelo pagamento.",
+            "A confirmacao de inscricao se da em ate 3 dias uteis.",
+            "Nao ha devolucao de valores de inscricoes pagas."
+          ],
+          "unsupported_pred": [
+            "Para que a inscrição seja válida, é necessário que a confirmação dos membros em uma equipe ocorra."
+          ]
+        },
+        {
+          "id": "classificacao_presencial__prof__154",
+          "lang": "en",
+          "intent": "Classificacao para a presencial",
+          "persona": "prof",
+          "question": "how are teams selected for the in-person phase?",
+          "n_gold_atoms": 5,
+          "n_pred_atoms": 8,
+          "precision": 0.125,
+          "recall": 0.2,
+          "f1": 0.15384615384615385,
+          "factscore": 0.125,
+          "missed_gold": [
+            "A Fase Presencial é destinada a três equipes por estado.",
+            "As três equipes incluem uma de Escola Particular.",
+            "As três equipes incluem uma de Escola Pública Regular.",
+            "As três equipes incluem uma de Escola Pública com Acesso Seletivo."
+          ],
+          "unsupported_pred": [
+            "A divulgação das equipes classificadas ocorrerá em 01/09/2026.",
+            "As equipes que se destacarem receberão certificados de medalhas, conforme a classificação por estado.",
+            "A Fase Final Presencial está programada para a última semana de novembro de 2026.",
+            "A data exata e o local da Fase Final Presencial ainda não foram definidos.",
+            "Os medalhistas da Fase Final Presencial poderão participar do processo de seleção para compor a equipe brasileira que representará o país na International Geography Olympiad (iGeo) 2027.",
+            "Os medalhistas devem estar matriculados na Educação Básica até 30/06/2027.",
+            "Os medalhistas devem ter entre 16 e 19 anos em 30/06/2027."
+          ]
+        },
+        {
+          "id": "equipe_composicao__aluno__191",
+          "lang": "pt",
+          "intent": "Composicao da equipe",
+          "persona": "aluno",
+          "question": "precisa de professor pra inscrever a equipe?",
+          "n_gold_atoms": 3,
+          "n_pred_atoms": 6,
+          "precision": 0.3333333333333333,
+          "recall": 0.3333333333333333,
+          "f1": 0.3333333333333333,
+          "factscore": 0.5,
+          "missed_gold": [
+            "Cada equipe é formada por 3 estudantes.",
+            "Cada equipe é formada por 1 professor(a) orientador(a)."
+          ],
+          "unsupported_pred": [
+            "O professor orientador deve inserir e atualizar os dados no sistema.",
+            "O professor orientador deve acompanhar as questões relacionadas à participação da equipe.",
+            "Em casos excepcionais, outro membro da instituição pode exercer a função de inscrição."
+          ]
+        },
+        {
+          "id": "equipe_composicao__prof__001",
+          "lang": "pt",
+          "intent": "Composicao da equipe",
+          "persona": "prof",
+          "question": "quantos alunos formam uma equipe?",
+          "n_gold_atoms": 3,
+          "n_pred_atoms": 3,
+          "precision": 0.6666666666666666,
+          "recall": 0.6666666666666666,
+          "f1": 0.6666666666666666,
+          "factscore": 1.0,
+          "missed_gold": [
+            "Cada equipe é formada por 1 professor(a) orientador(a)."
+          ],
+          "unsupported_pred": []
+        },
+        {
+          "id": "respostas_sistema__aluno__150",
+          "lang": "en",
+          "intent": "Envio de respostas",
+          "persona": "aluno",
+          "question": "can I change my answers after submitting?",
+          "n_gold_atoms": 6,
+          "n_pred_atoms": 4,
+          "precision": 0.75,
+          "recall": 0.16666666666666666,
+          "f1": 0.27272727272727276,
+          "factscore": 1.0,
+          "missed_gold": [
+            "As respostas são feitas exclusivamente pelo sistema da OBG.",
+            "As respostas nunca são feitas por e-mail.",
+            "O sistema salva rascunho automaticamente.",
+            "Durante a fase, a prova pode ser reaberta.",
+            "Durante a fase, o envio pode ser substituído."
+          ],
+          "unsupported_pred": []
+        },
+        {
+          "id": "desempate__coord_escola__071",
+          "lang": "pt",
+          "intent": "Criterios de desempate",
+          "persona": "coord_escola",
+          "question": "qual fase conta primeiro no criterio de desempate?",
+          "n_gold_atoms": 4,
+          "n_pred_atoms": 3,
+          "precision": 0.3333333333333333,
+          "recall": 0.25,
+          "f1": 0.28571428571428575,
+          "factscore": 0.6666666666666666,
+          "missed_gold": [
+            "Em caso de empate após as três fases, os critérios são, nesta ordem: maior pontuação na Fase 2.",
+            "Em caso de empate após as três fases, os critérios são, nesta ordem: maior nota na Fase 3.",
+            "Em caso de empate após as três fases, os critérios são, nesta ordem: outros critérios definidos pela Comissão."
+          ],
+          "unsupported_pred": [
+            "Em caso de empate, a análise de desempenho em todas as etapas é realizada."
+          ]
+        },
+        {
+          "id": "equipes_mesma_escola__aluno__087",
+          "lang": "pt",
+          "intent": "Equipes de escolas diferentes",
+          "persona": "aluno",
+          "question": "posso fazer equipe com um amigo de outra escola?",
+          "n_gold_atoms": 4,
+          "n_pred_atoms": 4,
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.6666666666666666,
+          "factscore": 1.0,
+          "missed_gold": [
+            "Nao sao permitidas equipes com alunos de escolas da mesma rede de ensino.",
+            "Nao sao permitidas equipes com alunos de escolas da mesma mantenedora."
+          ],
+          "unsupported_pred": []
+        },
+        {
+          "id": "recursos__prof__114",
+          "lang": "pt",
+          "intent": "Recursos de questao",
+          "persona": "prof",
+          "question": "que tipo de argumento e aceito num recurso?",
+          "n_gold_atoms": 6,
+          "n_pred_atoms": 5,
+          "precision": 0.6,
+          "recall": 0.5,
+          "f1": 0.5454545454545454,
+          "factscore": 0.8,
+          "missed_gold": [
+            "Os recursos de revisão de questão são enviados pelo ambiente 'Fale Conosco'.",
+            "A opção para enviar recursos de revisão de questão é 'Revisão de Questão'.",
+            "Os recursos de revisão de questão devem ser enviados dentro do prazo do calendário."
+          ],
+          "unsupported_pred": [
+            "Solicitações que abordarem questões ideológicas e epistemológicas da Geografia serão desconsideradas."
+          ]
+        },
+        {
+          "id": "cnpj_inep_escola__prof__040",
+          "lang": "pt",
+          "intent": "Corrigir dados da escola",
+          "persona": "prof",
+          "question": "o CNPJ da escola saiu errado, como corrijo?",
+          "n_gold_atoms": 9,
+          "n_pred_atoms": 4,
+          "precision": 0.75,
+          "recall": 0.1111111111111111,
+          "f1": 0.19354838709677416,
+          "factscore": 0.25,
+          "missed_gold": [
+            "Erros ou inexistência da escola na base devem ser corrigidos.",
+            "O ajuste deve ser solicitado pela equipe.",
+            "O responsável deve conferir o nome da escola.",
+            "O responsável deve conferir a cidade da escola.",
+            "O responsável deve conferir o estado da escola.",
+            "O responsável deve conferir o endereço da escola.",
+            "O responsável deve conferir o CNPJ se a escola for particular.",
+            "O responsável deve conferir a Inscrição Estadual se a escola for pública."
+          ],
+          "unsupported_pred": [
+            "Para corrigir o CNPJ incorreto de uma escola, o professor deve solicitar a correção dos dados através do ambiente 'Fale Conosco' disponível no site da OBG.",
+            "Os dados da escola incluem nome, cidade, estado e endereço.",
+            "Instituições com nomes similares podem causar confusões."
+          ]
+        },
+        {
+          "id": "participantes_series__aluno__168",
+          "lang": "pt",
+          "intent": "Quem pode participar / series",
+          "persona": "aluno",
+          "question": "ja terminei o ensino medio mas to em cursinho, da pra participar?",
+          "n_gold_atoms": 5,
+          "n_pred_atoms": 5,
+          "precision": 0.8,
+          "recall": 0.6,
+          "f1": 0.6857142857142857,
+          "factscore": 1.0,
+          "missed_gold": [
+            "Os estudantes devem estar no 9o ano do Ensino Fundamental até o 3o (ou 4o, se houver) ano do Ensino Médio.",
+            "São aceitos ensino regular, profissionalizante, supletivo e EJA."
+          ],
+          "unsupported_pred": []
+        },
+        {
+          "id": "valor_inscricao__prof__097",
+          "lang": "pt",
+          "intent": "Valor da inscricao",
+          "persona": "prof",
+          "question": "tem taxa de inscricao esse ano?",
+          "n_gold_atoms": 2,
+          "n_pred_atoms": 2,
+          "precision": 0.0,
+          "recall": 0.5,
+          "f1": 0.0,
+          "factscore": 0.0,
+          "missed_gold": [
+            "Na 10a OBG 2025, a inscrição é gratuita para escolas particulares."
+          ],
+          "unsupported_pred": [
+            "A taxa de inscrição para as escolas particulares na 11ª Olimpíada Brasileira de Geografia é de R$ 65,00 por equipe.",
+            "As inscrições para escolas públicas na 11ª Olimpíada Brasileira de Geografia são gratuitas."
+          ]
+        },
+        {
+          "id": "certificados__coord_escola__181",
+          "lang": "pt",
+          "intent": "Certificados",
+          "persona": "coord_escola",
+          "question": "o certificado e fisico ou digital?",
+          "n_gold_atoms": 7,
+          "n_pred_atoms": 5,
+          "precision": 0.4,
+          "recall": 0.14285714285714285,
+          "f1": 0.21052631578947364,
+          "factscore": 0.8,
+          "missed_gold": [
+            "Os certificados ficam no sistema.",
+            "Os participantes devem imprimir os certificados até 31/12/2025.",
+            "A Comissão não emite segunda via dos certificados.",
+            "A Comissão não emite segunda via de edições anteriores dos certificados.",
+            "Os certificados são emitidos com base nos dados da inscrição.",
+            "Os dados da inscrição não serão corrigidos depois."
+          ],
+          "unsupported_pred": [
+            "Os certificados atestam a participação dos estudantes nas fases online."
+          ]
+        },
+        {
+          "id": "aluno_uma_equipe__coord_escola__086",
+          "lang": "pt",
+          "intent": "Aluno em mais de uma equipe",
+          "persona": "coord_escola",
+          "question": "o que acontece se um aluno entrar em duas equipes?",
+          "n_gold_atoms": 2,
+          "n_pred_atoms": 4,
+          "precision": 0.75,
+          "recall": 1.0,
+          "f1": 0.8571428571428571,
+          "factscore": 0.5,
+          "missed_gold": [],
+          "unsupported_pred": [
+            "Todas as equipes às quais o aluno pertence também serão desclassificadas.",
+            "O aluno pode estar cursando o ensino regular em mais de uma escola."
+          ]
+        },
+        {
+          "id": "presencial_min_membros__prof__091",
+          "lang": "pt",
+          "intent": "Minimo de membros na presencial",
+          "persona": "prof",
+          "question": "com dois membros a equipe ainda concorre a premio?",
+          "n_gold_atoms": 2,
+          "n_pred_atoms": 2,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "factscore": 0.0,
+          "missed_gold": [
+            "Equipes classificadas para a Fase Presencial nao podem participar com menos de dois membros.",
+            "Equipes que participarem com apenas dois membros nao concorrem a premiacoes por equipe."
+          ],
+          "unsupported_pred": [
+            "Não encontrei essa informação nos documentos oficiais da OBG.",
+            "Para mais detalhes, contate obgeografia@unifal-mg.edu.br."
+          ]
+        },
+        {
+          "id": "medalhas_fisicas__aluno__182",
+          "lang": "pt",
+          "intent": "Medalhas fisicas",
+          "persona": "aluno",
+          "question": "vou receber uma medalha de verdade pelo correio?",
+          "n_gold_atoms": 3,
+          "n_pred_atoms": 4,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "factscore": 1.0,
+          "missed_gold": [],
+          "unsupported_pred": []
+        },
+        {
+          "id": "responder_todas__aluno__067",
+          "lang": "pt",
+          "intent": "Responder todas as questoes",
+          "persona": "aluno",
+          "question": "preciso responder todas as questoes?",
+          "n_gold_atoms": 5,
+          "n_pred_atoms": 2,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "factscore": 0.0,
+          "missed_gold": [
+            "A equipe deve responder todas as questões.",
+            "A equipe deve enviar as respostas dentro do prazo.",
+            "Deixar uma fase inteira em branco elimina a equipe.",
+            "Deixar uma fase inteira em rascunho elimina a equipe.",
+            "A equipe que é considerada desistente perde acesso às fases seguintes."
+          ],
+          "unsupported_pred": [
+            "Não encontrei essa informação nos documentos oficiais da OBG.",
+            "Para mais detalhes, contate obgeografia@unifal-mg.edu.br."
+          ]
+        },
+        {
+          "id": "participantes_series__prof__190",
+          "lang": "en",
+          "intent": "Quem pode participar / series",
+          "persona": "prof",
+          "question": "which students are eligible to take part in the OBG?",
+          "n_gold_atoms": 5,
+          "n_pred_atoms": 6,
+          "precision": 0.3333333333333333,
+          "recall": 0.4,
+          "f1": 0.3636363636363636,
+          "factscore": 0.6666666666666666,
+          "missed_gold": [
+            "São aceitos ensino regular, profissionalizante, supletivo e EJA.",
+            "Quem já concluiu o Ensino Médio não pode participar.",
+            "Quem está no Ensino Superior não pode participar."
+          ],
+          "unsupported_pred": [
+            "Para a seleção para a iGeo 2027, os estudantes devem estar matriculados na Educação Básica até 30 de junho de 2027.",
+            "Os estudantes devem ter entre 16 e 19 anos em 30 de junho de 2027."
+          ]
+        },
+        {
+          "id": "respostas_sistema__aluno__024",
+          "lang": "pt",
+          "intent": "Envio de respostas",
+          "persona": "aluno",
+          "question": "como envio as respostas da prova?",
+          "n_gold_atoms": 6,
+          "n_pred_atoms": 4,
+          "precision": 0.5,
+          "recall": 0.3333333333333333,
+          "f1": 0.4,
+          "factscore": 0.75,
+          "missed_gold": [
+            "As respostas nunca são feitas por e-mail.",
+            "O sistema salva rascunho automaticamente.",
+            "Durante a fase, a prova pode ser reaberta.",
+            "Durante a fase, o envio pode ser substituído."
+          ],
+          "unsupported_pred": [
+            "A Comissão Organizadora não se responsabiliza por erros decorrentes de logins múltiplos e simultâneos de participantes."
+          ]
+        },
+        {
+          "id": "professor_orientador__coord_olimp__088",
+          "lang": "pt",
+          "intent": "Quem pode ser professor orientador",
+          "persona": "coord_olimp",
+          "question": "um coordenador de olimpiadas pode atuar como orientador?",
+          "n_gold_atoms": 6,
+          "n_pred_atoms": 3,
+          "precision": 0.3333333333333333,
+          "recall": 0.0,
+          "f1": 0.0,
+          "factscore": 0.6666666666666666,
+          "missed_gold": [
+            "O professor orientador deve pertencer ao corpo docente da escola.",
+            "O professor orientador pode orientar estagiários.",
+            "O professor orientador pode orientar plantonistas.",
+            "O professor orientador pode orientar coordenadores de olimpíadas.",
+            "Os estagiários, plantonistas e coordenadores de olimpíadas devem estar vinculados à escola.",
+            "Somente o professor orientador pode alterar a composição da equipe."
+          ],
+          "unsupported_pred": [
+            "É recomendado que um professor inscreva apenas a quantidade de equipes que consiga acompanhar adequadamente durante as fases da competição."
+          ]
+        },
+        {
+          "id": "medalhas_fisicas__prof__117",
+          "lang": "en",
+          "intent": "Medalhas fisicas",
+          "persona": "prof",
+          "question": "does the OBG send physical medals?",
+          "n_gold_atoms": 3,
+          "n_pred_atoms": 3,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "factscore": 1.0,
+          "missed_gold": [],
+          "unsupported_pred": []
+        },
+        {
+          "id": "calendario__aluno__039",
+          "lang": "pt",
+          "intent": "Calendario / datas",
+          "persona": "aluno",
+          "question": "quando vao ser as provas?",
+          "n_gold_atoms": 10,
+          "n_pred_atoms": 11,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "factscore": 0.0,
+          "missed_gold": [
+            "O calendário oficial da 10a OBG 2025 foi divulgado.",
+            "As inscrições para a 10a OBG 2025 ocorrem de 12/05 a 11/07.",
+            "As inscrições foram prorrogadas até 21/07.",
+            "A Fase 1 da 10a OBG 2025 ocorre de 05/08 a 08/08.",
+            "A Fase 2 da 10a OBG 2025 ocorre de 12/08 a 15/08.",
+            "A Fase 3 da 10a OBG 2025 ocorre de 19/08 a 21/08.",
+            "Os gabaritos da 10a OBG 2025 serão divulgados em 22/08.",
+            "Os recursos podem ser feitos de 22/08 a 23/08.",
+            "Os resultados da 10a OBG 2025 serão divulgados em 01/09.",
+            "A Fase Final Presencial da 10a OBG 2025 ocorre de 25/11 a 28/11/2025."
+          ],
+          "unsupported_pred": [
+            "A 1ª Fase (online) da Olimpíada Brasileira de Geografia foi encerrada em 06/08/2026.",
+            "A 2ª Fase (online) da Olimpíada Brasileira de Geografia abrirá em 11/08/2026.",
+            "A 2ª Fase (online) da Olimpíada Brasileira de Geografia fechará em 13/08/2026.",
+            "A 3ª Fase (online) da Olimpíada Brasileira de Geografia abrirá em 18/08/2026.",
+            "A 3ª Fase (online) da Olimpíada Brasileira de Geografia fechará em 19/08/2026.",
+            "A divulgação dos gabaritos da Olimpíada Brasileira de Geografia ocorrerá em 20/08/2026.",
+            "A interposição de recursos da Olimpíada Brasileira de Geografia abrirá em 20/08/2026.",
+            "A interposição de recursos da Olimpíada Brasileira de Geografia fechará em 21/08/2026.",
+            "A divulgação dos resultados e das equipes classificadas para a Fase Presencial da Olimpíada Brasileira de Geografia será em 01/09/2026.",
+            "Não há datas definidas para a Fase Final Presencial da Olimpíada Brasileira de Geografia.",
+            "A Fase Final Presencial da Olimpíada Brasileira de Geografia ocorrerá na última semana de novembro de 2026."
+          ]
+        },
+        {
+          "id": "tipos_escola__coord_escola__137",
+          "lang": "en",
+          "intent": "Tipos de escola",
+          "persona": "coord_escola",
+          "question": "what are the school categories for the in-person phase?",
+          "n_gold_atoms": 6,
+          "n_pred_atoms": 3,
+          "precision": 0.0,
+          "recall": 0.3333333333333333,
+          "f1": 0.0,
+          "factscore": 1.0,
+          "missed_gold": [
+            "As escolas são categorizadas em Escolas Particulares.",
+            "As escolas são categorizadas em Escolas Públicas de Ensino Regular.",
+            "As Escolas Públicas com Acesso Seletivo incluem escolas técnicas/profissionalizantes.",
+            "As Escolas Públicas com Acesso Seletivo incluem escolas militares."
+          ],
+          "unsupported_pred": []
+        },
+        {
+          "id": "tipos_escola__coord_escola__011",
+          "lang": "pt",
+          "intent": "Tipos de escola",
+          "persona": "coord_escola",
+          "question": "quais sao as categorias de escola na olimpiada?",
+          "n_gold_atoms": 6,
+          "n_pred_atoms": 7,
+          "precision": 0.5714285714285714,
+          "recall": 0.8333333333333334,
+          "f1": 0.6779661016949152,
+          "factscore": 0.8571428571428571,
+          "missed_gold": [
+            "As escolas são categorizadas em Escolas Públicas de Ensino Regular."
+          ],
+          "unsupported_pred": [
+            "As categorias de escolas participantes na Olimpíada Brasileira de Geografia são Escolas Públicas."
+          ]
+        },
+        {
+          "id": "temas_ods__coord_olimp__185",
+          "lang": "pt",
+          "intent": "Temas e ODS das questoes",
+          "persona": "coord_olimp",
+          "question": "existe uma matriz de temas e ODS para orientar as questoes?",
+          "n_gold_atoms": 5,
+          "n_pred_atoms": 37,
+          "precision": 0.05405405405405406,
+          "recall": 0.6,
+          "f1": 0.09917355371900827,
+          "factscore": 0.08108108108108109,
+          "missed_gold": [
+            "As questões são categorizadas em geotecnologias.",
+            "As geotecnologias incluem geoprocessamento, sensoriamento remoto e cartografia."
+          ],
+          "unsupported_pred": [
+            "A Geografia Econômica inclui a organização espacial das atividades econômicas.",
+            "A Geografia Econômica inclui agricultura, indústria e serviços.",
+            "A Geografia Econômica inclui impactos ambientais e sociais da exploração de recursos naturais.",
+            "A Geografia Econômica inclui a distribuição de riqueza e desigualdades regionais.",
+            "Os ODS relacionados à Geografia Econômica são ODS 8 e ODS 9.",
+            "A Geografia Cultural inclui diversidade cultural e suas expressões espaciais.",
+            "Os ODS relacionados à Geografia Cultural são ODS 10 e ODS 15.",
+            "O Sensoriamento Remoto inclui monitoramento de desmatamento e mudanças no uso do solo.",
+            "O Sensoriamento Remoto inclui análise de desastres naturais.",
+            "O Sensoriamento Remoto inclui estudo de mudanças climáticas e seus impactos.",
+            "Os ODS relacionados ao Sensoriamento Remoto são ODS 13 e ODS 15.",
+            "A Geografia Histórica inclui processos de colonização e transformação do território.",
+            "A Geografia Histórica inclui evolução das cidades e regiões.",
+            "A Geografia Histórica inclui impacto de eventos históricos na organização do espaço.",
+            "O ODS relacionado à Geografia Histórica é ODS 11.",
+            "A Geografia da Saúde inclui distribuição espacial de doenças.",
+            "A Geografia da Saúde inclui desigualdades no acesso à saúde.",
+            "A Geografia da Saúde inclui impactos ambientais na saúde.",
+            "Os ODS relacionados à Geografia da Saúde são ODS 3 e ODS 6.",
+            "A Geografia do Transporte inclui infraestrutura de transporte e desenvolvimento regional.",
+            "A Geografia do Transporte inclui mobilidade urbana e desafios dos grandes centros.",
+            "O ODS relacionado à Geografia do Transporte é ODS 16.",
+            "A Geografia do Desenvolvimento inclui teorias do desenvolvimento e subdesenvolvimento.",
+            "A Geografia do Desenvolvimento inclui indicadores socioeconômicos e distribuição espacial.",
+            "A Geografia do Desenvolvimento inclui políticas públicas para redução de desigualdades.",
+            "Os ODS relacionados à Geografia do Desenvolvimento são ODS 10.",
+            "A Geologia Geral inclui estrutura interna da Terra.",
+            "A Geologia Geral inclui tipos de rochas e ciclos geológicos.",
+            "A Geologia Geral inclui tectônica de placas e fenômenos associados.",
+            "O ODS relacionado à Geologia Geral é ODS 12.",
+            "A Pedologia inclui formação e classificação dos solos.",
+            "A Pedologia inclui práticas de conservação do solo.",
+            "A Pedologia inclui combate à desertificação.",
+            "Os ODS relacionados à Pedologia são ODS 2 e ODS 15."
+          ]
+        }
+      ]
+    }
+  ]
+}

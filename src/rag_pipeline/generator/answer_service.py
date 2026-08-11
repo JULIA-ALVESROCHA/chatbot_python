@@ -1,29 +1,51 @@
-from typing import List, Dict, Any, Optional
+"""
+src/rag_pipeline/generator/answer_service.py
+
+MUDANCAS
+--------
+1. max_tokens 300 -> 800. Era teto duplo junto com "2-3 frases": as
+   respostas gold têm 5,08 fatos atômicos e não cabiam. Pior, enumerações
+   eram cortadas no meio da frase e o decompositor transformava o fragmento
+   em fato malformado, derrubando precisão E recall.
+
+2. ChatPromptTemplate REMOVIDO. Ele trata toda {chave} como variável, e o
+   SYSTEM_PROMPT novo tem {refusal_pt}/{refusal_en}, o ANSWER_TEMPLATE tem
+   {calendario}. format_messages() levantaria KeyError. Usamos as funções
+   answer_prompt()/system_prompt(), que fazem a injeção corretamente.
+
+3. refused: bool no retorno. Hoje a avaliação não distingue "recusou" de
+   "errou" — 39,5% das linhas são recusas e contaminam o FactScore.
+
+4. _detect_phase MANTIDO. O rótulo "aplica-se a: <fase>" é real e o prompt
+   depende dele. (Correção: eu havia dito que não existia.)
+
+5. _extract_sources passa a preferir metadata["item"] ao regex sobre o texto.
+   O splitter novo já grava o número do item; o regex pegava qualquer
+   sequência numérica do chunk, inclusive datas e valores.
+"""
+
+from typing import Any, Dict, List, Optional
 import logging
 import re
 
 from langchain_core.documents import Document
 from langchain_openai import ChatOpenAI
-from langchain_core.prompts import ChatPromptTemplate
 
-
-from .templates import (
-    SYSTEM_PROMPT,
-    ANSWER_TEMPLATE,
-    FALLBACK_RESPONSE,
-)
 from src.app.core.config import settings
+from src.rag_pipeline.generator.templates import (
+    answer_prompt,
+    system_prompt,
+    is_refusal,
+    refusal,
+)
 
 logger = logging.getLogger("bgo_chatbot.generator")
 
 
 class AnswerService:
     """
-    Service responsible for generating the final answer
-    based on reranked documents and a user question.
-
-    This class contains NO prompt text definitions.
-    All prompt content is delegated to templates.py.
+    Gera a resposta final a partir dos documentos reranqueados.
+    Nenhum texto de prompt vive aqui — tudo em templates.py.
     """
 
     def __init__(self, model_name: str = None, temperature: float = None):
@@ -35,107 +57,120 @@ class AnswerService:
                 else getattr(settings, "generation_temperature", 0.1)
             ),
             request_timeout=30,
-            max_tokens=300,
-        )
-
-        self.prompt = ChatPromptTemplate.from_messages(
-            [
-                ("system", SYSTEM_PROMPT),
-                ("human", ANSWER_TEMPLATE),
-            ]
+            # 800 comporta uma enumeração completa sem truncar. Se subir mais,
+            # o modelo começa a divagar (é o problema oposto, documentado no
+            # CanLegalRAGBench: respostas longas com material irrelevante).
+            max_tokens=getattr(settings, "generation_max_tokens", 800),
         )
 
     async def generate_answer(
         self,
         question: str,
         documents: List[Document],
-        language: str = "pt-BR",
-        chat_history: str = ""
+        language: str = "pt",
+        chat_history: str = "",
     ) -> Dict[str, Any]:
         """
-        Generates a grounded answer using only the provided documents.
-        
-        Returns:
-            Dict with keys:
-                - answer: str - The generated answer text WITH citations
-                - sources: List[Dict] - Source metadata for reference
+        Retorna:
+            answer:   str
+            sources:  List[Dict]
+            refused:  bool   <- novo; use no eval e no cache
         """
+        # Normaliza 'pt-BR' -> 'pt'. langdetect devolve 'pt'/'en'; o default
+        # antigo era 'pt-BR' e o prompt só testava == 'en'.
+        language = "en" if str(language).lower().startswith("en") else "pt"
 
         if not documents:
-            logger.warning("No documents provided for answer generation")
-            return {
-                "answer": FALLBACK_RESPONSE,
-                "sources": []
-            }
+            # Com o piso min_chunks no _fuse_and_select isto virou caminho
+            # raro, mas mantemos a sentinela por segurança.
+            logger.warning("Nenhum documento recebido para geração")
+            return {"answer": refusal(language), "sources": [], "refused": True}
 
         try:
-            # Build context with source labels for the LLM
             context = self._build_context_with_labels(documents)
-            
-            logger.debug("Generating answer with %d documents", len(documents))
-            
-            response = await self.llm.ainvoke(
-                self.prompt.format_messages(
-                    question=question,
+            logger.debug("Gerando resposta com %d documentos", len(documents))
+
+            messages = [
+                {"role": "system", "content": system_prompt(language)},
+                {"role": "user", "content": answer_prompt(
                     context=context,
-                    language=language,
-                    chat_history=chat_history or "(sem histórico)",
-                )
-            )
+                    question=question,
+                    chat_history=chat_history,
+                )},
+            ]
 
-            answer_text = response.content
-            
-            if not answer_text or not answer_text.strip():
-                logger.warning("LLM returned empty response, using fallback")
-                answer_text = FALLBACK_RESPONSE
+            response = await self.llm.ainvoke(messages)
+            answer_text = (response.content or "").strip()
 
-            # Abstenção/pedido de reformulação não deve exibir fontes:
-            # citações sob "não sei" passam falsa autoridade ao usuário.
-            if self._is_abstention(answer_text):
+            if not answer_text:
+                logger.warning("LLM devolveu resposta vazia")
+                return {"answer": refusal(language), "sources": [], "refused": True}
+
+            answer_text = self._clean(answer_text)
+
+            # Duas camadas: sentinela exata (barata e confiável) e heurística
+            # de segurança para variações que o modelo insista em produzir.
+            refused = is_refusal(answer_text) or self._looks_like_abstention(answer_text)
+
+            if refused:
+                # Citação sob "não sei" passa falsa autoridade ao usuário.
                 sources = []
+                # Normaliza qualquer variação para a sentinela canônica, para
+                # que o avaliador consiga detectá-la por comparação exata.
+                if not is_refusal(answer_text):
+                    logger.info("Recusa fora do padrão normalizada: %r", answer_text[:80])
+                    answer_text = refusal(language)
             else:
                 sources = self._extract_sources(documents)
 
-            # Ensure answer has citations in the correct format
-            answer_with_citations = self._ensure_citations(answer_text, sources)
-            
-            logger.info("Successfully generated answer (len=%d chars) with %d sources", 
-                       len(answer_with_citations), len(sources))
-            
-            return {
-                "answer": answer_with_citations,
-                "sources": sources
-            }
+            logger.info(
+                "Resposta gerada (len=%d, fontes=%d, recusa=%s)",
+                len(answer_text), len(sources), refused,
+            )
+            return {"answer": answer_text, "sources": sources, "refused": refused}
 
         except Exception as e:
-            logger.exception("Error during answer generation: %s", e)
-            # Re-raise to allow pipeline retry logic to handle it
+            logger.exception("Erro na geração da resposta: %s", e)
             raise
 
+    # ------------------------------------------------------------ limpeza
     @staticmethod
-    def _is_abstention(text: str) -> bool:
-        """Detecta respostas de abstenção/reformulação (sem conteúdo factual)."""
-        t = (text or "").lower()
-        patterns = [
-            "não encontrei", "nao encontrei",
-            "não está no regulamento", "nao esta no regulamento",
-            "não consta", "nao consta",
-            "não está clara", "nao esta clara",
-            "reformul",                      # reformule / reformular
-            "pergunta está incompleta", "pergunta esta incompleta",
-            "não fornece informações suficientes",
-            "nao fornece informacoes suficientes",
-            "não é mencionad", "nao e mencionad",
-            "not mentioned", "could not find", "i did not find",
-            "please rephrase",
-        ]
-        return any(p in t for p in patterns)
+    def _clean(text: str) -> str:
+        """Remove prefixos e rodapés de citação que o modelo às vezes inventa."""
+        text = re.sub(r"^\s*(Resposta|Response)\s*:\s*", "", text, flags=re.IGNORECASE)
+        for pat in (
+            r"\n\s*(você pode encontrar|encontre mais em|consulte|fonte|fontes|referência)s?\s*:.*$",
+        ):
+            text = re.sub(pat, "", text, flags=re.IGNORECASE | re.DOTALL)
+        return text.strip()
 
     @staticmethod
+    def _looks_like_abstention(text: str) -> bool:
+        """
+        Rede de segurança. A sentinela canônica é o caminho principal; isto
+        pega variações. Mantido estreito de propósito: padrões largos como
+        "não consta" pegariam respostas legítimas ("não consta limite de
+        equipes por escola"), marcando conteúdo válido como recusa.
+        """
+        t = (text or "").lower()
+        return any(p in t for p in (
+            "não encontrei essa informação", "nao encontrei essa informacao",
+            "não encontrei informações", "nao encontrei informacoes",
+            "o contexto não menciona", "o contexto nao menciona",
+            "não há informações nos documentos", "nao ha informacoes nos documentos",
+            "os documentos não especificam", "os documentos nao especificam",
+            "i could not find this information",
+            "the context does not mention",
+        ))
+
+    # ------------------------------------------------------------ contexto
+    @staticmethod
     def _detect_phase(text: str) -> str:
-        """Heurística: a qual fase da OBG o trecho se refere.
-        Usada para rotular o contexto e impedir que o gerador aplique
-        regra de uma fase à outra (ex.: consulta permitida online != presencial)."""
+        """
+        A qual fase da OBG o trecho se refere. Rotula o contexto para impedir
+        que o gerador aplique regra de uma fase à outra (ex.: consulta a
+        materiais é permitida online, não necessariamente na presencial).
+        """
         t = (text or "").lower()
         has_presencial = "presencial" in t
         has_online = bool(re.search(r"\bonline\b|fases?\s+on-?line", t))
@@ -149,111 +184,76 @@ class AnswerService:
 
     @staticmethod
     def _build_context_with_labels(documents: List[Document]) -> str:
-        """
-        Builds the textual context with source labels for citation.
-        Each chunk is labeled with its source AND the phase it refers to.
-        """
-        context_parts = []
-
+        parts = []
         for idx, doc in enumerate(documents, 1):
-            metadata = doc.metadata or {}
-            source_name = metadata.get("source", "Regulamento")
-            page = metadata.get("page", "?")
-
-            source_clean = source_name.replace(".pdf", "").replace(".txt", "")
+            meta = doc.metadata or {}
+            source = str(meta.get("source", "Regulamento"))
+            source_clean = re.sub(r"\.(pdf|txt)$", "", source.split("/")[-1],
+                                  flags=re.IGNORECASE)
+            page = meta.get("page", "?")
+            item = meta.get("item")
 
             phase = AnswerService._detect_phase(doc.page_content)
-            label = f"[Fonte {idx}: {source_clean}-pag{page} | aplica-se a: {phase}]"
-            context_parts.append(f"{label}\n{doc.page_content}")
+            bits = [f"Fonte {idx}: {source_clean}-pag{page}"]
+            if item:
+                bits.append(f"item {item}")
+            bits.append(f"aplica-se a: {phase}")
 
-        return "\n\n".join(context_parts)
+            parts.append(f"[{' | '.join(bits)}]\n{doc.page_content}")
+        return "\n\n".join(parts)
 
+    # ------------------------------------------------------------ fontes
     @staticmethod
     def _extract_sources(documents: List[Document]) -> List[Dict[str, Any]]:
-        sources = []
-        seen_sources = set()
+        sources: List[Dict[str, Any]] = []
+        seen = set()
 
         for doc in documents:
-            metadata = doc.metadata or {}
-
-            source_key = (
-                metadata.get("source", ""),
-                metadata.get("page"),
-            )
-
-            if source_key in seen_sources:
+            meta = doc.metadata or {}
+            key = (meta.get("source", ""), meta.get("page"))
+            if key in seen:
                 continue
+            seen.add(key)
 
-            seen_sources.add(source_key)
+            source_name = str(meta.get("source", "Regulamento"))
+            source_clean = re.sub(r"\.(pdf|txt)$", "", source_name,
+                                  flags=re.IGNORECASE)
+            source_clean = re.sub(r"^(?:data[/\\]raw[/\\]|data[/\\])", "",
+                                  source_clean).strip()
 
-            source_name = metadata.get("source", "Regulamento")
-            source_clean = source_name.replace(".pdf", "").replace(".txt", "")
-            source_clean = re.sub(r'^(?:data[/\\]raw[/\\]|data[/\\])', '', source_clean)
-            source_clean = source_clean.strip()
+            page = meta.get("page")
 
-            page = metadata.get("page")
+            # Prefere o item gravado pelo splitter. O regex sobre o texto
+            # pegava qualquer sequência numérica — inclusive "31/12/2026"
+            # e "R$ 65,00" — e citava item inexistente.
+            item = meta.get("item")
+            if not item:
+                m = re.search(r"(?m)^\s*(\d{1,2}(?:\.\d{1,2}){1,3})\b", doc.page_content)
+                item = m.group(1) if m else None
 
-           
-            item_match = re.search(r"\b\d+(?:\.\d+){1,3}\b", doc.page_content)
-            item = item_match.group(0) if item_match else None
-
-            citation_parts = [source_clean]
-
-            if item:
-                citation_parts.append(f"item {item}")
-
-            if page is not None:
-                citation_parts.append(f"pag {page}")
-
-            citation = " — ".join(citation_parts)
+            citation = " — ".join(
+                [source_clean]
+                + ([f"item {item}"] if item else [])
+                + ([f"pag {page}"] if page is not None else [])
+            )
 
             sources.append({
                 "title": source_clean,
                 "page": page,
-                "item": item,  
-                "url": metadata.get("url"),
-                "chunk_id": metadata.get("chunk_id"),
-                "citation": citation
+                "item": item,
+                "url": meta.get("url"),
+                "chunk_id": meta.get("chunk_id"),
+                "citation": citation,
             })
 
         return sources[:3]
 
-    @staticmethod
-    def _ensure_citations(answer_text: str, sources: List[Dict[str, Any]]) -> str:
-        """
-        Ensures the answer has properly formatted citations with correct spacing.
-        """
-        
-        clean_answer = re.sub(r"^Resposta:\s*", "", answer_text, flags=re.IGNORECASE)
 
-      
-        citation_patterns = [
-            r"você pode encontrar.*$",
-            r"encontre mais em.*$",
-            r"consulte:.*$",
-            r"fonte:.*$",
-            r"fontes:.*$",
-            r"referência:.*$",
-        ]
-        
-        for pattern in citation_patterns:
-            # We use DOTALL or just ensure we catch the end of the string
-            clean_answer = re.sub(pattern, "", clean_answer, flags=re.IGNORECASE | re.MULTILINE | re.DOTALL)
-        
-       
-        clean_answer = clean_answer.strip()
-
-        # As fontes vão SOMENTE no campo estruturado "sources" da resposta;
-        # o frontend as renderiza como badges. Não anexar texto de citação aqui.
-        return clean_answer
-
-
-# Module-level singleton instance for backward compatibility
+# ---------------------------------------------------------------- singleton
 _service_instance: Optional[AnswerService] = None
 
 
 def _get_service() -> AnswerService:
-    """Get or create the singleton AnswerService instance."""
     global _service_instance
     if _service_instance is None:
         _service_instance = AnswerService()
@@ -263,23 +263,15 @@ def _get_service() -> AnswerService:
 async def generate_answer(
     question: str,
     documents: List[Document],
-    language: str = "pt-BR"
+    language: str = "pt",
+    chat_history: str = "",
 ) -> Dict[str, Any]:
     """
-    Module-level function wrapper for AnswerService.generate_answer().
-    
-    This function maintains backward compatibility with pipeline.py
-    which imports generate_answer as a standalone function.
-    
-    Args:
-        question: The user's question
-        documents: List of Document objects to use as context
-        language: Language for the response (default: pt-BR)
-        
-    Returns:
-        Dict with keys:
-            - answer: str - The generated answer text WITH citations
-            - sources: List[Dict] - Source metadata for reference
+    Wrapper de compatibilidade. NOTA: a versão anterior não repassava
+    chat_history, então qualquer chamador que usasse esta função perdia o
+    histórico — e perguntas de acompanhamento ("e na fase presencial?")
+    não eram reescritas corretamente. Corrigido.
     """
-    service = _get_service()
-    return await service.generate_answer(question, documents, language)
+    return await _get_service().generate_answer(
+        question, documents, language, chat_history
+    )

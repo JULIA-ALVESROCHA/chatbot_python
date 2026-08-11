@@ -15,6 +15,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from src.app.api.v1 import chat
 from src.app.core.config import settings
 from src.rag_pipeline.retrieval.vectorstore import init_vectorstore
+from src.rag_pipeline.retrieval.manifest import verify_manifest
 
 logger = logging.getLogger("bgo_chatbot")
 logging.basicConfig(level=logging.INFO)
@@ -68,27 +69,25 @@ def create_app() -> FastAPI:
     @app.on_event("startup")
     async def on_startup():
         logger.info("Starting BGO Chatbot API...")
-        # 1️⃣ Validar OpenAI key
         if not settings.openai_api_key:
             logger.error("OPENAI_API_KEY não definido.")
         else:
             logger.info("OPENAI_API_KEY carregada.")
 
-        # 2️⃣ Inicializar FAISS (OBRIGATÓRIO)
+        verify_manifest(settings.faiss_index_path, strict=False)   # <-- aqui
+
         try:
-            logger.info(
-                "Inicializando vectorstore (FAISS) em: %s",
-                settings.faiss_index_path
-            )
+            logger.info("Inicializando vectorstore (FAISS) em: %s",
+                        settings.faiss_index_path)
             init_vectorstore(settings.faiss_index_path)
             logger.info("Vectorstore inicializado com sucesso.")
         except FileNotFoundError as e:
             logger.error("FAISS index não encontrado: %s", e)
             raise RuntimeError("FAISS index obrigatório para rodar o chatbot")
-        except Exception as e:
+        except Exception:
             logger.exception("Erro ao inicializar vectorstore")
             raise
-    
+
     return app
 
 app = create_app()

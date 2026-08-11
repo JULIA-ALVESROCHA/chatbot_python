@@ -1,0 +1,44 @@
+ca0dbd3
+ M .gitignore
+ D .lumie_cache.json
+ M data/processed/faiss_index/index.faiss
+ M data/processed/faiss_index/index.pkl
+ M estrutura_pastas.txt
+ M eval/lumie_eval.py
+ M eval/results.json
+ M eval/results_report.md
+ M eval/testset_questions.jsonl
+ D report_03.md
+ D report_v2.md
+ D report_v3.md
+ D report_v4.md
+ D report_v5.md
+ D requirements_fixed.txt
+ D results_03.json
+ D results_v2.json
+ D results_v3.json
+ D results_v4.json
+ D results_v5.json
+ M scripts/build_index.py
+ M src/app/core/config.py
+ M src/app/main.py
+ M src/infra/cache.py
+ M src/rag_pipeline/generator/answer_service.py
+ M src/rag_pipeline/generator/templates.py
+ M src/rag_pipeline/reranker/model_wrapper.py
+ M src/rag_pipeline/retrieval/text_splitter.py
+ M src/rag_pipeline/retrieval/vectorstore.py
+ D src/utils/i18n.py
+ M src/utils/language.py
+ M src/utils/text.py
+?? .env.example
+?? data/data.yml
+?? data/processed/index_manifest.json
+?? diagnose.py
+?? diagnose_retrieval.py
+?? eval/regen_report.py
+?? run_all_tests.sh
+?? setup_env.sh
+?? src/rag_pipeline/generator/calendar.py
+?? src/rag_pipeline/retrieval/manifest.py
+?? v1_test/

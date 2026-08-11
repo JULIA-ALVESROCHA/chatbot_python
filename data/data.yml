@@ -1,0 +1,45 @@
+# data/calendar.yml
+#
+# Fallback local do calendário. Usado quando a planilha remota
+# (CALENDAR_URL) não responde.
+#
+# A fonte de verdade é a planilha — este arquivo é a rede de segurança.
+# Vale manter em dia a cada edição, mesmo assim.
+#
+# Datas em AAAA-MM-DD. Para evento de um dia só, inicio == fim.
+
+edicao: 11ª OBG 2026
+atualizado_em: 2026-08-10
+
+eventos:
+  inscricoes:
+    rotulo: Inscrições
+    inicio: 2026-03-02
+    fim: 2026-05-15
+    nota: Escolas públicas têm inscrição gratuita
+
+  fase1:
+    rotulo: 1ª Fase (online)
+    inicio: 2026-06-10
+    fim: 2026-06-10
+
+  fase2:
+    rotulo: 2ª Fase (online)
+    inicio: 2026-07-08
+    fim: 2026-07-08
+
+  resultado_fase2:
+    rotulo: Resultado da 2ª Fase
+    inicio: 2026-07-29
+    fim: 2026-07-29
+
+  fase_presencial:
+    rotulo: Fase Presencial
+    inicio: 2026-09-12
+    fim: 2026-09-13
+
+  certificados:
+    rotulo: Emissão de certificados
+    inicio: 2026-10-01
+    fim: 2026-12-31
+    nota: Imprimir dentro do prazo; sem garantia de disponibilidade depois

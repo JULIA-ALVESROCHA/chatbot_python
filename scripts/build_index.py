@@ -9,6 +9,7 @@ from langchain_community.vectorstores import FAISS
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.documents import Document
 from src.app.core.config import settings
+from src.rag_pipeline.retrieval.manifest import write_manifest
 
 DATA_RAW = Path("data/raw")
 PROCESSED = Path("data/processed/faiss_index")
@@ -78,6 +79,7 @@ def build_faiss(docs: List[Document]) -> FAISS:
     embeddings = OpenAIEmbeddings(model=settings.embedding_model)
     vectorstore = FAISS.from_documents(docs, embeddings)
     vectorstore.save_local(str(PROCESSED))
+    write_manifest(vectorstore, docs, str(PROCESSED)) 
     return vectorstore
 
 
@@ -129,3 +131,4 @@ if __name__ == "__main__":
     verify_index(vs)
 
     print("\n✔ INDEXAÇÃO FINALIZADA COM SUCESSO!")
+

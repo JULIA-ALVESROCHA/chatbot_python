@@ -1,0 +1,15 @@
+BASELINE (índice de 19/07/2026, chunk_size=500, overlap=50)
+ntotal: 182 | dim: 3072 | IndexFlatL2 | EUCLIDEAN_DISTANCE
+vec_checksum: 17c5b7a8b083aa05
+docid_checksum: 6f03d44eca84698a
+auto-recuperação: cosseno 0.9994
+
+melhor cosseno por consulta:
+  [pt] quem pode participar da OBG?        0.7438
+  [pt] quando serao as provas?             0.5507
+  [pt] como recupero minha senha?          0.5919
+  [pt] quais navegadores sao suportados?   0.5286
+  [pt] o link do token expirou             0.3983
+  [en] how do I recover my password?       0.0267
+  [en] who can participate in the OBG?     0.4893
+  [en] which browsers are supported?       0.1713

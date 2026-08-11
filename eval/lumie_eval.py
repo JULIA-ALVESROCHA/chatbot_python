@@ -133,42 +133,8 @@ def verify_support(atom, source, model, seed) -> bool:
 # --------------------------------------------------------------------------- #
 # Per-instance scoring (records diagnostics)                                  #
 # --------------------------------------------------------------------------- #
-ABSTENTION_MARKERS = (
-    "não encontrei", "nao encontrei", "não está no regulamento",
-    "nao esta no regulamento", "não consta", "nao consta",
-    "não está clara", "nao esta clara", "reformul",
-    "pergunta está incompleta", "pergunta esta incompleta",
-    "not mentioned", "could not find", "i did not find", "please rephrase",
-)
-
-
-def is_abstention(text: str) -> bool:
-    t = (text or "").lower()
-    return any(m in t for m in ABSTENTION_MARKERS)
-
-
 def score_instance(rec, source, model, seed) -> dict:
     gold, pred = rec["gold_answer"], rec["generated_answer"]
-
-    # Abstenção: a frase canônica ("Não encontrei... reformule... contate...")
-    # não contém fatos — decompô-la em átomos gera falsos "fatos alucinados"
-    # (contamina precision e FactScore). Tratamento correto:
-    #   - recall = 0 se o gold tinha conteúdo (abstenção em pergunta
-    #     respondível É perda real de recall — o sinal fica preservado)
-    #   - precision/factscore = NaN (excluídos das médias; não há fatos
-    #     a auditar)
-    if is_abstention(pred):
-        gold_atoms = decompose(gold, model, seed)
-        recall = 0.0 if gold_atoms else float("nan")
-        return {"id": rec.get("id"), "lang": rec.get("lang", "pt"),
-                "intent": rec.get("intent", ""), "persona": rec.get("persona", ""),
-                "question": rec.get("question", ""),
-                "n_gold_atoms": len(gold_atoms), "n_pred_atoms": 0,
-                "precision": float("nan"), "recall": recall,
-                "f1": float("nan"), "factscore": float("nan"),
-                "abstained": True,
-                "missed_gold": gold_atoms, "unsupported_pred": []}
-
     gold_atoms = decompose(gold, model, seed)
     pred_atoms = decompose(pred, model, seed)
 
@@ -193,7 +159,6 @@ def score_instance(rec, source, model, seed) -> dict:
             "question": rec.get("question", ""),
             "n_gold_atoms": len(gold_atoms), "n_pred_atoms": len(pred_atoms),
             "precision": precision, "recall": recall, "f1": f1, "factscore": factscore,
-            "abstained": False,
             "missed_gold": missed, "unsupported_pred": unsupported}
 
 # --------------------------------------------------------------------------- #
@@ -232,9 +197,11 @@ def aggregate(seed_results) -> dict:
                     if r[m] == r[m]:
                         g[keyfn(r)][m].append(r[m])
         out = {}
+        METRICS = ("precision", "recall", "f1", "factscore")
         for k, d in g.items():
-            out[k] = {m: {"mean": _mean(d[m]), "std": _std(d[m])} for m in d}
-            out[k]["n"] = max(len(d[m]) for m in d)
+            out[k] = {m: {"mean": _mean(d.get(m, [])),
+                          "std": _std(d.get(m, []))} for m in METRICS}
+            out[k]["n"] = max((len(d.get(m, [])) for m in METRICS), default=0)
         return out
 
     all_rows = [r for s in seed_results for r in s["rows"]]

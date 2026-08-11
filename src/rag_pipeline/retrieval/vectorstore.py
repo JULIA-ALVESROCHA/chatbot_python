@@ -9,6 +9,8 @@ from langchain_openai import OpenAIEmbeddings
 from langchain_core.embeddings import Embeddings
 from langchain_core.documents import Document
 from src.app.core.config import settings
+from src.utils.language import to_portuguese, ato_portuguese
+
 
 logger = logging.getLogger("bgo_chatbot.vectorstore")
 
@@ -156,45 +158,77 @@ class _DiverseRetriever:
         )[:fetch_k]
         return [(_bm25_docs[i], rank) for rank, (i, _sc) in enumerate(ranked, 1)]
 
-    # ---------------- fusão + seleção ----------------
+# ---------------- fusão + seleção ----------------
+
+    @staticmethod
+    def _lc_to_cosine(s: float) -> float:
+        """
+        similarity_search_with_relevance_scores() num índice EUCLIDEAN aplica
+        s = 1 - d/sqrt(2), o que está errado para embeddings unit-norm (d vai
+        de 0 a 2, não a sqrt(2)) — daí os scores negativos.
+
+        Como é invertível, reconstruímos o cosseno real aqui:
+            d = sqrt(2)*(1-s)  ->  cos = 1 - d^2/2 = 1 - (1-s)^2
+
+            s=0.494 -> cos=0.744        s=0.300 -> cos=0.510  (limiar antigo)
+            s=0.361 -> cos=0.592        s=0.013 -> cos=0.026
+        """
+        return 1.0 - (1.0 - float(s)) ** 2
 
     def _fuse_and_select(self, sem_docs_scores, bm25_ranked):
-        base_th = settings.retrieval_score_threshold
-        support_th = getattr(settings, "support_score_threshold", 0.12)
+        # Limiares em COSSENO. Não reaproveite o 0.3 antigo: ele equivalia a
+        # cosseno 0.51, muito mais restritivo do que a intenção.
+        base_th = getattr(settings, "retrieval_cosine_threshold", 0.25)
+        support_th = getattr(settings, "support_cosine_threshold", 0.15)
         bm25_top_accept = getattr(settings, "bm25_top_accept", 5)
-        per_page_cap = getattr(settings, "max_chunks_per_page", 2)
+        per_page_cap = getattr(settings, "max_chunks_per_page", 4)
+        min_chunks = getattr(settings, "min_chunks", 2)
 
         def fp(doc):
-            return hash(doc.page_content.strip())
+            # chunk_id é estável entre processos; hash() não é (PYTHONHASHSEED)
+            meta = doc.metadata or {}
+            return meta.get("chunk_id") or hash(doc.page_content.strip())
 
-        bm25_rank_by_fp = {fp(d): r for d, r in bm25_ranked}
-
-        # pontuação RRF e elegibilidade
-        candidates = {}  # fp -> {"doc", "rrf", "eligible"}
+        candidates = {}
         for sem_rank, (doc, score) in enumerate(sem_docs_scores, 1):
             f = fp(doc)
+            cos = self._lc_to_cosine(score)
             th = support_th if _is_support_doc(doc) else base_th
             entry = candidates.setdefault(
-                f, {"doc": doc, "rrf": 0.0, "eligible": False}
+                f, {"doc": doc, "rrf": 0.0, "eligible": False, "cos": cos}
             )
             entry["rrf"] += 1.0 / (self.RRF_K + sem_rank)
-            if score >= th:
+            entry["cos"] = cos
+            if cos >= th:
                 entry["eligible"] = True
 
         for doc, b_rank in bm25_ranked:
             f = fp(doc)
             entry = candidates.setdefault(
-                f, {"doc": doc, "rrf": 0.0, "eligible": False}
+                f, {"doc": doc, "rrf": 0.0, "eligible": False, "cos": None}
             )
             entry["rrf"] += 1.0 / (self.RRF_K + b_rank)
             if b_rank <= bm25_top_accept:
                 entry["eligible"] = True
 
-        ordered = sorted(
-            (c for c in candidates.values() if c["eligible"]),
-            key=lambda c: c["rrf"],
-            reverse=True,
-        )
+        eligible = [c for c in candidates.values() if c["eligible"]]
+
+        # PISO: nenhum elegível -> lista vazia -> pipeline.py responde
+        # "Não encontrei nada no regulamento". Era isso que gerava a maior
+        # parte dos 39,5% de recusas, inclusive em intents onde o chunk certo
+        # tinha sido recuperado e depois descartado.
+        used_floor = False
+        if len(eligible) < min_chunks:
+            used_floor = True
+            já = {id(c) for c in eligible}
+            for c in sorted(candidates.values(), key=lambda c: c["rrf"], reverse=True):
+                if len(eligible) >= min_chunks:
+                    break
+                if id(c) not in já:
+                    eligible.append(c)
+                    já.add(id(c))
+
+        ordered = sorted(eligible, key=lambda c: c["rrf"], reverse=True)
 
         selected: List[Document] = []
         per_page_count = {}
@@ -208,22 +242,53 @@ class _DiverseRetriever:
             selected.append(doc)
             if len(selected) >= self._k:
                 break
-        return selected
 
+        top_cos = self._lc_to_cosine(sem_docs_scores[0][1]) if sem_docs_scores else None
+        if used_floor:
+            logger.warning(
+                "PISO ACIONADO: top_cos=%s base_th=%s — limiar alto demais aqui",
+                f"{top_cos:.3f}" if top_cos is not None else "n/a", base_th,
+            )
+        logger.info(
+            "retrieval: candidatos=%d elegíveis=%d selecionados=%d top_cos=%s",
+            len(candidates), len(eligible), len(selected),
+            f"{top_cos:.3f}" if top_cos is not None else "n/a",
+        )
+        return selected
+    
     # ---------------- interfaces ----------------
+
+    @staticmethod
+    def _l2_to_cosine(distance: float) -> float:
+        """Valid only for unit-norm vectors. Verified: mean_norm = 0.999995."""
+        return 1.0 - (float(distance) ** 2) / 2.0
+
 
     def invoke(self, query: str) -> List[Document]:
         fetch_k = getattr(settings, "retrieval_fetch_k", 20)
-        sem = self._vs.similarity_search_with_relevance_scores(query, k=fetch_k)
-        return self._fuse_and_select(sem, self._bm25_candidates(query))
+        search_q = to_portuguese(query) if getattr(
+            settings, "translate_query_to_pt", True
+        ) else query
+
+        raw = self._vs.similarity_search_with_score(search_q, k=fetch_k)
+        sem = [(doc, self._l2_to_cosine(dist)) for doc, dist in raw]
+        sem.sort(key=lambda x: x[1], reverse=True)
+
+        return self._fuse_and_select(sem, self._bm25_candidates(search_q))
+
 
     async def ainvoke(self, query: str) -> List[Document]:
         fetch_k = getattr(settings, "retrieval_fetch_k", 20)
-        sem = await self._vs.asimilarity_search_with_relevance_scores(
-            query, k=fetch_k
-        )
-        return self._fuse_and_select(sem, self._bm25_candidates(query))
+        search_q = await ato_portuguese(query) if getattr(
+            settings, "translate_query_to_pt", True
+        ) else query
 
+        raw = await self._vs.asimilarity_search_with_score(search_q, k=fetch_k)
+        sem = [(doc, self._l2_to_cosine(dist)) for doc, dist in raw]
+        sem.sort(key=lambda x: x[1], reverse=True)
+
+        return self._fuse_and_select(sem, self._bm25_candidates(search_q))
+    
     # compatibilidade com código legado
     def get_relevant_documents(self, query: str) -> List[Document]:
         return self.invoke(query)

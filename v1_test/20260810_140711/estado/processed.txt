@@ -1,0 +1,7 @@
+total 32
+drwxr-xr-x@ 6 juliarocha  staff   192 Aug 10 14:07 .
+drwxrwxr-x@ 6 juliarocha  staff   192 Aug 10 13:25 ..
+-rw-r--r--@ 1 juliarocha  staff  6148 Jul 19 16:22 .DS_Store
+-rw-r--r--@ 1 juliarocha  staff  2962 Aug 10 14:07 .calendar_cache.json
+drwxr-xr-x@ 4 juliarocha  staff   128 Aug 10 13:55 faiss_index
+-rw-r--r--@ 1 juliarocha  staff  1677 Aug 10 13:58 index_manifest.json

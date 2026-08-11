@@ -1,12 +1,26 @@
-chatbot_python/                     # raiz do projeto (Brazilian Geography Olympiad chatbot)
-├── .env.example                    # variáveis de ambiente (exemplo)
+chatbot_obg-main/                  # raiz do projeto
+├── .gitignore
+├── .gitattributes
 ├── README.md
 ├── pyproject.toml                  # configuração do projeto (dependências, build)
+├── package.json
+├── package-lock.json
 ├── requirements.txt                # dependências Python
-├── Dockerfile
-├── .gitignore
+├── requirements_fixed.txt          # dependências extras / corrigidas
+├── runtime.txt
+├── .lumie_cache.json
 ├── estrutura_pastas.txt            # este arquivo - documentação da estrutura
 ├── useful.txt                      # notas úteis
+├── check_chunks.py
+├── check_metadata.py
+├── debug_retrieval.py
+├── diagnose_retrieval.py
+├── dignose.pu
+├── fix_dataset_chunks.py
+│
+├── chatbot/                       # package de execução do chatbot
+│   ├── __init__.py
+│   └── run_chatbot.py
 │
 ├── src/
 │   ├── __init__.py
@@ -25,56 +39,109 @@ chatbot_python/                     # raiz do projeto (Brazilian Geography Olymp
 │   │       └── responses.py        # pydantic models para saída
 │   │
 │   ├── rag_pipeline/               # implementação modular do pipeline RAG
-│   │   ├── __init__.py
+│   │   ├── pipeline.py             # orquestração Rewrite→Retrieve→Rerank→Answer
 │   │   ├── rewrite/                # Query rewriting / decomposition
 │   │   │   ├── rewrite_service.py
 │   │   │   └── prompts.py
-│   │   ├── retrieval/              # Vector store / FAISS / loaders
-│   │   │   ├── loader.py           # carregamento de PDFs/HTMLs
-│   │   │   ├── text_splitter.py    # divisão de texto em chunks
-│   │   │   ├── embeddings.py       # wrapper para OpenAI embeddings
-│   │   │   └── vectorstore.py      # inicialização do FAISS / save/load
-│   │   ├── reranker/               # opcional: cross-encoder / reranker
-│   │   │   ├── reranker.py         # interface de reranking
-│   │   │   └── model_wrapper.py    # wrapper do modelo cross-encoder
-│   │   ├── generator/              # LLM prompt + resposta baseada no contexto
-│   │   │   ├── answer_service.py   # serviço de geração de resposta
-│   │   │   └── templates.py        # templates de prompt
-│   │   └── pipeline.py             # função/chained orchestration (Rewrite→Retrieve→Rerank→Answer)
+│   │   ├── retrieval/              # Vector store / loaders / embeddings
+│   │   │   ├── loader.py
+│   │   │   ├── text_splitter.py
+│   │   │   ├── embeddings.py
+│   │   │   └── vectorstore.py
+│   │   ├── reranker/               # opcional: reranking com cross-encoder
+│   │   │   ├── reranker.py
+│   │   │   └── model_wrapper.py
+│   │   └── generator/              # prompt assembly e resposta com contexto
+│   │       ├── answer_service.py
+│   │       └── templates.py
 │   │
 │   ├── infra/                      # infra local / integração (caching, storage)
-│   │   ├── cache.py                # opcional: redis wrapper
-│   │   └── storage.py              # paths para FAISS/index files, persistência
+│   │   ├── cache.py                # wrapper opcional de cache (ex. Redis)
+│   │   └── storage.py              # paths e persistência para index
 │   │
 │   ├── utils/                      # utilitários cross-cutting
-│   │   ├── text.py                 # normalização, limpeza
-│   │   ├── i18n.py                 # detecção/rotas de idioma (pt/en)
-│   │   └── metrics.py              # logging/metrics simples
+│   │   ├── text.py                 # normalização e limpeza de texto
+│   │   ├── i18n.py                 # detecção e rotas de idioma
+│   │   ├── language.py             # utilitários de idioma
+│   │   └── metrics.py              # métricas e logging simples
 │   │
 │   └── tests/                      # testes unitários e de integração
+│       ├── integration/
 │       ├── unit/
-│       └── integration/
+│       └── test_retrival/          # testes de recuperação / regressão
+│           ├── dataset_retrival.json
+│           ├── evaluation_rtv.py
+│           └── runner_regression_rtv.py
 │
-├── data/                           # documentos de origem (PDFs, txt) - NÃO versionar grandes binários
-│   ├── raw/                        # PDFs originais do regulamento
-│   │   └── *.pdf                   # arquivos PDF do regulamento OBG
-│   └── processed/                  # chunks, embeddings index
-│       └── faiss_index/            # índice FAISS
-│           ├── index.faiss
-│           └── index.pkl
+├── data/                           # documentos de origem / dados processados
+│   ├── raw/                        # arquivos de origem (PDFs, txt)
+│   └── processed/                  # arquivos processados e embeddings
 │
-├── frontend/                       # frontend mínimo (Streamlit / React) — opcional
-│   ├── streamlit_app.py
-│   └── react_app/                  # se for React: código aqui
+├── eval/                           # avaliação e geração de relatórios de teste
+│   ├── build_testset_obg.py
+│   ├── demo.json
+│   ├── demo.md
+│   ├── demo_results.json
+│   ├── demo_summary.md
+│   ├── example_dataset.jsonl
+│   ├── fill_answers.py
+│   ├── gold_corpus.jsonl
+│   ├── knowledge_source.txt
+│   ├── lumie_eval.py
+│   ├── regen_report.py
+│   ├── report.md
+│   ├── results.json
+│   └── results_report.md
 │
-├── scripts/                        # scripts úteis (Python - Windows compatible)
-│   ├── setup_env.py                # cria venv, instala dependências, cria .env local
-│   ├── run_dev.py                  # inicia uvicorn + pré-requisitos
-│   ├── build_index.py              # pipeline para carregar docs e construir FAISS
-│   └── test_imp/                   # testes de implementação/integração
-│       ├── test_generator_components.py
-│       ├── test_reranker_service.py
-│       └── test_reranker.py
+├── frontend/                       # frontend mínimo / assets do cliente
+│   ├── geolume-chat.js
+│   └── react_app/
+│
+├── reports/                        # relatórios de avaliação e diagnóstico
+│   ├── hallucination_report_summary.json
+│   ├── hallucination_results_raw.json
+│   ├── reports.py
+│   ├── retrieval_report_20260717_221029.json
+│   ├── retrieval_report_20260717_221516.json
+│   ├── retrieval_report_20260717_221836.json
+│   ├── retrieval_report_20260719_154553.json
+│   ├── retrieval_report_20260719_171753.json
+│   ├── retrieval_report_20260719_174416.json
+│   ├── retrieval_results_raw_20260717_221029.json
+│   ├── retrieval_results_raw_20260717_221516.json
+│   ├── retrieval_results_raw_20260717_221836.json
+│   ├── retrieval_results_raw_20260719_154553.json
+│   ├── retrieval_results_raw_20260719_171753.json
+│   └── retrieval_results_raw_20260719_174416.json
+│
+├── scripts/                        # scripts úteis para desenvolvimento e testes
+│   ├── build_index.py
+│   ├── run_dev.py
+│   ├── setup_env.py
+│   └── test_imp/
+│       └── .gitkeep
+│
+├── tests/                          # testes externos / qualidade de recuperação
+│   ├── QA_quality/
+│   │   ├── evaluator.py
+│   │   ├── hallucination_tests.json
+│   │   └── regression_runner.py
+│   ├── retrieval_quality/
+│   └── __init__.py
+│
+├── report_03.md
+├── report_final.md
+├── report_v2.md
+├── report_v2.mdmmhiuhj
+├── report_v3.md
+├── report_v4.md
+├── report_v5.md
+├── results_03.json
+├── results_final.json
+├── results_v2.json
+├── results_v3.json
+├── results_v4.json
+└── results_v5.json
 
 ================================================================================
 Explicação por bloco / responsabilidades
@@ -91,7 +158,7 @@ api/v1/health.py: endpoint de health check.
 
 api/deps.py: dependências do FastAPI (e.g. get_retriever, get_reranker).
 
-core/config.py: centraliza leitura de variáveis (OPENAI_API_KEY, FAISS_INDEX_PATH, thresholds), usando pydantic.BaseSettings.
+core/config.py: centraliza leitura de variáveis de ambiente e configurações da aplicação.
 
 core/logging.py: configuração de logging da aplicação.
 
@@ -100,34 +167,37 @@ schemas/: Pydantic models para validação e documentação automática do OpenA
 src/rag_pipeline/
 Corpo do RAG — modularizado em submódulos lógicos:
 
-rewrite/: responsável por tornar a query "standalone" (resolver pronomes, decompor multi-part questions). Aqui você manda a query + último N turnos ao GPT-4 com um prompt de reescrita curto.
+rewrite/: responsável por tornar a query "standalone" (resolver pronomes, decompor multi-part questions).
 
-retrieval/: loaders (PDF/HTML/TXT), splitters, embeddings e criação/consulta ao FAISS. Idealmente essa camada só retorna Document com text + metadata.
+retrieval/: loaders, divisores de texto e embeddings para construir/consultar o índice.
 
-reranker/ (opcional): pega os top-N do FAISS e re-rankeia com um cross-encoder local (ou serviço externo) para melhorar precisão.
+reranker/: opcional, reordena resultados do retrieval para melhorar precisão.
 
-generator/: monta o prompt final (instruções "use apenas os trechos abaixo" + citações) e chama GPT-4 para sintetizar a resposta e formatar citações.
+generator/: monta o prompt final e gera a resposta com base no contexto recuperado.
 
-pipeline.py: função que orquestra a sequência (rewrite → retrieve → rerank → generate) e aplica políticas (ex.: se retrieval score < X → retornar fallback).
+pipeline.py: orquestra a sequência de reescrita, recuperação, reranking e geração.
 
 src/infra/
-Abstrações de infra (cache, storage). Por exemplo, se quiser usar Redis para cache de respostas, coloque o wrapper aqui.
+Abstrações de infra (cache, storage). Por exemplo, suportar cache local ou persistência de index.
 
 src/utils/
-Funções utilitárias reutilizáveis: limpeza de texto, detecção de idioma, logs e métricas simples.
+Funções utilitárias reutilizáveis: limpeza de texto, detecção de idioma, métricas e helpers gerais.
 
 data/
-Contém os PDFs originais e arquivos processados. Não comite PDFs grandes no git — use .gitignore.
+Arquivos de dados brutos e processados usados pelo pipeline. PDFs e outros dados de origem devem ser mantidos fora do controle de versão quando grandes.
+
+eval/
+Scripts e artefatos para avaliar o modelo e gerar relatórios de teste.
 
 frontend/
-Se for Streamlit, um arquivo streamlit_app.py simples que faz POST para /chat. Se for React, coloque app neste subdiretório.
+Códigos e assets para frontend mínimo. Neste repositório há um asset `geolume-chat.js` e um subdiretório React.
+
+reports/
+Relatórios de avaliação e diagnóstico gerados pelo projeto.
 
 scripts/
-Scripts em Python pensados para Windows (mas compatíveis com Linux). Scripts principais:
-- setup_env.py: cria venv, instala dependências, cria .env local
-- run_dev.py: inicia uvicorn + pré-requisitos
-- build_index.py: pipeline para carregar docs e construir FAISS
+Scripts auxiliares para setup, execução local e construção de índice.
 
-scripts/test_imp/
-Testes de implementação/integração para validar componentes individuais do pipeline.
+tests/
+Testes adicionais de qualidade e regressão fora do código fonte principal.
 

@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/Users/juliarocha/Documents/projects/obg/chatbot_obg-main/tests/QA_quality/regression_runner.py", line 5, in <module>
+    from tests.evaluator import evaluate_response
+ModuleNotFoundError: No module named 'tests.evaluator'
