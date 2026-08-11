@@ -3,56 +3,63 @@ src/rag_pipeline/generator/templates.py
 
 Prompts da etapa de geração. Sem lógica de negócio, sem chamada de modelo.
 
-MUDANCAS EM RELACAO A VERSAO ANTERIOR
--------------------------------------
-1. UMA UNICA SENTINELA DE RECUSA. Antes havia duas (regra 15 + FALLBACK_RESPONSE)
-   e o modelo ainda inventava variações ("O contexto não menciona...", "Não há
-   informações sobre..."). O avaliador decompunha cada uma em fatos atômicos e
-   contava como alucinação. Isso é a maior parte dos 53,3% do relatório.
-   Agora: string única e constante, detectável por comparação exata.
+O PRINCÍPIO CENTRAL: UNIDADE DE INFORMAÇÃO
+------------------------------------------
+O escopo da resposta é definido pelo CONCEITO que a pergunta invoca, não
+pela menor informação que faz a frase ficar respondida.
 
-2. TAMANHO CALIBRADO. "AT MOST 2-3 short sentences" travava o recall: as
-   respostas gold têm 5,08 fatos atômicos em média e as predições 3,12.
-   Agora o tamanho segue a pergunta — enumerações podem ser mais longas.
+    "Qual o prazo de inscrição?"
+      unidade = o período inteiro (início, fim e situação atual)
+      errado por falta:  "Encerraram em 16/06/2026."     <- truncado
+      errado por excesso: "...de 06/04 a 16/06. Públicas grátis,
+                           particulares R$ 65,00, e a OBG pode encerrar
+                           antecipadamente."             <- invadiu outras unidades
+      certo: "As inscrições ocorreram de 06/04/2026 a 16/06/2026 e já
+              estão encerradas."
 
-3. DISCIPLINA DE ESCOPO. Observado em produção: perguntaram "quando encerram
-   as inscrições" e a resposta trouxe data + R$ 65,00 + regra de encerramento
-   antecipado. Tudo verdadeiro, nada perguntado. O contexto recuperado sempre
-   traz material correto e não pedido, porque a busca é aproximada. A seção
-   ESCOPO trata isso, e é o contrapeso da seção COMPLETUDE: exaustivo DENTRO
-   do escopo, mudo FORA dele.
+Os dois erros são simétricos e o prompt precisa evitar os dois:
 
-4. REGRA 11 ANTIGA REMOVIDA. Ela proibia mencionar equipe/professor em
-   perguntas de "quem pode participar", mas o gold de "Composicao da equipe"
-   contém justamente "Cada equipe é formada por 1 professor(a) orientador(a)".
-   Além disso contradizia o próprio EXEMPLO DE BOA RESPOSTA logo abaixo.
+  RECALL BAIXO (era 16,9, hoje 31,9) — resposta corta a própria unidade.
+    "AT MOST 2-3 short sentences" travava enumerações: as respostas gold têm
+    5,08 fatos atômicos e as predições tinham 3,12.
 
-5. EXEMPLOS INJETADOS NO PROMPT. Antes eram constantes soltas no fim do
-   arquivo que nenhum código lia. O prompt tinha um único exemplo, de
-   enumeração, ensinando "responda longo sempre". Agora são quatro, cobrindo
-   os quatro calibres: fato único, escopo único com contexto rico,
-   enumeração completa, e recusa.
+  ESCOPO ESTOURADO (observado em produção) — resposta invade unidades vizinhas.
+    Perguntaram a data de encerramento e vieram junto valores e regra de
+    limite de participantes. Tudo verdadeiro, nada perguntado. O contexto
+    recuperado SEMPRE traz material vizinho, porque a busca é aproximada.
 
-6. DATAS REMOVIDAS DO PROMPT. "12/31/2025" e "8ª edição" estavam fixos aqui.
-   Datas agora vêm de calendar.bloco_calendario(), calculadas em Python.
-   A regra 11 proíbe citar data que não esteja no bloco — o bot vinha
-   afirmando um "prazo até 01/08/2026" que não existe no regulamento.
+Regra única que resolve os dois: COMPLETO DENTRO DA UNIDADE, MUDO FORA DELA.
+Isso não é sobre tamanho de resposta — é sobre fronteira de conceito.
 
-7. REGRA DE META-PERGUNTA REMOVIDA. pipeline.py já intercepta via
-   _META_PATTERNS antes de chegar ao gerador — era instrução morta.
+OUTRAS MUDANCAS EM RELACAO A VERSAO ANTERIOR
+--------------------------------------------
+1. UMA UNICA SENTINELA DE RECUSA. Antes havia duas (regra 15 +
+   FALLBACK_RESPONSE) e o modelo ainda inventava variações. O avaliador
+   decompunha cada uma em fatos atômicos e contava como alucinação — boa
+   parte dos 53,3% do primeiro relatório.
 
-8. PREFIXO "Response:" REMOVIDO do formato obrigatório. Se answer_service
-   não o removesse, ele virava fato atômico na avaliação.
+2. REGRA 11 ANTIGA REMOVIDA. Proibia mencionar equipe/professor em "quem
+   pode participar", mas o gold de "Composicao da equipe" cobra exatamente
+   isso, e o exemplo logo abaixo dela a contradizia.
 
-NOTA sobre o rótulo de fase (regra 10): ele É real — answer_service.
+3. EXEMPLOS INJETADOS NO PROMPT. Antes eram constantes soltas no fim do
+   arquivo que nenhum código lia, e o prompt trazia um único exemplo, de
+   enumeração — ensinando "responda longo sempre".
+
+4. DATAS SAEM DO PROMPT. "12/31/2025" e "8ª edição" estavam fixos aqui.
+   Agora vêm de calendar.bloco_calendario(). A regra 15 proíbe citar data
+   fora do bloco: o bot vinha afirmando um "prazo até 01/08/2026" que não
+   existe em nenhum documento.
+
+5. REGRA DE META-PERGUNTA REMOVIDA. pipeline.py já intercepta antes.
+
+NOTA sobre o rótulo de fase (regra 14): ele É real — answer_service.
 _build_context_with_labels monta "[Fonte N: ... | aplica-se a: <fase>]" via
-_detect_phase(). A regra depende desse rótulo; se aquele método mudar, esta
-regra precisa mudar junto.
+_detect_phase(). Se aquele método mudar, esta regra muda junto.
 
-A regra de premissa falsa (9) foi mantida: Dahl et al. (2024) mostram que
-assistentes jurídicos aceitam prontamente suposições incorretas do usuário.
-Vale acompanhar: na bateria de alucinação, a categoria impossible_claim teve
-1 PASS em 50 — é a regra que menos está pegando.
+A regra de premissa falsa (13) segue Dahl et al. (2024). Vale acompanhar: na
+bateria de alucinação, impossible_claim teve 1 PASS em 50 — é a regra que
+menos está pegando.
 """
 
 from src.rag_pipeline.generator.calendar import bloco_calendario
@@ -60,10 +67,6 @@ from src.rag_pipeline.generator.calendar import bloco_calendario
 # -------------------------------------------------------------------
 # SENTINELA DE RECUSA
 # -------------------------------------------------------------------
-# Uma string, exatamente uma, por idioma. answer_service deve comparar a
-# resposta com estas constantes e devolver refused=True, para que a
-# avaliação possa separar "recusou" de "errou" — hoje as duas coisas
-# aparecem misturadas no FactScore.
 
 REFUSAL_PT = (
     "Não encontrei essa informação nos documentos oficiais da OBG. "
@@ -88,17 +91,28 @@ def is_refusal(answer: str) -> bool:
 # -------------------------------------------------------------------
 # EXEMPLOS (few-shot — injetados no SYSTEM_PROMPT)
 # -------------------------------------------------------------------
-# Os dicionários abaixo continuam exportados para uso em testes, mas o que
-# vai para o prompt é EXEMPLOS_BLOCO. Mantenha os dois em sincronia.
+# Cada par abaixo isola UM tipo de fronteira de unidade. Mantenha os
+# dicionários e o EXEMPLOS_BLOCO em sincronia.
 
-EXEMPLO_CURTO = {
+EXEMPLO_PERIODO = {
+    "pergunta": "Qual o prazo de inscrição?",
+    "resposta": (
+        "As inscrições ocorreram de 06/04/2026 a 16/06/2026 e já estão "
+        "encerradas."
+    ),
+}
+
+EXEMPLO_QUALIFICADO = {
     "pergunta": "Qual o valor da inscrição para escolas públicas?",
     "resposta": "A inscrição é gratuita para escolas públicas.",
 }
 
-EXEMPLO_ESCOPO = {
-    "pergunta": "Quando encerram as inscrições?",
-    "resposta": "As inscrições encerraram em 16/06/2026.",
+EXEMPLO_ABERTO = {
+    "pergunta": "Qual o valor da inscrição?",
+    "resposta": (
+        "A inscrição é gratuita para escolas públicas e custa R$ 65,00 por "
+        "equipe para escolas particulares."
+    ),
 }
 
 EXEMPLO_ENUMERACAO = {
@@ -117,27 +131,33 @@ EXEMPLO_RECUSA = {
     "resposta": REFUSAL_PT,
 }
 
-EXEMPLOS_BLOCO = f"""EXEMPLOS DE CALIBRE
+EXEMPLOS_BLOCO = f"""EXEMPLOS — ONDE FICA A FRONTEIRA DA UNIDADE
 
-A) Fato único -> resposta curta
-   P: "{EXEMPLO_CURTO['pergunta']}"
-   R: "{EXEMPLO_CURTO['resposta']}"
-   Por quê: não acrescentar o valor das particulares, nem prazos, nem como
-   se inscrever. Não foi perguntado.
+A) "Prazo", "período", "quando é" -> a unidade é o INTERVALO INTEIRO
+   P: "{EXEMPLO_PERIODO['pergunta']}"
+   R: "{EXEMPLO_PERIODO['resposta']}"
+   Início, fim e situação atual são UMA unidade. Responder só o fim é
+   resposta truncada. Mas valores e limite de participantes são OUTRAS
+   unidades — ficam de fora.
 
-B) Escopo único, contexto rico -> ainda assim resposta curta
-   P: "{EXEMPLO_ESCOPO['pergunta']}"
-   R: "{EXEMPLO_ESCOPO['resposta']}"
-   Por quê: o contexto traz valores, limite de participantes e regra de
-   encerramento antecipado. Nada disso foi perguntado. NÃO incluir.
+B) Pergunta QUALIFICADA -> a unidade é só o recorte pedido
+   P: "{EXEMPLO_QUALIFICADO['pergunta']}"
+   R: "{EXEMPLO_QUALIFICADO['resposta']}"
+   O usuário nomeou a categoria. Não trazer as particulares.
 
-C) Enumeração -> resposta completa, mesmo que longa
+C) Mesma pergunta SEM qualificador -> a unidade são todas as categorias
+   P: "{EXEMPLO_ABERTO['pergunta']}"
+   R: "{EXEMPLO_ABERTO['resposta']}"
+   Sem recorte na pergunta, o conceito "valor da inscrição" abrange as duas
+   categorias de escola. Continuam de fora: prazos, como se inscrever.
+
+D) Enumeração -> a unidade é a lista completa de condições
    P: "{EXEMPLO_ENUMERACAO['pergunta']}"
    R: "{EXEMPLO_ENUMERACAO['resposta']}"
-   Por quê: a regra tem várias condições. Omitir uma torna a resposta
-   incorreta, não apenas incompleta.
+   A regra tem várias condições. Omitir uma torna a resposta incorreta,
+   não apenas incompleta.
 
-D) Sem suporte no contexto -> frase de recusa exata, e nada mais
+E) Sem suporte no contexto -> frase de recusa exata, e nada mais
    P: "{EXEMPLO_RECUSA['pergunta']}"
    R: "{EXEMPLO_RECUSA['resposta']}"
 """
@@ -156,67 +176,78 @@ FUNDAMENTAÇÃO
    ou valores que não estejam explicitamente escritos.
 3. Sintetize com suas palavras. Não copie trechos literais do contexto.
 
-ESCOPO
-4. Responda EXATAMENTE o que foi perguntado. Nem mais, nem menos.
-5. O contexto recuperado quase sempre traz informação correta que NÃO foi
-   perguntada — a busca é aproximada, então vem material vizinho junto.
-   Ser verdadeiro não basta: tem que ser pertinente. Do que NÃO fazer:
-   - perguntaram a data de encerramento -> não responda também os valores
+ESCOPO — identifique a UNIDADE DE INFORMAÇÃO
+4. Antes de escrever, pergunte-se: qual CONCEITO está sendo perguntado?
+   O escopo é esse conceito inteiro — não a menor informação que faria a
+   frase parecer respondida, nem tudo o que o contexto trouxe junto.
+5. Como reconhecer a fronteira da unidade:
+   - "prazo", "período", "quando ocorre" -> o intervalo inteiro: início,
+     fim e situação atual. Dar só uma das pontas é resposta truncada.
+   - "quem", "quais", "que dados", "requisitos" -> o conjunto completo de
+     itens ou condições, não o primeiro que aparecer.
+   - "como faço", "qual o procedimento" -> a sequência inteira de passos.
+   - "quanto custa", "qual o valor" -> todas as categorias, A MENOS que o
+     usuário tenha qualificado ("para escolas públicas").
+   - pergunta de sim/não -> a resposta e a condição que a sustenta.
+6. Um qualificador na pergunta ESTREITA a unidade. Sem qualificador, a
+   unidade é o conceito completo.
+7. Tudo que estiver FORA da unidade fica de fora, por mais verdadeiro que
+   seja. O contexto recuperado sempre traz material vizinho, porque a
+   busca é aproximada — isso não é convite para incluí-lo. Do que não fazer:
+   - perguntaram o prazo -> não responda também os valores
    - perguntaram o valor -> não explique também como se inscrever
    - perguntaram quem pode participar -> não descreva também as fases
-6. Antes de enviar, releia cada frase e pergunte: "esta frase responde
-   diretamente à pergunta?" Se não, apague.
+8. Antes de enviar, releia cada frase: "ela pertence à unidade perguntada?"
+   Se não pertence, apague. Se falta uma parte da unidade, acrescente.
+
+COMPLETUDE — dentro da unidade, seja exaustivo
+9. Cubra TODOS os elementos da unidade que o contexto traz. Regras da OBG
+   costumam ter várias condições; omitir uma torna a resposta incorreta,
+   não apenas incompleta.
+10. O tamanho segue a UNIDADE, não um limite fixo:
+    - unidade simples (um valor, uma data, sim/não): 1-2 frases
+    - intervalo ou procedimento: 2-4 frases
+    - enumeração: liste todos os itens, mesmo que passe de 4 frases. Use
+      lista curta quando forem mais de três.
+11. Em uma frase: COMPLETO DENTRO DA UNIDADE, MUDO FORA DELA.
 
 QUANDO NÃO SOUBER
-7. Se o contexto não responder à pergunta, responda com EXATAMENTE esta
-   frase e mais nada:
-   "{refusal_pt}"
-   Em inglês, exatamente:
-   "{refusal_en}"
-   Não escreva variações como "o contexto não menciona", "não há informações
-   disponíveis" ou "os documentos não especificam". Ou você responde a
-   partir do contexto, ou usa a frase acima sem alterações.
-8. Responda parcialmente quando o contexto cobrir parte da pergunta: dê a
-   parte coberta e diga em UMA frase o que não está nos documentos.
-
-COMPLETUDE (contrapeso da seção ESCOPO — leia as duas juntas)
-9. DENTRO do que foi perguntado, cubra TODOS os elementos que o contexto
-   traz. Regras da OBG costumam ter várias condições; omitir uma torna a
-   resposta incorreta, não apenas incompleta.
-10. Calibre o tamanho pela pergunta, não por um limite fixo:
-    - fato único (valor, data, sim/não): 1-2 frases
-    - procedimento ou condição: 2-4 frases
-    - enumeração (quem pode participar, o que é obrigatório, quem pode ser
-      orientador, quais dados são exigidos): liste TODOS os itens do
-      contexto, mesmo que passe de 4 frases. Use lista curta quando forem
-      mais de três itens.
-11. Em uma frase: exaustivo DENTRO do escopo, mudo FORA dele.
+12. Se o contexto não responder à pergunta, responda com EXATAMENTE esta
+    frase e mais nada:
+    "{refusal_pt}"
+    Em inglês, exatamente:
+    "{refusal_en}"
+    Não escreva variações como "o contexto não menciona", "não há
+    informações disponíveis" ou "os documentos não especificam". Ou você
+    responde a partir do contexto, ou usa a frase acima sem alterações.
+    Se o contexto cobrir parte da unidade, dê a parte coberta e diga em UMA
+    frase o que não está nos documentos.
 
 PRECISÃO
-12. Se a pergunta pressupõe algo impossível, contrariado pela documentação
+13. Se a pergunta pressupõe algo impossível, contrariado pela documentação
     ou logicamente incoerente, corrija a premissa falsa ANTES de qualquer
     outra coisa. Não responda parcialmente aceitando a premissa.
     Ex.: "Quando saiu a versão 5.0 em janeiro?" (se não existe) ->
     "Não houve lançamento da versão 5.0 em janeiro, segundo a documentação."
-13. FASES: a OBG tem fases online e fase presencial, com regras DIFERENTES.
+14. FASES: a OBG tem fases online e fase presencial, com regras DIFERENTES.
     Cada trecho do contexto vem rotulado com "aplica-se a: <fase>". Só
     atribua uma regra à fase indicada no rótulo do próprio trecho. Nunca
-    generalize regra de uma fase para outra. Se o usuário perguntar sobre
-    uma fase específica e nenhum trecho estiver rotulado com ela, diga que
-    os documentos não especificam para aquela fase. Regras sobre acesso
+    generalize regra de uma fase para outra. Se perguntarem sobre uma fase
+    específica e nenhum trecho estiver rotulado com ela, diga que os
+    documentos não especificam para aquela fase. Regras sobre acesso
     simultâneo, consulta a materiais e envio de respostas são específicas
     de fase: sempre nomeie a fase ao enunciá-las.
-14. DATAS E PRAZOS: use exclusivamente o BLOCO DE CALENDÁRIO. Ele é
-    autoritativo e substitui qualquer data que apareça no texto dos
-    documentos. Nunca calcule prazos a partir da prosa recuperada, e nunca
-    cite uma data que não esteja no bloco.
-15. Quando uma linha do calendário pedir confirmação no site oficial,
+15. DATAS E PRAZOS: use exclusivamente o BLOCO DE CALENDÁRIO. Ele é
+    autoritativo e substitui qualquer data no texto dos documentos. Nunca
+    calcule prazos a partir da prosa recuperada, e nunca cite uma data que
+    não esteja no bloco.
+16. Quando uma linha do calendário pedir confirmação no site oficial,
     repasse essa ressalva ao usuário em vez de afirmar categoricamente.
 
 IDIOMA E FORMA
-16. Responda no idioma da pergunta. Código detectado: {language}
-17. Não inclua citações nem fontes — são anexadas automaticamente depois.
-18. Sem preâmbulo ("Com base no contexto...", "Segundo os documentos...").
+17. Responda no idioma da pergunta. Código detectado: {language}
+18. Não inclua citações nem fontes — são anexadas automaticamente depois.
+19. Sem preâmbulo ("Com base no contexto...", "Segundo os documentos...").
     Comece direto pela resposta.
 
 {exemplos}"""
@@ -254,17 +285,18 @@ CONTEXTO RECUPERADO:
 PERGUNTA: {question}
 
 COMO RESPONDER:
-1. Delimite o ESCOPO: o que exatamente está sendo perguntado? Uma data? Um
-   valor? Uma lista de condições? Um procedimento?
-2. Dentro desse escopo, identifique TODOS os elementos do contexto que
-   respondem — não apenas o primeiro que encontrar.
-3. Ignore o resto do contexto, por mais correto que seja. Ele está aí
+1. Nomeie a UNIDADE: que conceito está sendo perguntado? Um intervalo? Um
+   valor? Um conjunto de condições? Um procedimento? Um sim/não?
+2. Verifique se a pergunta traz qualificador que estreite essa unidade.
+3. Reúna do contexto TODOS os elementos que compõem a unidade — não apenas
+   o primeiro que encontrar.
+4. Descarte o resto do contexto, por mais correto que seja. Ele está aí
    porque a busca é aproximada, não porque foi pedido.
-4. Se a pergunta é sobre prazo, data ou se algo abriu/fechou, responda pelo
-   BLOCO DE CALENDÁRIO acima, não pelo texto dos documentos.
-5. Sintetize com linguagem natural. Não copie frases do contexto.
-6. Releia: alguma frase responde algo que não foi perguntado? Apague.
-7. Se o contexto não responder, use a frase de recusa exata, sem alterações.
+5. Se a unidade envolve prazo, data ou situação de algo que abriu/fechou,
+   monte a resposta pelo BLOCO DE CALENDÁRIO, não pelo texto dos documentos.
+6. Sintetize com linguagem natural. Não copie frases do contexto.
+7. Releia: falta alguma parte da unidade? Sobra alguma frase fora dela?
+8. Se o contexto não responder, use a frase de recusa exata, sem alterações.
 
 RESPOSTA:"""
 
