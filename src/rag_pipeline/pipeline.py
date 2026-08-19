@@ -140,6 +140,8 @@ async def process_query(
     # IMPORTANTE: usamos a pergunta REESCRITA (autossuficiente) na geração.
     # Antes, o gerador recebia a pergunta crua ("e na fase presencial?") sem
     # histórico e respondia "pergunta incompleta" mesmo com retrieval correto.
+    question_for_generation = rewritten if chat_history.strip() else question
+
     result = await answer_service.generate_answer(
         question=rewritten,
         documents=docs,
