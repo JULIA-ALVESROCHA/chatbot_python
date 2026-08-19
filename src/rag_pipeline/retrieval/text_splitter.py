@@ -37,7 +37,7 @@ from langchain_core.documents import Document
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 from src.app.core.config import settings
-from src.utils.text import clean_pdf_text
+from src.utils.text import clean_pdf_text, clean_pdf_text_structural
 
 logger = logging.getLogger("bgo_chatbot.splitter")
 
@@ -130,15 +130,37 @@ def _split_prose(text: str) -> List[dict]:
     heads = list(_SUPPORT_HEADING.finditer(text))
     blocks: List[dict] = []
     if heads:
+        # Anything before the first heading (preamble) becomes its own
+        # block. Without this, text preceding the first matched heading is
+        # silently dropped from the index instead of falling into a block.
+        preamble = text[: heads[0].start()].strip()
+        if preamble:
+            blocks.append({"item": None, "section": None, "text": preamble})
         for i, m in enumerate(heads):
             start = m.start()
             end = heads[i + 1].start() if i + 1 < len(heads) else len(text)
             body = text[start:end].strip()
-            if len(body) >= MIN_CHARS:
+            if body:
                 blocks.append({"item": None, "section": m.group(1).strip(),
                                "text": body})
     if not blocks:
         blocks = [{"item": None, "section": None, "text": text}]
+
+    # Merge stubs forward: _SUPPORT_HEADING also matches short data lines
+    # that aren't real section headings (e.g. "Valor da Inscrição por
+    # Equipe:"), producing blocks too short to search well on their own.
+    # Folding them into the next block keeps the content instead of the
+    # old behavior, which silently dropped anything under MIN_CHARS.
+    merged: List[dict] = []
+    for b in blocks:
+        if merged and len(b["text"]) < MIN_CHARS:
+            merged[-1]["text"] += "\n" + b["text"]
+        elif merged and len(merged[-1]["text"]) < MIN_CHARS:
+            merged[-1]["text"] += "\n" + b["text"]
+            merged[-1]["section"] = merged[-1]["section"] or b["section"]
+        else:
+            merged.append(b)
+    blocks = merged
 
     out: List[dict] = []
     overflow = RecursiveCharacterTextSplitter(
@@ -160,25 +182,29 @@ def split_documents(docs: List[Document]) -> List[Document]:
     """
     Drop-in for whatever loader.py currently calls.
 
-    IMPORTANT: this calls clean_pdf_text() itself, so it is safe even if
-    loader.py never did. Cleaning is idempotent - calling it twice is fine.
+    IMPORTANT: boundary detection (_is_numbered_doc / _split_numbered /
+    _split_prose) runs on clean_pdf_text_structural() output, which keeps
+    single line breaks intact - clean_pdf_text() collapses those to spaces
+    and would erase the '^' line starts the boundary regexes need. Each
+    resulting piece is then passed through clean_pdf_text() individually
+    before being stored, so the final chunk text is still fully normalized.
     """
     chunks: List[Document] = []
 
     for doc in docs:
-        text = clean_pdf_text(doc.page_content)
-        if not text:
+        structural = clean_pdf_text_structural(doc.page_content)
+        if not structural:
             continue
 
-        pieces = _split_numbered(text) if _is_numbered_doc(text) else _split_prose(text)
+        pieces = _split_numbered(structural) if _is_numbered_doc(structural) else _split_prose(structural)
         if not pieces:
-            pieces = [{"item": None, "section": None, "text": text}]
+            pieces = [{"item": None, "section": None, "text": structural}]
 
         source = (doc.metadata or {}).get("source", "?")
         page = (doc.metadata or {}).get("page", 0)
 
         for idx, p in enumerate(pieces):
-            body = p["text"].strip()
+            body = clean_pdf_text(p["text"]).strip()
             if not body:
                 continue
 

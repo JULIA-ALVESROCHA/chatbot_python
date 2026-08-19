@@ -1,78 +1,34 @@
 from pathlib import Path
 from typing import List
-import re
-from collections import defaultdict
 
-from langchain_community.document_loaders import PyMuPDFLoader, TextLoader
 from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import FAISS
-from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.documents import Document
 from src.app.core.config import settings
+from src.rag_pipeline.retrieval.loader import load_documents as _load_documents
+from src.rag_pipeline.retrieval.text_splitter import split_documents as _split_documents
 from src.rag_pipeline.retrieval.manifest import write_manifest
 
 DATA_RAW = Path("data/raw")
 PROCESSED = Path("data/processed/faiss_index")
 PROCESSED.mkdir(parents=True, exist_ok=True)
 
-ITEM_REGEX = re.compile(r"\b\d+\.\d+\.\d+\b")
-
 
 def load_documents() -> List[Document]:
-    docs = []
-    for p in DATA_RAW.iterdir():
-        if p.suffix.lower() == ".pdf":
-            loader = PyMuPDFLoader(str(p))  # fixed: was PyPDFLoader
-            loaded = loader.load()
-            # PyMuPDF gives 0-indexed pages — convert to 1-indexed
-            for doc in loaded:
-                doc.metadata["page"] = doc.metadata.get("page", 0) + 1
-            docs.extend(loaded)
-        elif p.suffix.lower() in [".txt", ".md"]:
-            loader = TextLoader(str(p), encoding="utf8")
-            docs.extend(loader.load())
-    print(f"[LOADER] Sample metadata from first doc: {docs[0].metadata}")
+    # Delegates to the shared loader (PyMuPDF, page/source metadata
+    # normalization) so build-time and query-time loading never diverge.
+    docs = _load_documents(str(DATA_RAW))
+    if docs:
+        print(f"[LOADER] Sample metadata from first doc: {docs[0].metadata}")
     return docs
 
 
-def split_documents(
-    documents: List[Document],
-    chunk_size: int = settings.chunk_size,
-    chunk_overlap: int = settings.chunk_overlap,
-) -> List[Document]:
-
-    splitter = RecursiveCharacterTextSplitter(
-        chunk_size=chunk_size,
-        chunk_overlap=chunk_overlap,
-    )
-    split_docs = splitter.split_documents(documents)
-
-    # assign deterministic chunk_id and extract item number
-    page_chunk_counter = defaultdict(int)
-
-    for doc in split_docs:
-        source = doc.metadata.get("source", "unknown")
-        page = doc.metadata.get("page", 0)
-
-        slug = (
-            Path(source).stem
-            .replace(" ", "_")
-            .replace("(", "")
-            .replace(")", "")
-            .lower()
-        )
-
-        key = f"{slug}_p{page}"
-        page_chunk_counter[key] += 1
-        idx = page_chunk_counter[key]
-
-        doc.metadata["chunk_id"] = f"{slug}_p{page}_c{idx}"
-
-        # extract regulation item number (e.g. 4.2.1)
-        match = ITEM_REGEX.search(doc.page_content or "")
-        doc.metadata["item"] = match.group() if match else None
-
-    return split_docs
+def split_documents(documents: List[Document]) -> List[Document]:
+    # Item-aware splitting (src/rag_pipeline/retrieval/text_splitter.py):
+    # keeps numbered regulation items whole and cleans PDF extraction noise
+    # (ligatures, soft line breaks) before embedding. Also assigns
+    # chunk_id/item/section/part metadata — no separate pass needed here.
+    return _split_documents(documents)
 
 
 def build_faiss(docs: List[Document]) -> FAISS:

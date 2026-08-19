@@ -1,6 +1,6 @@
 {
-  "built_at": "2026-08-19T21:10:17.566105+00:00",
-  "git_rev": "7225633",
+  "built_at": "2026-08-10T16:58:36.475384+00:00",
+  "git_rev": "ca0dbd3",
   "python": "3.11.15",
   "platform": "macOS-26.5-arm64-arm-64bit",
   "packages": {
@@ -18,11 +18,11 @@
     "strategy": "item_aware",
     "chunk_size": 500,
     "chunk_overlap": 100,
-    "n_chunks": 242,
-    "chars_min": 122,
-    "chars_median": 279,
-    "chars_max": 1138,
-    "chunks_with_item_number": 187
+    "n_chunks": 202,
+    "chars_min": 103,
+    "chars_median": 459,
+    "chars_max": 499,
+    "chunks_with_item_number": 74
   },
   "corpus": {
     "files": {
@@ -54,11 +54,11 @@
     "combined_sha": "c4baec2220690941"
   },
   "vectors": {
-    "ntotal": 242,
+    "ntotal": 202,
     "dim": 3072,
     "faiss_class": "IndexFlatL2",
-    "mean_norm": 1.000004,
+    "mean_norm": 1.000033,
     "unit_norm": true,
-    "sha": "58bb478e25cbd465"
+    "sha": "a5faff2e04b77eb4"
   }
 }

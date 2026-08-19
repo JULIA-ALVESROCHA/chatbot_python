@@ -53,8 +53,16 @@ _PAGE_NOISE = re.compile(
 )
 
 
-def clean_pdf_text(text: str) -> str:
-    """Normalize extracted PDF text for embedding. Idempotent."""
+def clean_pdf_text_structural(text: str) -> str:
+    """Like clean_pdf_text(), but keeps single line breaks intact.
+
+    The splitter (src/rag_pipeline/retrieval/text_splitter.py) finds item
+    and heading boundaries with regexes anchored on '^' (start of line).
+    In the raw PDF extraction, a numbered item like "9.1.1" genuinely starts
+    its own line. clean_pdf_text() collapses those single newlines to
+    spaces, which erases that line start - so the splitter must run its
+    boundary detection on THIS text, not on clean_pdf_text()'s output.
+    """
     if not text:
         return ""
 
@@ -69,10 +77,21 @@ def clean_pdf_text(text: str) -> str:
     # Order matters: rejoin hyphenated words before collapsing newlines.
     text = _HYPHEN_BREAK.sub("", text)
     text = _PAGE_NOISE.sub("", text)
-    text = _SOFT_NEWLINE.sub(" ", text)
 
     text = _MULTI_SPACE.sub(" ", text)
     text = _MULTI_BLANK.sub("\n\n", text)
+
+    return text.strip()
+
+
+def clean_pdf_text(text: str) -> str:
+    """Normalize extracted PDF text for embedding. Idempotent."""
+    if not text:
+        return ""
+
+    text = clean_pdf_text_structural(text)
+    text = _SOFT_NEWLINE.sub(" ", text)
+    text = _MULTI_SPACE.sub(" ", text)
 
     return text.strip()
 

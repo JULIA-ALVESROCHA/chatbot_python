@@ -293,23 +293,25 @@ def _status(ev: Evento, hoje: date) -> str:
     if hoje > ev.fim:
         dias = (hoje - ev.fim).days
         verbo = "REALIZADA" if pontual else "ENCERRADAS"
+        # Pontual (data única) não tem início separado do fim; período tem.
+        quando = f"em {ev.fim:%d/%m/%Y}" if pontual else f"de {ev.inicio:%d/%m/%Y} a {ev.fim:%d/%m/%Y}"
         if dias <= GRACE_DAYS and not pontual:
             # Janela de incerteza: prorrogação recém-anunciada pode não ter
             # chegado aqui ainda. Não afirmar categoricamente.
-            return (f"CONSTAM COMO {verbo} em {ev.fim:%d/%m/%Y} (há {dias} dias). "
+            return (f"CONSTAM COMO {verbo} ({quando}) (há {dias} dias). "
                     f"ATENÇÃO: prazo encerrado há pouco — se houve prorrogação, "
                     f"ela pode ainda não constar aqui. Oriente o usuário a "
                     f"confirmar em {SITE_OFICIAL}")
-        return f"{verbo} em {ev.fim:%d/%m/%Y} (há {dias} dias)"
+        return f"{verbo} {quando} (há {dias} dias)"
 
     if pontual:
         return f"É HOJE ({ev.inicio:%d/%m/%Y})"
 
     restam = (ev.fim - hoje).days
     if restam <= DIAS_CRITICO:
-        return (f"ABERTAS — encerram {ev.fim:%d/%m/%Y} (restam {restam} dias). "
-                f"Prazo próximo do fim; pode haver prorrogação")
-    return f"ABERTAS — até {ev.fim:%d/%m/%Y} (restam {restam} dias)"
+        return (f"ABERTAS — de {ev.inicio:%d/%m/%Y}, encerram {ev.fim:%d/%m/%Y} "
+                f"(restam {restam} dias). Prazo próximo do fim; pode haver prorrogação")
+    return f"ABERTAS — de {ev.inicio:%d/%m/%Y} até {ev.fim:%d/%m/%Y} (restam {restam} dias)"
 
 
 def bloco_calendario() -> str:
@@ -333,10 +335,17 @@ def bloco_calendario() -> str:
         "",
     ]
     for ev in _eventos:
-        linha = f"- {ev.rotulo}: {_status(ev, hoje)}"
+        linhas.append(f"- {ev.rotulo}: {_status(ev, hoje)}")
         if ev.nota:
-            linha += f" | {ev.nota}"
-        linhas.append(linha)
+            # A comissão edita "nota" livremente na planilha e às vezes
+            # mistura ali informação de outra unidade (valores, regras) que
+            # nada tem a ver com data/prazo. Linha própria + instrução
+            # inline, para não virar parte do "use APENAS este bloco" acima.
+            linhas.append(
+                f'  detalhe de "{ev.rotulo}" (inclua na resposta só se a '
+                f"pergunta pedir especificamente esse detalhe — não é parte "
+                f"do prazo/data, pode ser sobre outro assunto): {ev.nota}"
+            )
 
     if _fonte == "codigo":
         linhas += ["", "AVISO: calendário vindo de valores padrão do código. "
